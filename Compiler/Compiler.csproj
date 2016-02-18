@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{884126DA-5100-4924-8068-B60E5DD01D59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Adamant.Exploratory.Compiler</RootNamespace>
+    <AssemblyName>Adamant.Exploratory.Compiler</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr4.Runtime">
+      <HintPath>..\lib\Antlr4.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Compile Include="Antlr\AdamantLexer.cs">
+      <DependentUpon>AdamantLexer.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\AdamantParser.cs">
+      <DependentUpon>AdamantParser.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\AdamantParserBaseListener.cs">
+      <DependentUpon>AdamantParser.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\AdamantParserBaseVisitor.cs">
+      <DependentUpon>AdamantParser.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\AdamantParserListener.cs">
+      <DependentUpon>AdamantParser.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\AdamantParserVisitor.cs">
+      <DependentUpon>AdamantParser.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\AdamantLexer.partial.cs" />
+    <Compile Include="Antlr\BuildAstVisitor.cs" />
+    <Compile Include="Antlr\PreprocessorLineLexer.cs">
+      <DependentUpon>PreprocessorLineLexer.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\PreprocessorLineParser.cs">
+      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\PreprocessorLineParserBaseListener.cs">
+      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\PreprocessorLineParserBaseVisitor.cs">
+      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\PreprocessorLineParserListener.cs">
+      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Antlr\PreprocessorLineParserVisitor.cs">
+      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
+    </Compile>
+    <None Include="Antlr\AdamantCommon.g4" />
+    <None Include="Antlr\AdamantParser.g4" />
+    <None Include="Antlr\AdamantLexer.g4" />
+    <None Include="Antlr\AdamantLexer.tokens">
+      <DependentUpon>AdamantLexer.g4</DependentUpon>
+    </None>
+    <None Include="Antlr\AdamantParser.tokens">
+      <DependentUpon>AdamantParser.g4</DependentUpon>
+    </None>
+    <None Include="Antlr\PreprocessorLineLexer.g4" />
+    <None Include="Antlr\PreprocessorLineLexer.tokens">
+      <DependentUpon>PreprocessorLineLexer.g4</DependentUpon>
+    </None>
+    <None Include="Antlr\PreprocessorLineParser.g4" />
+    <None Include="Antlr\PreprocessorLineParser.tokens">
+      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
+    </None>
+    <None Include="Antlr\Unicode.g4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
+    <Compile Include="Ast\AccessModifier.cs" />
+    <Compile Include="Ast\Assemblage.cs" />
+    <Compile Include="Ast\Declaration.cs" />
+    <Compile Include="Ast\Declarations\ClassDeclaration.cs" />
+    <Compile Include="Ast\Declarations\FunctionDeclaration.cs" />
+    <Compile Include="Ast\Declarations\GlobalDeclaration.cs" />
+    <Compile Include="Ast\Declarations\Parameter.cs" />
+    <Compile Include="Ast\Expression.cs" />
+    <Compile Include="Ast\Expressions\LiteralExpression.cs" />
+    <Compile Include="Ast\Expressions\NewObjectExpression.cs" />
+    <Compile Include="Ast\IDeclarationContainer.cs" />
+    <Compile Include="Ast\Member.cs" />
+    <Compile Include="Ast\Members\Constructor.cs" />
+    <Compile Include="Ast\Members\Field.cs" />
+    <Compile Include="Ast\Members\Method.cs" />
+    <Compile Include="Ast\Members\MethodLike.cs" />
+    <Compile Include="Ast\Members\Property.cs" />
+    <Compile Include="Ast\Name.cs" />
+    <Compile Include="Ast\Node.cs" />
+    <Compile Include="Ast\QualifiedName.cs" />
+    <Compile Include="Ast\Safety.cs" />
+    <Compile Include="Ast\Statement.cs" />
+    <Compile Include="Ast\Statements\ExpressionStatement.cs" />
+    <Compile Include="Ast\Statements\ForeachStatement.cs" />
+    <Compile Include="Ast\Statements\IfStatement.cs" />
+    <Compile Include="Ast\Statements\ReturnStatement.cs" />
+    <Compile Include="Ast\Type.cs" />
+    <Compile Include="Ast\Types\ArraySliceType.cs" />
+    <Compile Include="Ast\Types\InferredType.cs" />
+    <Compile Include="Ast\Types\Ownership.cs" />
+    <Compile Include="Ast\Types\OwnershipType.cs" />
+    <Compile Include="Ast\Types\PlainType.cs" />
+    <Compile Include="Ast\Types\TypeName.cs" />
+    <Compile Include="Ast\UsingContext.cs" />
+    <Compile Include="Ast\Visitors\IDeclarationVisitor.cs" />
+    <Compile Include="Ast\Visitors\IExpressionVisitor.cs" />
+    <Compile Include="Ast\Visitors\IMemberVisitor.cs" />
+    <Compile Include="Ast\Visitors\ITypeVisitor.cs" />
+    <Compile Include="Preprocessor\Conditional.cs" />
+    <Compile Include="Preprocessor\PreprocessorState.cs" />
+    <Compile Include="Preprocessor\PreprocessorVisitor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{041ee85b-e098-4454-9dd9-d7b6723ddf83}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(ProjectDir)Antlr
+CALL $(SolutionDir)tools\antlr4.bat AdamantLexer.g4 -package Adamant.Exploratory.Compiler.Antlr
+CALL $(SolutionDir)tools\antlr4.bat AdamantParser.g4 -visitor -package Adamant.Exploratory.Compiler.Antlr
+CALL $(SolutionDir)tools\antlr4.bat PreprocessorLineLexer.g4 -package Adamant.Exploratory.Compiler.Antlr
+CALL $(SolutionDir)tools\antlr4.bat PreprocessorLineParser.g4 -visitor -package Adamant.Exploratory.Compiler.Antlr</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
