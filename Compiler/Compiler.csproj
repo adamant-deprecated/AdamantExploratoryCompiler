@@ -47,6 +47,7 @@
     <Compile Include="Antlr\AdamantParser.cs">
       <DependentUpon>AdamantParser.g4</DependentUpon>
     </Compile>
+    <Compile Include="Antlr\AdamantParser.partial.cs" />
     <Compile Include="Antlr\AdamantParserBaseListener.cs">
       <DependentUpon>AdamantParser.g4</DependentUpon>
     </Compile>
