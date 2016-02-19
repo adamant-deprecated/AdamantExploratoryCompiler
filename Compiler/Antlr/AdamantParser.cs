@@ -3278,6 +3278,8 @@ public partial class AdamantParser : Parser {
 	}
 
 	public partial class ArgumentListContext : ParserRuleContext {
+		public ExpressionContext _expression;
+		public IList<ExpressionContext> _expressions = new List<ExpressionContext>();
 		public ExpressionContext[] expression() {
 			return GetRuleContexts<ExpressionContext>();
 		}
@@ -3331,7 +3333,8 @@ public partial class AdamantParser : Parser {
 			case EscapedIdentifier:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 612; expression(0);
+				State = 612; _localctx._expression = expression(0);
+				_localctx._expressions.Add(_localctx._expression);
 				State = 617;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.La(1);
@@ -3339,7 +3342,8 @@ public partial class AdamantParser : Parser {
 					{
 					{
 					State = 613; Match(Comma);
-					State = 614; expression(0);
+					State = 614; _localctx._expression = expression(0);
+					_localctx._expressions.Add(_localctx._expression);
 					}
 					}
 					State = 619;

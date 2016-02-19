@@ -165,6 +165,11 @@ namespace Adamant.Exploratory.Compiler.Antlr
 			return new ArraySliceType(elementType, dimensions);
 		}
 
+		public override Node VisitMaybeType(AdamantParser.MaybeTypeContext context)
+		{
+			// TODO return a generic type Maybe<T>
+			return context.typeName().Accept(this);
+		}
 		#endregion
 
 		#region Members
@@ -205,6 +210,16 @@ namespace Adamant.Exploratory.Compiler.Antlr
 		#endregion
 
 		#region Statements
+		public override Node VisitVariableDeclarationStatement(AdamantParser.VariableDeclarationStatementContext context)
+		{
+			return context.variableDeclaration().Accept(this);
+		}
+
+		public override Node VisitVariableDeclaration(AdamantParser.VariableDeclarationContext context)
+		{
+			return new VariableDeclarationStatement();
+		}
+
 		public override Node VisitExpressionStatement(AdamantParser.ExpressionStatementContext context)
 		{
 			//TODO implement
@@ -213,8 +228,12 @@ namespace Adamant.Exploratory.Compiler.Antlr
 
 		public override Node VisitReturnStatement(AdamantParser.ReturnStatementContext context)
 		{
-			// TODO implement
-			return new ReturnStatement();
+			return new ReturnStatement((Expression)context.expression().Accept(this));
+		}
+
+		public override Node VisitThrowStatement(AdamantParser.ThrowStatementContext context)
+		{
+			return new ThrowStatement((Expression)context.expression().Accept(this));
 		}
 
 		public override Node VisitIfStatement(AdamantParser.IfStatementContext context)
@@ -231,13 +250,61 @@ namespace Adamant.Exploratory.Compiler.Antlr
 		#endregion
 
 		#region Expressions
+		public override Node VisitMemberExpression(AdamantParser.MemberExpressionContext context)
+		{
+			var expression = (Expression)context.expression().Accept(this);
+			var member = context.identifier().GetText();
+			return new MemberExpression(expression, member);
+		}
+
+		public override Node VisitCallExpression(AdamantParser.CallExpressionContext context)
+		{
+			var expression = (Expression)context.expression().Accept(this);
+			var arguments = context.argumentList()._expressions.Select(exp => (Expression)exp.Accept(this));
+			return new CallExpression(expression, arguments);
+		}
+
+		public override Node VisitEqualityExpression(AdamantParser.EqualityExpressionContext context)
+		{
+			var lhs = (Expression)context.lhs.Accept(this);
+			var rhs = (Expression)context.lhs.Accept(this);
+			return new BinaryOperatorExpression(lhs, rhs);
+		}
+
+		public override Node VisitIfExpression(AdamantParser.IfExpressionContext context)
+		{
+			var condition = (Expression)context.condition.Accept(this);
+			var then = (Expression)context.then.Accept(this);
+			var @else = (Expression)context.@else.Accept(this);
+			return new IfExpression(condition, then, @else);
+		}
+
+		public override Node VisitVariableExpression(AdamantParser.VariableExpressionContext context)
+		{
+			var name = new Name(context.identifier().GetText());
+			return new VariableExpression(name);
+		}
+
+		public override Node VisitNewExpression(AdamantParser.NewExpressionContext context)
+		{
+			var type = (TypeName)context.typeName().Accept(this);
+			var arguments = context.argumentList()._expressions.Select(exp => (Expression)exp.Accept(this));
+			return new NewExpression(type, arguments);
+		}
+
 		public override Node VisitNewObjectExpression(AdamantParser.NewObjectExpressionContext context)
 		{
 			var baseTypes = context.baseTypes();
 			var baseClass = (Type)baseTypes?.baseType?.Accept(this);
 			var interfaces = baseTypes?._interfaces.Select(i => (Type)i.Accept(this)).ToList() ?? new List<Type>();
+			var arguments = context.argumentList()._expressions.Select(exp => (Expression)exp.Accept(this));
 			var members = context.member().Select(m => (Member)m.Accept(this));
-			return new NewObjectExpression(baseClass, interfaces, members);
+			return new NewObjectExpression(baseClass, interfaces, arguments, members);
+		}
+
+		public override Node VisitBooleanLiteralExpression(AdamantParser.BooleanLiteralExpressionContext context)
+		{
+			return new LiteralExpression();
 		}
 
 		public override Node VisitIntLiteralExpression(AdamantParser.IntLiteralExpressionContext context)

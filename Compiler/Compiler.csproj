@@ -111,8 +111,14 @@
     <Compile Include="Ast\Declarations\GlobalDeclaration.cs" />
     <Compile Include="Ast\Declarations\Parameter.cs" />
     <Compile Include="Ast\Expression.cs" />
+    <Compile Include="Ast\Expressions\BinaryOperatorExpression.cs" />
+    <Compile Include="Ast\Expressions\CallExpression.cs" />
+    <Compile Include="Ast\Expressions\IfExpression.cs" />
     <Compile Include="Ast\Expressions\LiteralExpression.cs" />
+    <Compile Include="Ast\Expressions\MemberExpression.cs" />
+    <Compile Include="Ast\Expressions\NewExpression.cs" />
     <Compile Include="Ast\Expressions\NewObjectExpression.cs" />
+    <Compile Include="Ast\Expressions\VariableExpression.cs" />
     <Compile Include="Ast\IDeclarationContainer.cs" />
     <Compile Include="Ast\Member.cs" />
     <Compile Include="Ast\Members\Constructor.cs" />
@@ -129,6 +135,8 @@
     <Compile Include="Ast\Statements\ForeachStatement.cs" />
     <Compile Include="Ast\Statements\IfStatement.cs" />
     <Compile Include="Ast\Statements\ReturnStatement.cs" />
+    <Compile Include="Ast\Statements\ThrowStatement.cs" />
+    <Compile Include="Ast\Statements\VariableDeclarationStatement.cs" />
     <Compile Include="Ast\Type.cs" />
     <Compile Include="Ast\Types\ArraySliceType.cs" />
     <Compile Include="Ast\Types\InferredType.cs" />

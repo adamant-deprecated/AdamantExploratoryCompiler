@@ -150,7 +150,7 @@ constructorInitializer
 	;
 
 argumentList
-	:  expression (',' expression)*
+	:  expressions+=expression (',' expressions+=expression)*
 	|
 	;
 

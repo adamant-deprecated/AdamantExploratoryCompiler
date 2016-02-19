@@ -1,10 +1,10 @@
 ﻿namespace Adamant.Exploratory.Compiler.Ast.Statements
 {
-	public class ReturnStatement : Statement
+	public class ThrowStatement : Statement
 	{
 		public readonly Expression Expression;
 
-		public ReturnStatement(Expression expression)
+		public ThrowStatement(Expression expression)
 		{
 			Expression = expression;
 		}

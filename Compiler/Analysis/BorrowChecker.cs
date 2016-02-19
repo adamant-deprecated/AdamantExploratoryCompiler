@@ -94,14 +94,44 @@ namespace Adamant.Exploratory.Compiler.Analysis
 		#endregion
 
 		#region Expression Visitor
-		Ownership IExpressionVisitor<Void, Ownership>.VisitLiteral(LiteralExpression expression, Void param)
+		Ownership IExpressionVisitor<Void, Ownership>.VisitIf(IfExpression ifExpression, Void param)
 		{
-			return Ownership.ImmutableBorrow;
+			throw new NotImplementedException();
+		}
+
+		Ownership IExpressionVisitor<Void, Ownership>.VisitBinaryOperator(BinaryOperatorExpression binaryOperatorExpression, Void param)
+		{
+			throw new NotImplementedException();
+		}
+
+		Ownership IExpressionVisitor<Void, Ownership>.VisitCall(CallExpression callExpression, Void param)
+		{
+			throw new NotImplementedException();
+		}
+
+		Ownership IExpressionVisitor<Void, Ownership>.VisitMember(MemberExpression memberExpression, Void param)
+		{
+			throw new NotImplementedException();
+		}
+
+		Ownership IExpressionVisitor<Void, Ownership>.VisitVariable(VariableExpression variableExpression, Void param)
+		{
+			throw new NotImplementedException();
+		}
+
+		Ownership IExpressionVisitor<Void, Ownership>.VisitNew(NewExpression newExpression, Void param)
+		{
+			throw new NotImplementedException();
 		}
 
 		Ownership IExpressionVisitor<Void, Ownership>.VisitNewObject(NewObjectExpression expression, Void param)
 		{
 			return Ownership.Owned;
+		}
+
+		Ownership IExpressionVisitor<Void, Ownership>.VisitLiteral(LiteralExpression expression, Void param)
+		{
+			return Ownership.ImmutableBorrow;
 		}
 		#endregion
 	}

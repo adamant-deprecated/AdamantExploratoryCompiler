@@ -88,6 +88,7 @@ namespace Adamant.Exploratory.Forge.Commands
 			var dependencies = projectConfig.Dependencies.Keys.Concat(CoreDependencies).ToList();
 			if(isApp)
 			{
+				Directory.CreateDirectory(compileDirPath);
 				// TODO emit cpp and compile it
 			}
 			builtDependencies.Add(projectConfig.Name, new Dependency(assemblage, dependencies));

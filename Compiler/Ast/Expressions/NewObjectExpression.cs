@@ -6,18 +6,19 @@ namespace Adamant.Exploratory.Compiler.Ast.Expressions
 {
 	public class NewObjectExpression : Expression
 	{
-		private readonly IList<Type> interfaces;
-		public Type BaseClass { get;  }
-		private readonly IList<Member> members;
+		public readonly Type BaseClass;
+		public readonly IReadOnlyList<Type> Interfaces;
+		public readonly IReadOnlyList<Expression> Arguments;
+		public readonly IReadOnlyList<Member> Members;
 
-		public NewObjectExpression(Type baseClass, IEnumerable<Type> interfaces, IEnumerable<Member> members)
+		public NewObjectExpression(Type baseClass, IEnumerable<Type> interfaces, IEnumerable<Expression> arguments, IEnumerable<Member> members)
 		{
-			this.interfaces = interfaces.ToList();
-			BaseClass = baseClass;
-			this.members = members.ToList();
-		}
 
-		public IEnumerable<Member> Members => members;
+			BaseClass = baseClass;
+			Interfaces = interfaces.ToList();
+			Arguments = arguments.ToList();
+			Members = members.ToList();
+		}
 
 		public override TReturn Accept<TParam, TReturn>(IExpressionVisitor<TParam, TReturn> visitor, TParam param)
 		{
