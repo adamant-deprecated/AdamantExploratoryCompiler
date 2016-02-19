@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ex-adamantc")]
+[assembly: AssemblyTitle("ex-forge")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e62a5b59-6693-41e0-8d49-51cbfe817c01")]
+[assembly: Guid("27336e74-687f-4e32-bdba-7179c13a23ba")]
 
 // Version information for an assembly consists of the following four values:
 //

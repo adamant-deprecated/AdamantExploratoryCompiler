@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E62A5B59-6693-41E0-8D49-51CBFE817C01}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{27336E74-687F-4E32-BDBA-7179C13A23BA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Adamant.Exploratory.Compiler.Cmd</RootNamespace>
-    <AssemblyName>ex-adamantc</AssemblyName>
+    <RootNamespace>Adamant.Exploratory.Forge</RootNamespace>
+    <AssemblyName>ex-forge</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,12 +36,20 @@
     <Reference Include="Antlr4.Runtime">
       <HintPath>..\lib\Antlr4.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="ManyConsole, Version=0.4.2.18, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ManyConsole.0.4.2.18\lib\ManyConsole.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NDesk.Options, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NDesk.Options.0.2.1\lib\NDesk.Options.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NDesk.Options.Extensions, Version=1.4.1.32053, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NDesk.Options.Extensions.1.4.1\lib\net45\NDesk.Options.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -51,9 +62,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Options\CmdAction.cs" />
-    <Compile Include="Options\CmdOptions.cs" />
+    <Compile Include="BuildFailedException.cs" />
+    <Compile Include="Commands\BuildCommand.cs" />
+    <Compile Include="Commands\ProjectDirCommand.cs" />
+    <Compile Include="Commands\RunCommand.cs" />
+    <Compile Include="Config\DependencyConfig.cs" />
+    <Compile Include="Config\ProjectConfig.cs" />
+    <Compile Include="Dependency.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,10 +78,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{041ee85b-e098-4454-9dd9-d7b6723ddf83}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Compiler\Compiler.csproj">
       <Project>{884126DA-5100-4924-8068-B60E5DD01D59}</Project>
       <Name>Compiler</Name>
