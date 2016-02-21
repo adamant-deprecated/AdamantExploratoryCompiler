@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using Adamant.Exploratory.Compiler.Antlr;
+using Adamant.Exploratory.Compiler.Antlr.Builders;
 using Adamant.Exploratory.Compiler.Ast;
 
 namespace Adamant.Exploratory.Compiler
 {
 	public class AdamantCompiler
 	{
+		private static readonly CompilationUnitBuilder CompilationUnitBuilder = new CompilationUnitBuilder();
+
 		public CompilationUnit Parse(string sourcePath)
 		{
 			var parser = new AdamantParser(sourcePath);
 			var tree = parser.compilationUnit();
 			var syntaxCheck = new SyntaxCheckVisitor();
 			tree.Accept(syntaxCheck);
-			var buildAst = new BuildAstVisitor();
-			return (CompilationUnit)tree.Accept(buildAst);
+			return tree.Accept(CompilationUnitBuilder);
 		}
 
 		public Project CompileProject(IEnumerable<CompilationUnit> compilationUnits, IEnumerable<Project> dependencies)

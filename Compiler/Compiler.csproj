@@ -63,7 +63,15 @@
       <DependentUpon>AdamantParser.g4</DependentUpon>
     </Compile>
     <Compile Include="Antlr\AdamantLexer.partial.cs" />
-    <Compile Include="Antlr\BuildAstVisitor.cs" />
+    <Compile Include="Antlr\Builders\Builder.cs" />
+    <Compile Include="Antlr\Builders\CompilationUnitBuilder.cs" />
+    <Compile Include="Antlr\Builders\DeclarationBuilder.cs" />
+    <Compile Include="Antlr\Builders\ExpressionBuilder.cs" />
+    <Compile Include="Antlr\Builders\IBuildContext.cs" />
+    <Compile Include="Antlr\Builders\MemberBuilder.cs" />
+    <Compile Include="Antlr\Builders\ParameterBuilder.cs" />
+    <Compile Include="Antlr\Builders\StatementBuilder.cs" />
+    <Compile Include="Antlr\Builders\TypeBuilder.cs" />
     <Compile Include="Antlr\PreprocessorLineLexer.cs">
       <DependentUpon>PreprocessorLineLexer.g4</DependentUpon>
     </Compile>
@@ -102,6 +110,7 @@
     <None Include="Antlr\Unicode.g4" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Antlr\RestrictedVisitor.cs" />
     <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
     <Compile Include="Ast\AccessModifier.cs" />
     <Compile Include="Ast\CompilationUnit.cs" />
