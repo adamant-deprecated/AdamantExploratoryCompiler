@@ -13,16 +13,17 @@ namespace Adamant.Exploratory.Compiler
 			var syntaxCheck = new SyntaxCheckVisitor();
 			tree.Accept(syntaxCheck);
 			var buildAst = new BuildAstVisitor();
-			var ast = (CompilationUnit)tree.Accept(buildAst);
-			// TODO run borrow checker
-			//var borrowChecker = new BorrowChecker();
-			//borrowChecker.Check(ast);
-			return ast;
+			return (CompilationUnit)tree.Accept(buildAst);
 		}
 
 		public Project CompileProject(IEnumerable<CompilationUnit> compilationUnits, IEnumerable<Project> dependencies)
 		{
-			return new Project(compilationUnits);
+			var project = new Project(compilationUnits, dependencies);
+			// TODO do name binding
+			// TODO run borrow checker
+			//var borrowChecker = new BorrowChecker();
+			//borrowChecker.Check(ast);
+			return project;
 		}
 	}
 }

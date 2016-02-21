@@ -4,6 +4,6 @@ namespace Adamant.Exploratory.Compiler.Ast
 {
 	public interface IDeclarationContainer
 	{
-		IEnumerable<Declaration> Declarations { get; } 
+		IReadOnlyList<Declaration> Declarations { get; }
 	}
 }

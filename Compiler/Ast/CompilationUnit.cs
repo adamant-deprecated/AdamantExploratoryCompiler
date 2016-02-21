@@ -8,13 +8,13 @@ namespace Adamant.Exploratory.Compiler.Ast
 	/// </summary>
 	public class CompilationUnit : Node, IDeclarationContainer
 	{
-		private readonly IList<Declaration> declarations;
+		private readonly List<Declaration> declarations;
 
 		internal CompilationUnit(IEnumerable<IDeclarationContainer> declarationContainers)
 		{
 			declarations = declarationContainers.SelectMany(c => c.Declarations).ToList();
 		}
 
-		public IEnumerable<Declaration> Declarations => declarations;
+		public IReadOnlyList<Declaration> Declarations => declarations;
 	}
 }

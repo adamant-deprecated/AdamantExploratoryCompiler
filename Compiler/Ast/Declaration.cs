@@ -14,7 +14,7 @@ namespace Adamant.Exploratory.Compiler.Ast
 		public QualifiedName Name { get; private set; }
 		public AccessModifier Access { get; private set; }
 
-		IEnumerable<Declaration> IDeclarationContainer.Declarations => new[] { this };
+		IReadOnlyList<Declaration> IDeclarationContainer.Declarations => new[] { this };
 
 		public abstract TReturn Accept<TParam, TReturn>(IDeclarationVisitor<TParam, TReturn> visitor, TParam param);
 	}
