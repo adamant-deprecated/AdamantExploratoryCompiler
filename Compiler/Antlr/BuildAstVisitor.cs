@@ -222,8 +222,8 @@ namespace Adamant.Exploratory.Compiler.Antlr
 
 		public override Node VisitExpressionStatement(AdamantParser.ExpressionStatementContext context)
 		{
-			//TODO implement
-			return new ExpressionStatement();
+			var expression = (Expression)context.expression().Accept(this);
+			return new ExpressionStatement(expression);
 		}
 
 		public override Node VisitReturnStatement(AdamantParser.ReturnStatementContext context)
@@ -308,6 +308,11 @@ namespace Adamant.Exploratory.Compiler.Antlr
 		}
 
 		public override Node VisitIntLiteralExpression(AdamantParser.IntLiteralExpressionContext context)
+		{
+			return new LiteralExpression();
+		}
+
+		public override Node VisitStringLiteralExpression(AdamantParser.StringLiteralExpressionContext context)
 		{
 			return new LiteralExpression();
 		}
