@@ -6,6 +6,7 @@ using System.Threading;
 using Adamant.Exploratory.Compiler;
 using Adamant.Exploratory.Forge.Config;
 using Newtonsoft.Json;
+using Project = Adamant.Exploratory.Compiler.Ast.Project;
 
 namespace Adamant.Exploratory.Forge.Commands
 {
@@ -20,9 +21,9 @@ namespace Adamant.Exploratory.Forge.Commands
 		{
 			try
 			{
-				var builtDependencies = new Dictionary<string, Dependency>();
+				var projects = new Dictionary<string, Project>();
 				var compiler = new AdamantCompiler();
-				Forge(ProjectPath, builtDependencies, compiler);
+				Forge(ProjectPath, projects, compiler);
 				return 0;
 			}
 			catch(BuildFailedException)
@@ -32,27 +33,25 @@ namespace Adamant.Exploratory.Forge.Commands
 			}
 		}
 
-		private static readonly string[] CoreDependencies = { "Adamant.Compiler.Runtime", "Adamant.Compiler.System" };
-
-		private static void Forge(string projectFilePath, IDictionary<string, Dependency> builtDependencies, AdamantCompiler compiler)
+		private static void Forge(string projectFilePath, IDictionary<string, Project> projects, AdamantCompiler compiler)
 		{
 			var projectDirPath = Path.GetFullPath(Path.GetDirectoryName(projectFilePath));
 			var projectConfig = JsonConvert.DeserializeObject<ProjectConfig>(File.ReadAllText(projectFilePath));
 			projectConfig.Name = projectConfig.Name ?? Path.GetFileName(projectDirPath);
 
-			BuildDependencies(projectDirPath, projectConfig, builtDependencies, compiler);
-			var targetDirPath = BuildProject(projectDirPath, projectConfig, builtDependencies, compiler);
-			BuildProjects(projectDirPath, projectConfig, builtDependencies, targetDirPath, compiler);
+			BuildDependencies(projectDirPath, projectConfig, projects, compiler);
+			var targetDirPath = BuildProject(projectDirPath, projectConfig, projects, compiler);
+			BuildProjects(projectDirPath, projectConfig, projects, targetDirPath, compiler);
 		}
 
-		private static void BuildDependencies(string projectDirPath, ProjectConfig projectConfig, IDictionary<string, Dependency> builtDependencies, AdamantCompiler compiler)
+		private static void BuildDependencies(string projectDirPath, ProjectConfig projectConfig, IDictionary<string, Project> projects, AdamantCompiler compiler)
 		{
 			foreach(var dependency in projectConfig.Dependencies)
 			{
 				var dependencyName = dependency.Key;
-				if(builtDependencies.ContainsKey(dependencyName)) continue;
+				if(projects.ContainsKey(dependencyName)) continue;
 				var path = DependencyPath(dependencyName, dependency.Value, projectDirPath, projectConfig.DependencyPaths);
-				Forge(Path.Combine(path, Project.FileName), builtDependencies, compiler);
+				Forge(Path.Combine(path, ProjectFile.Name), projects, compiler);
 			}
 		}
 
@@ -72,7 +71,7 @@ namespace Adamant.Exploratory.Forge.Commands
 			throw new Exception("Could not find dependency");
 		}
 
-		private static string BuildProject(string projectDirPath, ProjectConfig projectConfig, IDictionary<string, Dependency> builtDependencies, AdamantCompiler compiler)
+		private static string BuildProject(string projectDirPath, ProjectConfig projectConfig, IDictionary<string, Project> projects, AdamantCompiler compiler)
 		{
 			Console.WriteLine($"Building {projectConfig.Name} ...");
 			var compileDirPath = Path.Combine(projectDirPath, ".forge-cache");
@@ -80,34 +79,35 @@ namespace Adamant.Exploratory.Forge.Commands
 
 			var sourceFiles = new DirectoryInfo(Path.Combine(projectDirPath, "src")).GetFiles("*.adam", SearchOption.AllDirectories);
 
-			var assemblage = compiler.Combine(sourceFiles.Select(sourceFile => compiler.Parse(sourceFile.FullName)));
+			var dependencies = projectConfig.Dependencies.Select(dependency => projects[dependency.Key]);
+			var project = compiler.CompileProject(sourceFiles.Select(sourceFile => compiler.Parse(sourceFile.FullName)), dependencies);
 
 			var isApp = projectConfig.Template == "app";
 			var targetDirPath = Path.Combine(projectDirPath, "targets/debug");
 			DeleteDirectoryIfExists(targetDirPath);
-			var dependencies = projectConfig.Dependencies.Keys.Concat(CoreDependencies).ToList();
+
 			if(isApp)
 			{
 				Directory.CreateDirectory(compileDirPath);
 				// TODO emit cpp and compile it
 			}
-			builtDependencies.Add(projectConfig.Name, new Dependency(assemblage, dependencies));
+			projects.Add(projectConfig.Name, project);
 			return targetDirPath;
 		}
 
 		private static void BuildProjects(
 			string projectDirPath,
 			ProjectConfig projectConfig,
-			IDictionary<string, Dependency> builtDependencies,
+			IDictionary<string, Project> projects,
 			string targetDirPath,
 			AdamantCompiler compiler)
 		{
-			// Build Projects that weren't already built as dependencies
+			// Build Projects that weren't already built as projects
 			foreach(var project in projectConfig.Projects)
 			{
 				var projectName = project.Key;
-				if(builtDependencies.ContainsKey(projectName)) continue;
-				Forge(Path.Combine(projectDirPath, project.Value, Project.FileName), builtDependencies, compiler);
+				if(projects.ContainsKey(projectName)) continue;
+				Forge(Path.Combine(projectDirPath, project.Value, ProjectFile.Name), projects, compiler);
 				// TODO copy into target
 			}
 		}

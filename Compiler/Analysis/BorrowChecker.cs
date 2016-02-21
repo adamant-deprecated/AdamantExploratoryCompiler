@@ -16,9 +16,9 @@ namespace Adamant.Exploratory.Compiler.Analysis
 		IMemberVisitor<Void, Void>,
 		IExpressionVisitor<Void, Ownership>
 	{
-		public void Check(Assemblage assemblage)
+		public void Check(CompilationUnit compilationUnit)
 		{
-			foreach(var declaration in assemblage.Declarations)
+			foreach(var declaration in compilationUnit.Declarations)
 				declaration.Accept(this, Void.Value);
 		}
 

@@ -68,7 +68,6 @@
     <Compile Include="Commands\RunCommand.cs" />
     <Compile Include="Config\DependencyConfig.cs" />
     <Compile Include="Config\ProjectConfig.cs" />
-    <Compile Include="Dependency.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

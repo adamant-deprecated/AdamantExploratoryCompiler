@@ -3,11 +3,14 @@ using System.Linq;
 
 namespace Adamant.Exploratory.Compiler.Ast
 {
-	public class Assemblage : Node, IDeclarationContainer
+	/// <summary>
+	/// A single compilation unit i.e. a source file
+	/// </summary>
+	public class CompilationUnit : Node, IDeclarationContainer
 	{
 		private readonly IList<Declaration> declarations;
 
-		public Assemblage(IEnumerable<IDeclarationContainer> declarationContainers)
+		internal CompilationUnit(IEnumerable<IDeclarationContainer> declarationContainers)
 		{
 			declarations = declarationContainers.SelectMany(c => c.Declarations).ToList();
 		}

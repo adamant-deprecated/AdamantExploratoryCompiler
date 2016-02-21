@@ -55,7 +55,7 @@ namespace Adamant.Exploratory.Compiler.Antlr
 			var newContext = new UsingContext(usingContext, GetNamespaces(context.usingStatement()));
 			var visitor = new BuildAstVisitor(newContext, currentNamespace);
 			var declarations = context.declaration().Select(d => (IDeclarationContainer)d.Accept(visitor));
-			return new Assemblage(declarations);
+			return new CompilationUnit(declarations);
 		}
 
 		#region Declarations
@@ -65,7 +65,7 @@ namespace Adamant.Exploratory.Compiler.Antlr
 			var newContext = new UsingContext(usingContext, GetNamespaces(context.usingStatement()));
 			var visitor = new BuildAstVisitor(newContext, currentNamespace.Append(namespaceName));
 			var declarations = context.declaration().Select(d => (IDeclarationContainer)d.Accept(visitor));
-			return new Assemblage(declarations);
+			return new CompilationUnit(declarations);
 		}
 
 		public override Node VisitClassDeclaration(AdamantParser.ClassDeclarationContext context)

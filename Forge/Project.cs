@@ -1,7 +1,7 @@
 ﻿namespace Adamant.Exploratory.Forge
 {
-	public class Project
+	public class ProjectFile
 	{
-		public const string FileName = "forge-project.vson";
+		public const string Name = "forge-project.vson";
 	}
 }

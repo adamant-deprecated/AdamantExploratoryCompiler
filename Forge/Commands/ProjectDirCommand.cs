@@ -17,7 +17,7 @@ namespace Adamant.Exploratory.Forge.Commands
 
 			var projectDirPath = remainingArguments.Length > 0 ? remainingArguments[0] : ".";
 
-			var projectPath = Path.GetFullPath(Path.Combine(projectDirPath, Project.FileName));
+			var projectPath = Path.GetFullPath(Path.Combine(projectDirPath, ProjectFile.Name));
 			if(!File.Exists(projectPath))
 				throw new ConsoleHelpAsException("No project found in directory");
 

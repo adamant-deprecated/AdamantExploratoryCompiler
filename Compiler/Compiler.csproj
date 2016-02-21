@@ -104,7 +104,7 @@
   <ItemGroup>
     <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
     <Compile Include="Ast\AccessModifier.cs" />
-    <Compile Include="Ast\Assemblage.cs" />
+    <Compile Include="Ast\CompilationUnit.cs" />
     <Compile Include="Ast\Declaration.cs" />
     <Compile Include="Ast\Declarations\ClassDeclaration.cs" />
     <Compile Include="Ast\Declarations\FunctionDeclaration.cs" />
@@ -128,6 +128,7 @@
     <Compile Include="Ast\Members\Property.cs" />
     <Compile Include="Ast\Name.cs" />
     <Compile Include="Ast\Node.cs" />
+    <Compile Include="Ast\Project.cs" />
     <Compile Include="Ast\QualifiedName.cs" />
     <Compile Include="Ast\Safety.cs" />
     <Compile Include="Ast\Statement.cs" />
