@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public class Project : IDeclarationContainer
+	public class Project
 	{
 		private readonly List<Project> dependencies;
 		private readonly List<Declaration> declarations;

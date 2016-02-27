@@ -11,9 +11,9 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 	{
 		private readonly ParameterBuilder parameterBuilder;
 
-		public DeclarationBuilder(UsingContext usingContext, FullyQualifiedName currentNamespace)
+		public DeclarationBuilder(UsingNameScope usingNameScope, FullyQualifiedName currentNamespace)
 		{
-			UsingContext = usingContext;
+			UsingNameScope = usingNameScope;
 			CurrentNamespace = currentNamespace;
 
 			parameterBuilder = new ParameterBuilder(this);
@@ -22,7 +22,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			Statement = new StatementBuilder(this);
 		}
 
-		public UsingContext UsingContext { get; }
+		public UsingNameScope UsingNameScope { get; }
 		public FullyQualifiedName CurrentNamespace { get; }
 		public TypeBuilder Type { get; } = new TypeBuilder();
 		public StatementBuilder Statement { get; }
@@ -39,8 +39,8 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			var namespaceName = context.namespaceName()
 				._identifiers.Select(Symbol)
 				.Aggregate(CurrentNamespace, (name, symbol) => name.Append(symbol));
-			var newContext = new UsingContext(UsingContext, GetNamespaces(context.usingStatement()));
-			var visitor = new DeclarationBuilder(newContext, namespaceName);
+			var usingNames = new UsingNameScope(UsingNameScope, UsingNames(context.usingStatement()));
+			var visitor = new DeclarationBuilder(usingNames, namespaceName);
 			var declarations = context.declaration().SelectMany(d => d.Accept(visitor));
 			return declarations;
 		}

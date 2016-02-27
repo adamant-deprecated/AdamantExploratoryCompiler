@@ -1,25 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax.Visitors;
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public abstract class Declaration : Node, IDeclarationContainer
+	public abstract class Declaration : Node
 	{
 		protected Declaration(AccessModifier access, FullyQualifiedName @namespace, Symbol name)
 		{
 			if(name == null) throw new ArgumentNullException(nameof(name));
+			if(!(access == AccessModifier.Public || access == AccessModifier.Package)) throw new ArgumentOutOfRangeException(nameof(access), "Must be Public or Package");
+
+			Access = access;
 			Namespace = @namespace;
 			Name = name;
-			Access = access;
+			FullyQualifiedName = @namespace.Append(name);
 		}
 
+		public AccessModifier Access { get; }
 		public FullyQualifiedName Namespace { get; }
 		public Symbol Name { get; }
-		public AccessModifier Access { get; }
-
-		IReadOnlyList<Declaration> IDeclarationContainer.Declarations => new[] { this };
+		public FullyQualifiedName FullyQualifiedName { get; }
 
 		public abstract TReturn Accept<TParam, TReturn>(IDeclarationVisitor<TParam, TReturn> visitor, TParam param);
 	}

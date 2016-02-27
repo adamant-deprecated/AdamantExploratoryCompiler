@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
-	class GlobalSymbols
+	public class GlobalSymbols
 	{
+		private readonly IDictionary<FullyQualifiedName, Declaration> symbols;
+
+		public GlobalSymbols(IEnumerable<Declaration> declarations)
+		{
+			symbols = declarations.ToDictionary(d => d.FullyQualifiedName, d => d);
+		}
 	}
 }

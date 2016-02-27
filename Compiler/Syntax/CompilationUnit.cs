@@ -6,13 +6,13 @@ namespace Adamant.Exploratory.Compiler.Syntax
 	/// <summary>
 	/// A single compilation unit i.e. a source file
 	/// </summary>
-	public class CompilationUnit : Node, IDeclarationContainer
+	public class CompilationUnit : Node
 	{
 		private readonly List<Declaration> declarations;
 
-		internal CompilationUnit(IEnumerable<IDeclarationContainer> declarationContainers)
+		internal CompilationUnit(IEnumerable<Declaration> declarations)
 		{
-			declarations = declarationContainers.SelectMany(c => c.Declarations).ToList();
+			this.declarations = declarations.ToList();
 		}
 
 		public IReadOnlyList<Declaration> Declarations => declarations;

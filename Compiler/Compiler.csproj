@@ -130,7 +130,6 @@
     <Compile Include="Syntax\Expressions\NewObjectExpression.cs" />
     <Compile Include="Syntax\Expressions\VariableExpression.cs" />
     <Compile Include="Syntax\TextPosition.cs" />
-    <Compile Include="Syntax\IDeclarationContainer.cs" />
     <Compile Include="Syntax\Member.cs" />
     <Compile Include="Syntax\Members\Constructor.cs" />
     <Compile Include="Syntax\Members\Field.cs" />
@@ -156,7 +155,7 @@
     <Compile Include="Syntax\Types\OwnershipType.cs" />
     <Compile Include="Syntax\Types\PlainType.cs" />
     <Compile Include="Syntax\Types\TypeName.cs" />
-    <Compile Include="Syntax\UsingContext.cs" />
+    <Compile Include="Symbols\UsingNameScope.cs" />
     <Compile Include="Syntax\Visitors\IDeclarationVisitor.cs" />
     <Compile Include="Syntax\Visitors\IExpressionVisitor.cs" />
     <Compile Include="Syntax\Visitors\IMemberVisitor.cs" />
