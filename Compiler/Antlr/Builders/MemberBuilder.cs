@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Members;
 using Adamant.Exploratory.Compiler.Syntax.Types;

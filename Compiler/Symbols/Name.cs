@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Adamant.Exploratory.Compiler.Syntax
+namespace Adamant.Exploratory.Compiler.Symbols
 {
 	public struct Name
 	{

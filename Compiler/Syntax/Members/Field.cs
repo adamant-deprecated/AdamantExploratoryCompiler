@@ -1,4 +1,5 @@
-﻿using Adamant.Exploratory.Compiler.Syntax.Types;
+﻿using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Syntax.Types;
 using Adamant.Exploratory.Compiler.Syntax.Visitors;
 
 namespace Adamant.Exploratory.Compiler.Syntax.Members

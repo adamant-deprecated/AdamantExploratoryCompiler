@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {

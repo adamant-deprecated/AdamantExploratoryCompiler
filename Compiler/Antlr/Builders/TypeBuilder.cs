@@ -1,4 +1,5 @@
-﻿using Adamant.Exploratory.Compiler.Syntax;
+﻿using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Types;
 using Type = Adamant.Exploratory.Compiler.Syntax.Type;
 

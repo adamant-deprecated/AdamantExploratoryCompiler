@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Adamant.Exploratory.Compiler.Syntax.Visitors;
 

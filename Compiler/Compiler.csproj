@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="Antlr\RestrictedVisitor.cs" />
     <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
+    <Compile Include="Symbols\GlobalSymbols.cs" />
     <Compile Include="Syntax\AccessModifier.cs" />
     <Compile Include="Syntax\CompilationUnit.cs" />
     <Compile Include="Syntax\Declaration.cs" />
@@ -136,10 +137,10 @@
     <Compile Include="Syntax\Members\Method.cs" />
     <Compile Include="Syntax\Members\MethodLike.cs" />
     <Compile Include="Syntax\Members\Property.cs" />
-    <Compile Include="Syntax\Name.cs" />
+    <Compile Include="Symbols\Name.cs" />
     <Compile Include="Syntax\Node.cs" />
     <Compile Include="Syntax\Project.cs" />
-    <Compile Include="Syntax\QualifiedName.cs" />
+    <Compile Include="Symbols\QualifiedName.cs" />
     <Compile Include="Syntax\Safety.cs" />
     <Compile Include="Syntax\Statement.cs" />
     <Compile Include="Syntax\Statements\ExpressionStatement.cs" />
@@ -171,6 +172,7 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>cd $(ProjectDir)Antlr
