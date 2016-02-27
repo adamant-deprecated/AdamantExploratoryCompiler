@@ -3,14 +3,14 @@ using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
-	public struct Symbol
+	public class Symbol
 	{
 		private readonly string value;
 		public readonly TextPosition Position;
 
 		public Symbol(string symbol, TextPosition position)
 		{
-			this.Position = position;
+			Position = position;
 			if(string.IsNullOrEmpty(symbol)) throw new ArgumentNullException(nameof(symbol));
 			if(symbol.Contains("."))
 				throw new ArgumentException("Symbol can't contain '.' becuase then it is a Qualified Name");
@@ -30,8 +30,8 @@ namespace Adamant.Exploratory.Compiler.Symbols
 
 		public override bool Equals(object obj)
 		{
-			var other = obj as Symbol?;
-			return other != null && Equals(value, other.Value.value);
+			var other = obj as Symbol;
+			return other != null && Equals(value, other.value);
 		}
 
 		public override string ToString()

@@ -11,7 +11,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 	{
 		private readonly ParameterBuilder parameterBuilder;
 
-		public DeclarationBuilder(UsingContext usingContext, QualifiedName currentNamespace)
+		public DeclarationBuilder(UsingContext usingContext, FullyQualifiedName currentNamespace)
 		{
 			UsingContext = usingContext;
 			CurrentNamespace = currentNamespace;
@@ -23,7 +23,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		}
 
 		public UsingContext UsingContext { get; }
-		public QualifiedName CurrentNamespace { get; }
+		public FullyQualifiedName CurrentNamespace { get; }
 		public TypeBuilder Type { get; } = new TypeBuilder();
 		public StatementBuilder Statement { get; }
 		public ExpressionBuilder Expression { get; }

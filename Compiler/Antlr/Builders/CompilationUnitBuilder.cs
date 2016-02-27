@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
@@ -10,7 +9,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			// TODO global attributes
 			var newContext = new UsingContext(GetNamespaces(context.usingStatement()));
-			var visitor = new DeclarationBuilder(newContext, QualifiedName.None);
+			var visitor = new DeclarationBuilder(newContext, null);
 			var declarations = context.declaration().SelectMany(d => d.Accept(visitor));
 			return new CompilationUnit(declarations);
 		}

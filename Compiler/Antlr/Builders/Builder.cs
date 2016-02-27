@@ -8,9 +8,9 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public abstract class Builder<T> : RestrictedVisitor<T>
 	{
-		protected static IEnumerable<QualifiedName> GetNamespaces(AdamantParser.UsingStatementContext[] contexts)
+		protected static IEnumerable<FullyQualifiedName> GetNamespaces(AdamantParser.UsingStatementContext[] contexts)
 		{
-			return contexts.Select(s => new QualifiedName(s.namespaceName().GetText()));
+			return contexts.Select(s => new FullyQualifiedName(s.namespaceName().GetText()));
 		}
 
 		protected static AccessModifier GetAccessModifier(AdamantParser.ModifierContext[] modifiers)

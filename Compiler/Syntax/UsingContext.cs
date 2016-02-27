@@ -6,21 +6,21 @@ namespace Adamant.Exploratory.Compiler.Syntax
 {
 	public class UsingContext
 	{
-		private readonly HashSet<QualifiedName> namespaces;
+		private readonly HashSet<FullyQualifiedName> namespaces;
 
 		public UsingContext()
 		{
-			namespaces = new HashSet<QualifiedName>();
+			namespaces = new HashSet<FullyQualifiedName>();
 		}
 
-		public UsingContext(IEnumerable<QualifiedName> namespaces)
+		public UsingContext(IEnumerable<FullyQualifiedName> namespaces)
 		{
-			this.namespaces = new HashSet<QualifiedName>(namespaces);
+			this.namespaces = new HashSet<FullyQualifiedName>(namespaces);
 		}
 
-		public UsingContext(UsingContext outerContext, IEnumerable<QualifiedName> namespaces)
+		public UsingContext(UsingContext outerContext, IEnumerable<FullyQualifiedName> namespaces)
 		{
-			this.namespaces = new HashSet<QualifiedName>(outerContext.namespaces.Union(namespaces));
+			this.namespaces = new HashSet<FullyQualifiedName>(outerContext.namespaces.Union(namespaces));
 		}
 	}
 }

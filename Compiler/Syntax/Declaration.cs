@@ -6,13 +6,13 @@ namespace Adamant.Exploratory.Compiler.Syntax
 {
 	public abstract class Declaration : Node, IDeclarationContainer
 	{
-		protected Declaration(AccessModifier access, QualifiedName name)
+		protected Declaration(AccessModifier access, FullyQualifiedName name)
 		{
 			Name = name;
 			Access = access;
 		}
 
-		public QualifiedName Name { get; private set; }
+		public FullyQualifiedName Name { get; private set; }
 		public AccessModifier Access { get; private set; }
 
 		IReadOnlyList<Declaration> IDeclarationContainer.Declarations => new[] { this };

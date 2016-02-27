@@ -6,7 +6,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 {
 	public class GlobalDeclaration : Declaration
 	{
-		public GlobalDeclaration(AccessModifier access, bool isMutableReference, QualifiedName name, OwnershipType type, Expression initExpression)
+		public GlobalDeclaration(AccessModifier access, bool isMutableReference, FullyQualifiedName name, OwnershipType type, Expression initExpression)
 			: base(access, name)
 		{
 			IsMutableReference = isMutableReference;

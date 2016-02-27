@@ -15,7 +15,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 			Safety safety, 
 			bool isSealed,
 			bool isAbstract,
-			QualifiedName name,
+			FullyQualifiedName name,
 			IEnumerable<Member> members)
 			: base(access, name)
 		{

@@ -8,7 +8,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 	public interface IBuildContext
 	{
 		UsingContext UsingContext { get; }
-		QualifiedName CurrentNamespace { get; }
+		FullyQualifiedName CurrentNamespace { get; }
 
 		TypeBuilder Type { get; }
 		StatementBuilder Statement { get; }
