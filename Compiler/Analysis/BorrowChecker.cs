@@ -1,10 +1,10 @@
 ﻿using System;
-using Adamant.Exploratory.Compiler.Ast;
-using Adamant.Exploratory.Compiler.Ast.Declarations;
-using Adamant.Exploratory.Compiler.Ast.Expressions;
-using Adamant.Exploratory.Compiler.Ast.Members;
-using Adamant.Exploratory.Compiler.Ast.Types;
-using Adamant.Exploratory.Compiler.Ast.Visitors;
+using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Declarations;
+using Adamant.Exploratory.Compiler.Syntax.Expressions;
+using Adamant.Exploratory.Compiler.Syntax.Members;
+using Adamant.Exploratory.Compiler.Syntax.Types;
+using Adamant.Exploratory.Compiler.Syntax.Visitors;
 
 namespace Adamant.Exploratory.Compiler.Analysis
 {

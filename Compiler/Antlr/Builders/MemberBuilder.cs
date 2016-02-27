@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Adamant.Exploratory.Compiler.Ast;
-using Adamant.Exploratory.Compiler.Ast.Members;
-using Adamant.Exploratory.Compiler.Ast.Types;
+using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Members;
+using Adamant.Exploratory.Compiler.Syntax.Types;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {

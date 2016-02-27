@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adamant.Exploratory.Compiler.Ast;
+using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {

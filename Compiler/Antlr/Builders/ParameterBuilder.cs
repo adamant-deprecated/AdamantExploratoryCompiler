@@ -1,4 +1,4 @@
-﻿using Adamant.Exploratory.Compiler.Ast.Declarations;
+﻿using Adamant.Exploratory.Compiler.Syntax.Declarations;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {

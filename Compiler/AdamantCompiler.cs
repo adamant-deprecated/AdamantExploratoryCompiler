@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Adamant.Exploratory.Compiler.Antlr;
 using Adamant.Exploratory.Compiler.Antlr.Builders;
-using Adamant.Exploratory.Compiler.Ast;
+using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler
 {

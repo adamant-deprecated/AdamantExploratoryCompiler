@@ -1,6 +1,6 @@
-﻿using Adamant.Exploratory.Compiler.Ast;
-using Adamant.Exploratory.Compiler.Ast.Types;
-using Type = Adamant.Exploratory.Compiler.Ast.Type;
+﻿using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Types;
+using Type = Adamant.Exploratory.Compiler.Syntax.Type;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {

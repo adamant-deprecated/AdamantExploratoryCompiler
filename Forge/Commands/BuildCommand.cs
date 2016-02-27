@@ -6,7 +6,7 @@ using System.Threading;
 using Adamant.Exploratory.Compiler;
 using Adamant.Exploratory.Forge.Config;
 using Newtonsoft.Json;
-using Project = Adamant.Exploratory.Compiler.Ast.Project;
+using Project = Adamant.Exploratory.Compiler.Syntax.Project;
 
 namespace Adamant.Exploratory.Forge.Commands
 {

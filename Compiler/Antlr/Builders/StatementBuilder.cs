@@ -1,5 +1,5 @@
-﻿using Adamant.Exploratory.Compiler.Ast;
-using Adamant.Exploratory.Compiler.Ast.Statements;
+﻿using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Statements;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
