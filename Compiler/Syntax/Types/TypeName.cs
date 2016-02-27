@@ -5,14 +5,14 @@ namespace Adamant.Exploratory.Compiler.Syntax.Types
 {
 	public class TypeName : PlainType
 	{
-		public TypeName(TypeName outerType, Name name)
+		public TypeName(TypeName outerType, Symbol symbol)
 		{
 			OuterType = outerType;
-			Name = name;
+			Symbol = symbol;
 		}
 
 		public TypeName OuterType { get; }
-		public Name Name { get; }
+		public Symbol Symbol { get; }
 
 		public override TReturn Accept<TParam, TReturn>(ITypeVisitor<TParam, TReturn> visitor, TParam param)
 		{

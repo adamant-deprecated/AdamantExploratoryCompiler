@@ -2,6 +2,7 @@
 using System.Linq;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
+using Antlr4.Runtime;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
@@ -29,6 +30,22 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 				}
 			// If we don't find an acces modifier
 			return AccessModifier.Private;
+		}
+
+		protected static TextPosition PositionOf(IToken token)
+		{
+			return new TextPosition(token.StartIndex, token.Line, token.Column);
+		}
+
+		protected static Symbol Symbol(IToken token)
+		{
+			return new Symbol(token.Text, PositionOf(token));
+		}
+
+		protected static Symbol Symbol(AdamantParser.IdentifierContext context)
+		{
+			var token = (context.Identifier() ?? context.EscapedIdentifier()).Symbol;
+			return Symbol(token);
 		}
 	}
 }

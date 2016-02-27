@@ -7,13 +7,13 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 {
 	public class Constructor : MethodLike
 	{
-		public Constructor(AccessModifier access, Name name, IEnumerable<Parameter> parameters, IEnumerable<Statement> body)
+		public Constructor(AccessModifier access, Symbol symbol, IEnumerable<Parameter> parameters, IEnumerable<Statement> body)
 			: base(access, parameters, body)
 		{
-			Name = name;
+			Symbol = symbol;
 		}
 
-		public Name Name { get; }
+		public Symbol Symbol { get; }
 
 		public override TReturn Accept<TParam, TReturn>(IMemberVisitor<TParam, TReturn> visitor, TParam param)
 		{

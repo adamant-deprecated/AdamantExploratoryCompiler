@@ -5,11 +5,11 @@ namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 {
 	public class VariableExpression : Expression
 	{
-		public readonly Name Name;
+		public readonly Symbol Symbol;
 
-		public VariableExpression(Name name)
+		public VariableExpression(Symbol symbol)
 		{
-			Name = name;
+			Symbol = symbol;
 		}
 
 		public override TReturn Accept<TParam, TReturn>(IExpressionVisitor<TParam, TReturn> visitor, TParam param)

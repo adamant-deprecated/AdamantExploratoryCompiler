@@ -137,7 +137,7 @@
     <Compile Include="Syntax\Members\Method.cs" />
     <Compile Include="Syntax\Members\MethodLike.cs" />
     <Compile Include="Syntax\Members\Property.cs" />
-    <Compile Include="Symbols\Name.cs" />
+    <Compile Include="Symbols\Symbol.cs" />
     <Compile Include="Syntax\Node.cs" />
     <Compile Include="Syntax\Project.cs" />
     <Compile Include="Symbols\QualifiedName.cs" />

@@ -43,7 +43,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override Type VisitTypeName(AdamantParser.TypeNameContext context)
 		{
 			var outerType = (TypeName)context.outerType?.Accept(this);
-			var name = new Name(context.identifier().GetText());
+			var name = Symbol(context.identifier());
 			return new TypeName(outerType, name);
 		}
 

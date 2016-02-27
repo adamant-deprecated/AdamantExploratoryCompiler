@@ -18,7 +18,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override Member VisitConstructor(AdamantParser.ConstructorContext context)
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
-			var name = new Name(context.identifier()?.GetText());
+			var name = Symbol(context.identifier());
 			var parameters = build.Parameters(context.parameterList());
 			var body = context.methodBody().statement().Select(s => s.Accept(build.Statement));
 			return new Constructor(accessModifier, name, parameters, body);
@@ -28,7 +28,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var isMutableReference = context.kind.Type == AdamantLexer.Var;
-			var name = new Name(context.identifier().GetText());
+			var name = Symbol(context.identifier());
 			var type = (OwnershipType)context.ownershipType()?.Accept(build.Type) ?? OwnershipType.NewInferred();
 			var initExpression = context.expression()?.Accept(build.Expression);
 			return new Field(accessModifier, isMutableReference, name, type, initExpression);
