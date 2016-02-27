@@ -1,6 +1,4 @@
-﻿using Adamant.Exploratory.Compiler.Syntax.Visitors;
-
-namespace Adamant.Exploratory.Compiler.Syntax.Expressions
+﻿namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 {
 	public class MemberExpression : Expression
 	{
@@ -11,11 +9,6 @@ namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 		{
 			Expression = expression;
 			Member = member;
-		}
-
-		public override TReturn Accept<TParam, TReturn>(IExpressionVisitor<TParam, TReturn> visitor, TParam param)
-		{
-			return visitor.VisitMember(this, param);
 		}
 	}
 }

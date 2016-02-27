@@ -42,7 +42,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Compile Include="AdamantCompiler.cs" />
-    <Compile Include="Analysis\BorrowChecker.cs" />
+    <Compile Include="Analysis\BindNames.cs" />
+    <Compile Include="Analysis\CheckLifetimes.cs" />
     <Compile Include="Antlr\AdamantLexer.cs">
       <DependentUpon>AdamantLexer.g4</DependentUpon>
     </Compile>
@@ -113,13 +114,15 @@
     <Compile Include="Antlr\RestrictedVisitor.cs" />
     <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
     <Compile Include="Symbols\GlobalSymbols.cs" />
+    <Compile Include="Symbols\NameScope.cs" />
     <Compile Include="Syntax\AccessModifier.cs" />
-    <Compile Include="Syntax\CompilationUnit.cs" />
+    <Compile Include="Syntax\ScopeDeclarations\CompilationUnit.cs" />
     <Compile Include="Syntax\Declaration.cs" />
-    <Compile Include="Syntax\Declarations\ClassDeclaration.cs" />
-    <Compile Include="Syntax\Declarations\FunctionDeclaration.cs" />
-    <Compile Include="Syntax\Declarations\GlobalDeclaration.cs" />
-    <Compile Include="Syntax\Declarations\Parameter.cs" />
+    <Compile Include="Syntax\EntityDeclarations\ClassDeclaration.cs" />
+    <Compile Include="Syntax\EntityDeclarations\FunctionDeclaration.cs" />
+    <Compile Include="Syntax\EntityDeclarations\GlobalDeclaration.cs" />
+    <Compile Include="Syntax\EntityDeclarations\Parameter.cs" />
+    <Compile Include="Syntax\EntityDeclaration.cs" />
     <Compile Include="Syntax\Expression.cs" />
     <Compile Include="Syntax\Expressions\BinaryOperatorExpression.cs" />
     <Compile Include="Syntax\Expressions\CallExpression.cs" />
@@ -129,6 +132,9 @@
     <Compile Include="Syntax\Expressions\NewExpression.cs" />
     <Compile Include="Syntax\Expressions\NewObjectExpression.cs" />
     <Compile Include="Syntax\Expressions\VariableExpression.cs" />
+    <Compile Include="Syntax\ScopeDeclaration.cs" />
+    <Compile Include="Syntax\ScopeDeclarations\NamespaceDeclaration.cs" />
+    <Compile Include="Syntax\ScopeDeclarations\UsingStatement.cs" />
     <Compile Include="Syntax\TextPosition.cs" />
     <Compile Include="Syntax\Member.cs" />
     <Compile Include="Syntax\Members\Constructor.cs" />
@@ -155,11 +161,7 @@
     <Compile Include="Syntax\Types\OwnershipType.cs" />
     <Compile Include="Syntax\Types\PlainType.cs" />
     <Compile Include="Syntax\Types\TypeName.cs" />
-    <Compile Include="Symbols\UsingNameScope.cs" />
-    <Compile Include="Syntax\Visitors\IDeclarationVisitor.cs" />
-    <Compile Include="Syntax\Visitors\IExpressionVisitor.cs" />
-    <Compile Include="Syntax\Visitors\IMemberVisitor.cs" />
-    <Compile Include="Syntax\Visitors\ITypeVisitor.cs" />
+    <Compile Include="Symbols\UsingScope.cs" />
     <Compile Include="Preprocessor\Conditional.cs" />
     <Compile Include="Preprocessor\PreprocessorState.cs" />
     <Compile Include="Preprocessor\PreprocessorVisitor.cs" />

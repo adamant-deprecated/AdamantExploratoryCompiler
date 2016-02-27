@@ -2,7 +2,7 @@
 using System.Linq;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.Declarations;
+using Adamant.Exploratory.Compiler.Syntax.EntityDeclarations;
 using Adamant.Exploratory.Compiler.Syntax.Types;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
@@ -11,9 +11,9 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 	{
 		private readonly ParameterBuilder parameterBuilder;
 
-		public DeclarationBuilder(UsingNameScope usingNameScope, FullyQualifiedName currentNamespace)
+		public DeclarationBuilder(UsingScope usingScope, FullyQualifiedName currentNamespace)
 		{
-			UsingNameScope = usingNameScope;
+			UsingScope = usingScope;
 			CurrentNamespace = currentNamespace;
 
 			parameterBuilder = new ParameterBuilder(this);
@@ -22,7 +22,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			Statement = new StatementBuilder(this);
 		}
 
-		public UsingNameScope UsingNameScope { get; }
+		public UsingScope UsingScope { get; }
 		public FullyQualifiedName CurrentNamespace { get; }
 		public TypeBuilder Type { get; } = new TypeBuilder();
 		public StatementBuilder Statement { get; }
@@ -39,7 +39,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			var namespaceName = context.namespaceName()
 				._identifiers.Select(Symbol)
 				.Aggregate(CurrentNamespace, (name, symbol) => name.Append(symbol));
-			var usingNames = new UsingNameScope(UsingNameScope, UsingNames(context.usingStatement()));
+			var usingNames = new UsingScope(UsingScope, UsingNames(context.usingStatement()));
 			var visitor = new DeclarationBuilder(usingNames, namespaceName);
 			var declarations = context.declaration().SelectMany(d => d.Accept(visitor));
 			return declarations;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adamant.Exploratory.Compiler.Syntax.Declarations;
+using Adamant.Exploratory.Compiler.Syntax.EntityDeclarations;
 
 namespace Adamant.Exploratory.Compiler.Syntax.Members
 {

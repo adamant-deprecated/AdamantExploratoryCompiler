@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Compiler.Syntax.Types;
-using Adamant.Exploratory.Compiler.Syntax.Visitors;
 
 namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 {
@@ -14,11 +13,6 @@ namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 		{
 			Type = type;
 			Arguments = arguments.ToList();
-		}
-
-		public override TReturn Accept<TParam, TReturn>(IExpressionVisitor<TParam, TReturn> visitor, TParam param)
-		{
-			return visitor.VisitNew(this, param);
 		}
 	}
 }

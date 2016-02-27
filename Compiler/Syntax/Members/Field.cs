@@ -1,6 +1,5 @@
 ﻿using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax.Types;
-using Adamant.Exploratory.Compiler.Syntax.Visitors;
 
 namespace Adamant.Exploratory.Compiler.Syntax.Members
 {
@@ -19,10 +18,5 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 		public Symbol Symbol { get; }
 		public OwnershipType Type { get; }
 		public Expression InitExpression { get; }
-
-		public override TReturn Accept<TParam, TReturn>(IMemberVisitor<TParam, TReturn> visitor, TParam param)
-		{
-			return visitor.VisitField(this, param);
-		}
 	}
 }

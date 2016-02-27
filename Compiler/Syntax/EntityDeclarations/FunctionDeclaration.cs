@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Compiler.Symbols;
-using Adamant.Exploratory.Compiler.Syntax.Visitors;
 
-namespace Adamant.Exploratory.Compiler.Syntax.Declarations
+namespace Adamant.Exploratory.Compiler.Syntax.EntityDeclarations
 {
-	public class FunctionDeclaration : Declaration
+	public class FunctionDeclaration : EntityDeclaration
 	{
 		private readonly IList<Parameter> parameters;
 		private readonly IList<Statement> body;
@@ -27,10 +26,5 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 		public IEnumerable<Parameter> Parameters => parameters;
 		public Type ReturnType { get; }
 		public IEnumerable<Statement> Body => body;
-
-		public override TReturn Accept<TParam, TReturn>(IDeclarationVisitor<TParam, TReturn> visitor, TParam param)
-		{
-			return visitor.VisitFunctionDeclaration(this, param);
-		}
 	}
 }

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Compiler.Symbols;
-using Adamant.Exploratory.Compiler.Syntax.Visitors;
 
-namespace Adamant.Exploratory.Compiler.Syntax.Declarations
+namespace Adamant.Exploratory.Compiler.Syntax.EntityDeclarations
 {
-	public class ClassDeclaration : Declaration
+	public class ClassDeclaration : EntityDeclaration
 	{
 		private readonly IList<Member> members;
 
@@ -34,9 +33,5 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 		public bool IsAbstract { get; }
 
 		public IEnumerable<Member> Members => members;
-		public override TReturn Accept<TParam, TReturn>(IDeclarationVisitor<TParam, TReturn> visitor, TParam param)
-		{
-			return visitor.VisitClassDeclaration(this, param);
-		}
 	}
 }

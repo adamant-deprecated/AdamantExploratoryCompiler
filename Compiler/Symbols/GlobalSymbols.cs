@@ -6,11 +6,11 @@ namespace Adamant.Exploratory.Compiler.Symbols
 {
 	public class GlobalSymbols
 	{
-		private readonly IDictionary<FullyQualifiedName, Declaration> symbols;
+		private readonly IDictionary<FullyQualifiedName, EntityDeclaration> symbols;
 
-		public GlobalSymbols(IEnumerable<Declaration> declarations)
+		public GlobalSymbols(IEnumerable<EntityDeclaration> entities)
 		{
-			symbols = declarations.ToDictionary(d => d.FullyQualifiedName, d => d);
+			symbols = entities.ToDictionary(d => d.FullyQualifiedName, d => d);
 		}
 	}
 }

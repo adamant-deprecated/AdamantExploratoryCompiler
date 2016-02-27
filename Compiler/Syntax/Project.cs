@@ -1,20 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
 	public class Project
 	{
 		private readonly List<Project> dependencies;
-		private readonly List<Declaration> declarations;
+		private readonly List<EntityDeclaration> entities;
 
-		internal Project(IEnumerable<CompilationUnit> compilationUnits, IEnumerable<Project> dependencies)
+		internal Project(IEnumerable<EntityDeclaration> entities, GlobalSymbols globals, IEnumerable<Project> dependencies)
 		{
+			this.entities = entities.ToList();
+			Globals = globals;
 			this.dependencies = dependencies.ToList();
-			declarations = compilationUnits.SelectMany(c => c.Declarations).ToList();
 		}
 
-		public IReadOnlyList<Declaration> Declarations => declarations;
+		public IReadOnlyList<Declaration> Entities => entities;
+		public GlobalSymbols Globals { get; }
 		public IReadOnlyList<Project> Dependencies => dependencies;
 	}
 }

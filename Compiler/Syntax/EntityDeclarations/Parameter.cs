@@ -1,4 +1,4 @@
-﻿namespace Adamant.Exploratory.Compiler.Syntax.Declarations
+﻿namespace Adamant.Exploratory.Compiler.Syntax.EntityDeclarations
 {
 	public class Parameter : Node
 	{

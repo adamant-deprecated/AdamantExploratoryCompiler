@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Adamant.Exploratory.Compiler.Analysis;
 using Adamant.Exploratory.Compiler.Antlr;
 using Adamant.Exploratory.Compiler.Antlr.Builders;
+using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
 
 namespace Adamant.Exploratory.Compiler
 {
@@ -20,8 +24,15 @@ namespace Adamant.Exploratory.Compiler
 
 		public Project CompileProject(IEnumerable<CompilationUnit> compilationUnits, IEnumerable<Project> dependencies)
 		{
-			var project = new Project(compilationUnits, dependencies);
-			// TODO do name binding
+			var units = compilationUnits.ToList();
+			var entities = units.SelectMany(cu => cu.Entities).ToList();
+			var projectDependencies = dependencies.ToList();
+			var projectGlobals = new GlobalSymbols(entities);
+			var globals = projectDependencies.Select(p => p.Globals).ToList();
+			foreach(var compilationUnit in units)
+				compilationUnit.BindNames(projectGlobals, globals);
+
+			var project = new Project(entities, projectGlobals, projectDependencies);
 			// TODO run borrow checker
 			//var borrowChecker = new BorrowChecker();
 			//borrowChecker.Check(ast);

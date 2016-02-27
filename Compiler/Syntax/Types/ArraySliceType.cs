@@ -1,6 +1,4 @@
-﻿using Adamant.Exploratory.Compiler.Syntax.Visitors;
-
-namespace Adamant.Exploratory.Compiler.Syntax.Types
+﻿namespace Adamant.Exploratory.Compiler.Syntax.Types
 {
 	public class ArraySliceType : PlainType
 	{
@@ -12,10 +10,5 @@ namespace Adamant.Exploratory.Compiler.Syntax.Types
 
 		public Type ElementType { get; }
 		public int Dimensions { get; }
-
-		public override TReturn Accept<TParam, TReturn>(ITypeVisitor<TParam, TReturn> visitor, TParam param)
-		{
-			return visitor.VisitArraySliceType(this, param);
-		}
 	}
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Adamant.Exploratory.Compiler.Symbols;
-using Adamant.Exploratory.Compiler.Syntax.Declarations;
-using Adamant.Exploratory.Compiler.Syntax.Visitors;
+using Adamant.Exploratory.Compiler.Syntax.EntityDeclarations;
 
 namespace Adamant.Exploratory.Compiler.Syntax.Members
 {
@@ -14,10 +13,5 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 		}
 
 		public Symbol Symbol { get; }
-
-		public override TReturn Accept<TParam, TReturn>(IMemberVisitor<TParam, TReturn> visitor, TParam param)
-		{
-			return visitor.VisitConstructor(this, param);
-		}
 	}
 }

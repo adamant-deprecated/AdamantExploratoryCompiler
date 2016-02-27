@@ -1,5 +1,4 @@
 ﻿using System;
-using Adamant.Exploratory.Compiler.Syntax.Visitors;
 
 namespace Adamant.Exploratory.Compiler.Syntax.Types
 {
@@ -38,11 +37,6 @@ namespace Adamant.Exploratory.Compiler.Syntax.Types
 		public static OwnershipType NewInferred()
 		{
 			return new OwnershipType(false, Ownership.Inferred, new InferredType());
-		}
-
-		public override TReturn Accept<TParam, TReturn>(ITypeVisitor<TParam, TReturn> visitor, TParam param)
-		{
-			return visitor.VisitOwnershipType(this, param);
 		}
 	}
 }

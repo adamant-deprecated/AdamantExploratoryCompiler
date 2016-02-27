@@ -1,10 +1,9 @@
 ﻿using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax.Types;
-using Adamant.Exploratory.Compiler.Syntax.Visitors;
 
-namespace Adamant.Exploratory.Compiler.Syntax.Declarations
+namespace Adamant.Exploratory.Compiler.Syntax.EntityDeclarations
 {
-	public class GlobalDeclaration : Declaration
+	public class GlobalDeclaration : EntityDeclaration
 	{
 		public GlobalDeclaration(
 			AccessModifier access,
@@ -23,10 +22,5 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 		public bool IsMutableReference { get; }
 		public OwnershipType Type { get; }
 		public Expression InitExpression { get; }
-
-		public override TReturn Accept<TParam, TReturn>(IDeclarationVisitor<TParam, TReturn> visitor, TParam param)
-		{
-			return visitor.VisitGlobalDeclaration(this, param);
-		}
 	}
 }

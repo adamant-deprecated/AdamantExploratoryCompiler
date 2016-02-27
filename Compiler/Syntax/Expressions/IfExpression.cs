@@ -1,6 +1,4 @@
-﻿using Adamant.Exploratory.Compiler.Syntax.Visitors;
-
-namespace Adamant.Exploratory.Compiler.Syntax.Expressions
+﻿namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 {
 	public class IfExpression : Expression
 	{
@@ -13,11 +11,6 @@ namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 			Condition = condition;
 			Then = then;
 			Else = @else;
-		}
-
-		public override TReturn Accept<TParam, TReturn>(IExpressionVisitor<TParam, TReturn> visitor, TParam param)
-		{
-			return visitor.VisitIf(this, param);
 		}
 	}
 }
