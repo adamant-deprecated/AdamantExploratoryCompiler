@@ -10,8 +10,14 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 		private readonly IList<Parameter> parameters;
 		private readonly IList<Statement> body;
 
-		public FunctionDeclaration(AccessModifier access, FullyQualifiedName name, IEnumerable<Parameter> parameters, Type returnType, IEnumerable<Statement> body)
-			: base(access, name)
+		public FunctionDeclaration(
+			AccessModifier access,
+			FullyQualifiedName @namespace,
+			Symbol name,
+			IEnumerable<Parameter> parameters,
+			Type returnType,
+			IEnumerable<Statement> body)
+			: base(access, @namespace, name)
 		{
 			this.parameters = parameters.ToList();
 			ReturnType = returnType;

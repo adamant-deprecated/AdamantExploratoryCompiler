@@ -36,9 +36,11 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		public override IEnumerable<Declaration> VisitNamespaceDeclaration(AdamantParser.NamespaceDeclarationContext context)
 		{
-			var namespaceName = context.namespaceName().GetText();
+			var namespaceName = context.namespaceName()
+				._identifiers.Select(Symbol)
+				.Aggregate(CurrentNamespace, (name, symbol) => name.Append(symbol));
 			var newContext = new UsingContext(UsingContext, GetNamespaces(context.usingStatement()));
-			var visitor = new DeclarationBuilder(newContext, CurrentNamespace.Append(namespaceName));
+			var visitor = new DeclarationBuilder(newContext, namespaceName);
 			var declarations = context.declaration().SelectMany(d => d.Accept(visitor));
 			return declarations;
 		}
@@ -52,34 +54,31 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			var safety = GetSafety(context.modifier());
 			var isAbstract = Has(context.modifier(), AdamantLexer.Abstract);
 			var isSealed = Has(context.modifier(), AdamantLexer.Sealed);
-			var name = context.name.GetText();
-			var fullName = CurrentNamespace.Append(name);
+			var name = Symbol(context.name);
 			// TODO base types
 			// TODO type parameter constraints
 			var members = context.member().Select(m => m.Accept(Member));
-			yield return new ClassDeclaration(accessModifier, isPartial, safety, isSealed, isAbstract, fullName, members);
+			yield return new ClassDeclaration(accessModifier, isPartial, safety, isSealed, isAbstract, CurrentNamespace, name, members);
 		}
 
 		public override IEnumerable<Declaration> VisitGlobalDeclaration(AdamantParser.GlobalDeclarationContext context)
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var isMutableReference = context.kind.Type == AdamantLexer.Var;
-			var name = context.name.GetText();
-			var fullName = CurrentNamespace.Append(name);
+			var name = Symbol(context.name);
 			var type = (OwnershipType)context.ownershipType()?.Accept(this) ?? OwnershipType.NewInferred();
 			var initExpression = context.expression()?.Accept(Expression);
-			yield return new GlobalDeclaration(accessModifier, isMutableReference, fullName, type, initExpression);
+			yield return new GlobalDeclaration(accessModifier, isMutableReference, CurrentNamespace, name, type, initExpression);
 		}
 
 		public override IEnumerable<Declaration> VisitFunctionDeclaration(AdamantParser.FunctionDeclarationContext context)
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var parameters = Parameters(context.parameterList());
-			var name = context.name.GetText();
-			var fullName = CurrentNamespace.Append(name);
+			var name = Symbol(context.name);
 			var returnType = context.returnType.Accept(Type);
 			var body = context.methodBody().statement().Select(s => s.Accept(Statement));
-			yield return new FunctionDeclaration(accessModifier, fullName, parameters, returnType, body);
+			yield return new FunctionDeclaration(accessModifier, CurrentNamespace, name, parameters, returnType, body);
 		}
 
 		private static bool Has(AdamantParser.ModifierContext[] modifiers, int desiredModifier)

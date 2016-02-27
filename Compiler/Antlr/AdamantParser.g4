@@ -18,13 +18,13 @@ usingStatement
 	;
 
 identifier
-	: Identifier
-	| EscapedIdentifier
-	| 'conversion'
+	: name=Identifier
+	| name=EscapedIdentifier
+	| name='conversion'
 	;
 
 namespaceName
-	: identifier ('.' identifier)*
+	: identifiers+=identifier ('.' identifiers+=identifier)*
 	;
 
 declaration

@@ -7,28 +7,22 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	{
 		private readonly string value;
 
-		public FullyQualifiedName(string name)
+		public FullyQualifiedName(Symbol symbol)
 		{
-			if(string.IsNullOrEmpty(name))
-				throw new ArgumentNullException(nameof(name));
-			value = Clean(name);
+			if(symbol == null) throw new ArgumentNullException(nameof(symbol));
+			value = symbol.ToString();
 		}
 
-		[Pure]
-		public FullyQualifiedName Append(string name)
+		public FullyQualifiedName(FullyQualifiedName name, Symbol symbol)
 		{
-			return value == null ? new FullyQualifiedName(name) : new FullyQualifiedName(value + "." + name);
+			if(name == null) throw new ArgumentNullException(nameof(name));
+			if(symbol == null) throw new ArgumentNullException(nameof(symbol));
+			value = name.value + "." + symbol;
 		}
 
-		[Pure]
-		public FullyQualifiedName Prepend(string name)
+		private FullyQualifiedName(string fullyQualifiedName)
 		{
-			return value == null ? new FullyQualifiedName(name) : new FullyQualifiedName(name + "." + value);
-		}
-
-		private static string Clean(string name)
-		{
-			return name.Replace("@", "");
+			value = fullyQualifiedName;
 		}
 
 		public override int GetHashCode()
@@ -61,6 +55,15 @@ namespace Adamant.Exploratory.Compiler.Symbols
 				return value;
 
 			return value.Substring(value.LastIndexOf('.') + 1);
+		}
+	}
+
+	public static class FullyQualifiedNameExtensions
+	{
+		public static FullyQualifiedName Append(this FullyQualifiedName name, Symbol symbol)
+		{
+			if(symbol == null) throw new ArgumentNullException(nameof(symbol));
+			return name == null ? new FullyQualifiedName(symbol) : new FullyQualifiedName(name, symbol);
 		}
 	}
 }

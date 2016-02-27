@@ -10,7 +10,10 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 	{
 		protected static IEnumerable<FullyQualifiedName> GetNamespaces(AdamantParser.UsingStatementContext[] contexts)
 		{
-			return contexts.Select(s => new FullyQualifiedName(s.namespaceName().GetText()));
+			return contexts.Select(s =>
+					s.namespaceName()
+						._identifiers.Select(Symbol)
+						.Aggregate(default(FullyQualifiedName), (name, symbol) => name.Append(symbol)));
 		}
 
 		protected static AccessModifier GetAccessModifier(AdamantParser.ModifierContext[] modifiers)
@@ -44,8 +47,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		protected static Symbol Symbol(AdamantParser.IdentifierContext context)
 		{
-			var token = (context.Identifier() ?? context.EscapedIdentifier()).Symbol;
-			return Symbol(token);
+			return Symbol(context.name);
 		}
 	}
 }

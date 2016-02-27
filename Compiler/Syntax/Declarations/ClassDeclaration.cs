@@ -11,15 +11,16 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 
 		public ClassDeclaration(
 			AccessModifier access,
-			bool isPartial, 
-			Safety safety, 
+			bool isPartial,
+			Safety safety,
 			bool isSealed,
 			bool isAbstract,
-			FullyQualifiedName name,
+			FullyQualifiedName @namespace,
+			Symbol name,
 			IEnumerable<Member> members)
-			: base(access, name)
+			: base(access, @namespace, name)
 		{
-			
+
 			IsPartial = isPartial;
 			Safety = safety;
 			IsSealed = isSealed;
