@@ -1,19 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public abstract class ScopeDeclaration : Declaration
+	public abstract class ScopeWithUsingStatements : SyntaxTree
 	{
 		private readonly List<Declaration> declarations;
+		private readonly List<UsingStatement> usingStatements;
 
-		protected ScopeDeclaration(FullyQualifiedName @namespace, IEnumerable<Declaration> declarations)
-			: base(@namespace)
+		protected ScopeWithUsingStatements(IEnumerable<UsingStatement> usingStatements, IEnumerable<Declaration> declarations)
 		{
+
+			this.usingStatements = usingStatements.ToList();
 			this.declarations = declarations.ToList();
 		}
+
+		public IReadOnlyList<UsingStatement> UsingStatements => usingStatements;
 
 		public IReadOnlyList<Declaration> Declarations => declarations;
 
@@ -21,7 +25,7 @@ namespace Adamant.Exploratory.Compiler.Syntax
 		{
 			get
 			{
-				var scopes = new Stack<ScopeDeclaration>();
+				var scopes = new Stack<ScopeWithUsingStatements>();
 				scopes.Push(this);
 				while(scopes.Count != 0)
 				{
@@ -29,7 +33,7 @@ namespace Adamant.Exploratory.Compiler.Syntax
 					foreach(var declaration in scope.declarations)
 					{
 						var entity = declaration.Match().Returning<EntityDeclaration>()
-							.With<ScopeDeclaration>(subScope => { scopes.Push(subScope); return null; })
+							.With<NamespaceDeclaration>(subScope => { scopes.Push(subScope); return null; })
 							.With<EntityDeclaration>(e => e)
 							.Exhaustive();
 						if(entity != null)

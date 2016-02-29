@@ -17,7 +17,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 				declaration.CheckLifetimes();
 		}
 
-		public static void CheckLifetimes(this Declaration declaration)
+		public static void CheckLifetimes(this EntityDeclaration declaration)
 		{
 			declaration.Match()
 				.With<ClassDeclaration>(@class =>
@@ -39,7 +39,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 						// TODO
 					}
 				})
-				.With<GlobalDeclaration>(global =>
+				.With<VariableDeclaration>(global =>
 				{
 					if(global.InitExpression == null)
 						global.Type.DefaultOwnership(Ownership.Owned);
@@ -49,7 +49,6 @@ namespace Adamant.Exploratory.Compiler.Analysis
 						global.Type.AssignValueWithOwnership(expressionOwnership);
 					}
 				})
-				.With<CompilationUnit>(_ => { throw new NotSupportedException("CompiliationUnit not supported"); })
 				.Exhaustive();
 		}
 

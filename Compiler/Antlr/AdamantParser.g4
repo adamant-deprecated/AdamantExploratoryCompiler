@@ -32,7 +32,7 @@ declaration
 	| attribute* modifier* 'class' name=identifier typeParameterList? baseTypes?
 		typeParameterConstraintClause*
 		'{' member* '}' #ClassDeclaration
-	| attribute* modifier* kind=('var'|'let') name=identifier (':' ownershipType)? ('=' expression)? ';' #GlobalDeclaration
+	| attribute* modifier* kind=('var'|'let') name=identifier (':' ownershipType)? ('=' expression)? ';' #VariableDeclaration
 	| attribute* modifier* name=identifier typeArguments? parameterList '=>' returnType=ownershipType typeParameterConstraintClause* methodBody	 #FunctionDeclaration
 	;
 
@@ -172,7 +172,7 @@ overloadableOperator
 	;
 
 statement
-	: variableDeclaration ';'								#VariableDeclarationStatement
+	: localVariableDeclaration ';'							#VariableDeclarationStatement
 	| 'unsafe' '{' statement* '}'							#UnsafeBlockStatement
 	| '{' statement* '}'									#BlockStatement
 	| ';'													#EmptyStatement
@@ -180,12 +180,12 @@ statement
 	| 'return' expression ';'								#ReturnStatement
 	| 'throw' expression ';'								#ThrowStatement
 	| 'if' '(' condition=expression ')' then=statement ('else' else=statement)?			#IfStatement
-	| 'for' '(' variableDeclaration? ';' expression? ';' expression? ')' statement		#ForStatement
-	| 'foreach' '(' variableDeclaration 'in' expression ')' statement					#ForeachStatement
+	| 'for' '(' localVariableDeclaration? ';' expression? ';' expression? ')' statement		#ForStatement
+	| 'foreach' '(' localVariableDeclaration 'in' expression ')' statement					#ForeachStatement
 	| 'delete' expression ';'								#DeleteStatement
 	;
 
-variableDeclaration
+localVariableDeclaration
 	: kind=('var'|'let') identifier (':' ownershipType)? ('=' expression)?
 	;
 

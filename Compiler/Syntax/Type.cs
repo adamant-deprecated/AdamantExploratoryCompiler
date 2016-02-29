@@ -1,6 +1,6 @@
 ﻿namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public abstract class Type : Node
+	public abstract class Type : SyntaxTree
 	{
 	}
 }

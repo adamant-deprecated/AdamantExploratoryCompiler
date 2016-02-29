@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using Adamant.Exploratory.Compiler.Symbols;
-using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.EntityDeclarations;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public interface IBuildContext
 	{
-		UsingScope UsingScope { get; }
 		FullyQualifiedName CurrentNamespace { get; }
 
 		TypeBuilder Type { get; }

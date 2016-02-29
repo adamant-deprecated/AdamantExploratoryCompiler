@@ -1,6 +1,6 @@
 ﻿namespace Adamant.Exploratory.Compiler.Syntax.EntityDeclarations
 {
-	public class Parameter : Node
+	public class Parameter : SyntaxTree
 	{
 		public Parameter(string name, Type type)
 		{

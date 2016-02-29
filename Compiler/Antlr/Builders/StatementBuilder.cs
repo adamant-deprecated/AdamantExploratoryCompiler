@@ -14,10 +14,10 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		public override Statement VisitVariableDeclarationStatement(AdamantParser.VariableDeclarationStatementContext context)
 		{
-			return context.variableDeclaration().Accept(this);
+			return context.localVariableDeclaration().Accept(this);
 		}
 
-		public override Statement VisitVariableDeclaration(AdamantParser.VariableDeclarationContext context)
+		public override Statement VisitLocalVariableDeclaration(AdamantParser.LocalVariableDeclarationContext context)
 		{
 			return new VariableDeclarationStatement();
 		}

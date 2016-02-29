@@ -3,9 +3,9 @@ using Adamant.Exploratory.Compiler.Syntax.Types;
 
 namespace Adamant.Exploratory.Compiler.Syntax.EntityDeclarations
 {
-	public class GlobalDeclaration : EntityDeclaration
+	public class VariableDeclaration : EntityDeclaration
 	{
-		public GlobalDeclaration(
+		public VariableDeclaration(
 			AccessModifier access,
 			bool isMutableReference,
 			FullyQualifiedName @namespace,

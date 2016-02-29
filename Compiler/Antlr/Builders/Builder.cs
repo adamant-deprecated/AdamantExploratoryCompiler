@@ -2,18 +2,19 @@
 using System.Linq;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
 using Antlr4.Runtime;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public abstract class Builder<T> : RestrictedVisitor<T>
 	{
-		protected static IEnumerable<FullyQualifiedName> UsingNames(AdamantParser.UsingStatementContext[] contexts)
+		protected static IEnumerable<UsingStatement> UsingStatements(AdamantParser.UsingStatementContext[] contexts)
 		{
-			return contexts.Select(s =>
+			return contexts.Select(s => new UsingStatement(PositionOf(s.namespaceName().Start),
 					s.namespaceName()
 						._identifiers.Select(Symbol)
-						.Aggregate(default(FullyQualifiedName), (name, symbol) => name.Append(symbol)));
+						.Aggregate(default(FullyQualifiedName), (name, symbol) => name.Append(symbol))));
 		}
 
 		protected static AccessModifier GetAccessModifier(AdamantParser.ModifierContext[] modifiers)
@@ -42,12 +43,12 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		protected static Symbol Symbol(IToken token)
 		{
-			return new Symbol(token.Text, PositionOf(token));
+			return new Symbol(token.Text);
 		}
 
 		protected static Symbol Symbol(AdamantParser.IdentifierContext context)
 		{
-			return Symbol(context.name);
+			return new Symbol(context.GetText());
 		}
 	}
 }

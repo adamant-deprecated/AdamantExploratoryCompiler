@@ -60,7 +60,7 @@ public partial class AdamantParser : Parser {
 		RULE_constExpression = 16, RULE_typeParameterConstraintClause = 17, RULE_typeParameterConstraint = 18, 
 		RULE_member = 19, RULE_parameterList = 20, RULE_parameter = 21, RULE_parameterModifier = 22, 
 		RULE_constructorInitializer = 23, RULE_argumentList = 24, RULE_methodBody = 25, 
-		RULE_overloadableOperator = 26, RULE_statement = 27, RULE_variableDeclaration = 28, 
+		RULE_overloadableOperator = 26, RULE_statement = 27, RULE_localVariableDeclaration = 28, 
 		RULE_expression = 29;
 	public static readonly string[] ruleNames = {
 		"compilationUnit", "usingStatement", "identifier", "namespaceName", "declaration", 
@@ -69,7 +69,7 @@ public partial class AdamantParser : Parser {
 		"funcTypeParameter", "constExpression", "typeParameterConstraintClause", 
 		"typeParameterConstraint", "member", "parameterList", "parameter", "parameterModifier", 
 		"constructorInitializer", "argumentList", "methodBody", "overloadableOperator", 
-		"statement", "variableDeclaration", "expression"
+		"statement", "localVariableDeclaration", "expression"
 	};
 
 	private static readonly string[] _LiteralNames = {
@@ -503,6 +503,45 @@ public partial class AdamantParser : Parser {
 			else return visitor.VisitChildren(this);
 		}
 	}
+	public partial class VariableDeclarationContext : DeclarationContext {
+		public IToken kind;
+		public IdentifierContext name;
+		public IdentifierContext identifier() {
+			return GetRuleContext<IdentifierContext>(0);
+		}
+		public AttributeContext[] attribute() {
+			return GetRuleContexts<AttributeContext>();
+		}
+		public AttributeContext attribute(int i) {
+			return GetRuleContext<AttributeContext>(i);
+		}
+		public ModifierContext[] modifier() {
+			return GetRuleContexts<ModifierContext>();
+		}
+		public ModifierContext modifier(int i) {
+			return GetRuleContext<ModifierContext>(i);
+		}
+		public OwnershipTypeContext ownershipType() {
+			return GetRuleContext<OwnershipTypeContext>(0);
+		}
+		public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		public VariableDeclarationContext(DeclarationContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IAdamantParserListener typedListener = listener as IAdamantParserListener;
+			if (typedListener != null) typedListener.EnterVariableDeclaration(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IAdamantParserListener typedListener = listener as IAdamantParserListener;
+			if (typedListener != null) typedListener.ExitVariableDeclaration(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IAdamantParserVisitor<TResult> typedVisitor = visitor as IAdamantParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitVariableDeclaration(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
 	public partial class NamespaceDeclarationContext : DeclarationContext {
 		public NamespaceNameContext namespaceName() {
 			return GetRuleContext<NamespaceNameContext>(0);
@@ -531,45 +570,6 @@ public partial class AdamantParser : Parser {
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IAdamantParserVisitor<TResult> typedVisitor = visitor as IAdamantParserVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitNamespaceDeclaration(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-	public partial class GlobalDeclarationContext : DeclarationContext {
-		public IToken kind;
-		public IdentifierContext name;
-		public IdentifierContext identifier() {
-			return GetRuleContext<IdentifierContext>(0);
-		}
-		public AttributeContext[] attribute() {
-			return GetRuleContexts<AttributeContext>();
-		}
-		public AttributeContext attribute(int i) {
-			return GetRuleContext<AttributeContext>(i);
-		}
-		public ModifierContext[] modifier() {
-			return GetRuleContexts<ModifierContext>();
-		}
-		public ModifierContext modifier(int i) {
-			return GetRuleContext<ModifierContext>(i);
-		}
-		public OwnershipTypeContext ownershipType() {
-			return GetRuleContext<OwnershipTypeContext>(0);
-		}
-		public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		public GlobalDeclarationContext(DeclarationContext context) { CopyFrom(context); }
-		public override void EnterRule(IParseTreeListener listener) {
-			IAdamantParserListener typedListener = listener as IAdamantParserListener;
-			if (typedListener != null) typedListener.EnterGlobalDeclaration(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IAdamantParserListener typedListener = listener as IAdamantParserListener;
-			if (typedListener != null) typedListener.ExitGlobalDeclaration(this);
-		}
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IAdamantParserVisitor<TResult> typedVisitor = visitor as IAdamantParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitGlobalDeclaration(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
@@ -698,7 +698,7 @@ public partial class AdamantParser : Parser {
 				}
 				break;
 			case 3:
-				_localctx = new GlobalDeclarationContext(_localctx);
+				_localctx = new VariableDeclarationContext(_localctx);
 				EnterOuterAlt(_localctx, 3);
 				{
 				State = 146;
@@ -728,15 +728,15 @@ public partial class AdamantParser : Parser {
 					_la = TokenStream.La(1);
 				}
 				State = 155;
-				((GlobalDeclarationContext)_localctx).kind = TokenStream.Lt(1);
+				((VariableDeclarationContext)_localctx).kind = TokenStream.Lt(1);
 				_la = TokenStream.La(1);
 				if ( !(_la==Var || _la==Let) ) {
-					((GlobalDeclarationContext)_localctx).kind = ErrorHandler.RecoverInline(this);
+					((VariableDeclarationContext)_localctx).kind = ErrorHandler.RecoverInline(this);
 				}
 				else {
 				    Consume();
 				}
-				State = 156; ((GlobalDeclarationContext)_localctx).name = identifier();
+				State = 156; ((VariableDeclarationContext)_localctx).name = identifier();
 				State = 159;
 				_la = TokenStream.La(1);
 				if (_la==Colon) {
@@ -3680,8 +3680,8 @@ public partial class AdamantParser : Parser {
 		}
 	}
 	public partial class VariableDeclarationStatementContext : StatementContext {
-		public VariableDeclarationContext variableDeclaration() {
-			return GetRuleContext<VariableDeclarationContext>(0);
+		public LocalVariableDeclarationContext localVariableDeclaration() {
+			return GetRuleContext<LocalVariableDeclarationContext>(0);
 		}
 		public VariableDeclarationStatementContext(StatementContext context) { CopyFrom(context); }
 		public override void EnterRule(IParseTreeListener listener) {
@@ -3743,8 +3743,8 @@ public partial class AdamantParser : Parser {
 		public StatementContext statement() {
 			return GetRuleContext<StatementContext>(0);
 		}
-		public VariableDeclarationContext variableDeclaration() {
-			return GetRuleContext<VariableDeclarationContext>(0);
+		public LocalVariableDeclarationContext localVariableDeclaration() {
+			return GetRuleContext<LocalVariableDeclarationContext>(0);
 		}
 		public ExpressionContext[] expression() {
 			return GetRuleContexts<ExpressionContext>();
@@ -3787,8 +3787,8 @@ public partial class AdamantParser : Parser {
 		}
 	}
 	public partial class ForeachStatementContext : StatementContext {
-		public VariableDeclarationContext variableDeclaration() {
-			return GetRuleContext<VariableDeclarationContext>(0);
+		public LocalVariableDeclarationContext localVariableDeclaration() {
+			return GetRuleContext<LocalVariableDeclarationContext>(0);
 		}
 		public ExpressionContext expression() {
 			return GetRuleContext<ExpressionContext>(0);
@@ -3825,7 +3825,7 @@ public partial class AdamantParser : Parser {
 				_localctx = new VariableDeclarationStatementContext(_localctx);
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 649; variableDeclaration();
+				State = 649; localVariableDeclaration();
 				State = 650; Match(Semicolon);
 				}
 				break;
@@ -3951,7 +3951,7 @@ public partial class AdamantParser : Parser {
 				_la = TokenStream.La(1);
 				if (_la==Var || _la==Let) {
 					{
-					State = 692; variableDeclaration();
+					State = 692; localVariableDeclaration();
 					}
 				}
 
@@ -3983,7 +3983,7 @@ public partial class AdamantParser : Parser {
 				{
 				State = 705; Match(Foreach);
 				State = 706; Match(LeftParen);
-				State = 707; variableDeclaration();
+				State = 707; localVariableDeclaration();
 				State = 708; Match(In);
 				State = 709; expression(0);
 				State = 710; Match(RightParen);
@@ -4014,7 +4014,7 @@ public partial class AdamantParser : Parser {
 		return _localctx;
 	}
 
-	public partial class VariableDeclarationContext : ParserRuleContext {
+	public partial class LocalVariableDeclarationContext : ParserRuleContext {
 		public IToken kind;
 		public IdentifierContext identifier() {
 			return GetRuleContext<IdentifierContext>(0);
@@ -4025,30 +4025,30 @@ public partial class AdamantParser : Parser {
 		public ExpressionContext expression() {
 			return GetRuleContext<ExpressionContext>(0);
 		}
-		public VariableDeclarationContext(ParserRuleContext parent, int invokingState)
+		public LocalVariableDeclarationContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_variableDeclaration; } }
+		public override int RuleIndex { get { return RULE_localVariableDeclaration; } }
 		public override void EnterRule(IParseTreeListener listener) {
 			IAdamantParserListener typedListener = listener as IAdamantParserListener;
-			if (typedListener != null) typedListener.EnterVariableDeclaration(this);
+			if (typedListener != null) typedListener.EnterLocalVariableDeclaration(this);
 		}
 		public override void ExitRule(IParseTreeListener listener) {
 			IAdamantParserListener typedListener = listener as IAdamantParserListener;
-			if (typedListener != null) typedListener.ExitVariableDeclaration(this);
+			if (typedListener != null) typedListener.ExitLocalVariableDeclaration(this);
 		}
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			IAdamantParserVisitor<TResult> typedVisitor = visitor as IAdamantParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitVariableDeclaration(this);
+			if (typedVisitor != null) return typedVisitor.VisitLocalVariableDeclaration(this);
 			else return visitor.VisitChildren(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public VariableDeclarationContext variableDeclaration() {
-		VariableDeclarationContext _localctx = new VariableDeclarationContext(Context, State);
-		EnterRule(_localctx, 56, RULE_variableDeclaration);
+	public LocalVariableDeclarationContext localVariableDeclaration() {
+		LocalVariableDeclarationContext _localctx = new LocalVariableDeclarationContext(Context, State);
+		EnterRule(_localctx, 56, RULE_localVariableDeclaration);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);

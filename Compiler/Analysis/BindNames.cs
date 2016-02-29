@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
@@ -11,20 +12,40 @@ namespace Adamant.Exploratory.Compiler.Analysis
 {
 	public static class BindNamesExtensions
 	{
-		public static void BindNames(this CompilationUnit compilationUnit, GlobalSymbols projectGlobals, IReadOnlyCollection<GlobalSymbols> globals)
+		public static void BindNames(this CompilationUnit compilationUnit, GlobalScope globalScope)
 		{
-			var usingScope = new UsingScope(null); // TODO correctly construct this
+			var usingDefinitions = compilationUnit.UsingStatements.SelectMany(u => u.UsingDefinitions(globalScope));
+			var scope = new CompilationUnitScope(globalScope, usingDefinitions);
+
 			foreach(var declaration in compilationUnit.Declarations)
-				declaration.BindNames(usingScope, projectGlobals, globals);
+				declaration.BindNames(globalScope, scope);
 		}
 
-		public static void BindNames(this Declaration declaration, NameScope scope, GlobalSymbols projectGlobals, IReadOnlyCollection<GlobalSymbols> globals)
+		private static IEnumerable<Definition> UsingDefinitions(this UsingStatement usingStatement, GlobalScope globalScope)
+		{
+			throw new NotImplementedException();
+		}
+
+		public static void BindNames(this Declaration declaration, GlobalScope globalScope, NameScope scope)
 		{
 			declaration.Match()
-				.With<CompilationUnit>(_ => { throw new NotSupportedException("CompilationUnit can't be nested inside declarations"); })
-				.With<NamespaceDeclaration>(@namespace => { throw new NotImplementedException(); })
+				.With<NamespaceDeclaration>(@namespace =>
+				{
+					foreach(var name in @namespace.Name.Parts())
+					{
+						var definition = (NamespaceDefinition)scope.LookupInScope(name);
+						var isFullNamespace = definition.FullyQualifiedName == @namespace.FullyQualifiedName;
+						var usingDefinitions = isFullNamespace ? @namespace.UsingStatements.SelectMany(u => u.UsingDefinitions(globalScope))
+																: Enumerable.Empty<Definition>();
+						scope = new NamespaceScope(definition, usingDefinitions);
+					}
+
+					foreach(var nestedDeclaration in @namespace.Declarations)
+						nestedDeclaration.BindNames(globalScope, scope);
+				})
 				.With<ClassDeclaration>(@class =>
 				{
+					// TODO class scope with members defined
 					foreach(var member in @class.Members)
 						member.BindNames(scope);
 				})
@@ -34,7 +55,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 					foreach(var statement in function.Body)
 						statement.BindNames(scope);
 				})
-				.With<GlobalDeclaration>(global =>
+				.With<VariableDeclaration>(global =>
 				{
 					global.Type.BindNames(scope);
 					global.InitExpression?.BindNames(scope);

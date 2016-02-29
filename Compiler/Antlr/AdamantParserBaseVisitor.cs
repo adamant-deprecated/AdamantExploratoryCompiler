@@ -93,7 +93,7 @@ public partial class AdamantParserBaseVisitor<Result> : AbstractParseTreeVisitor
 	/// <return>The visitor result.</return>
 	public virtual Result VisitClassDeclaration([NotNull] AdamantParser.ClassDeclarationContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="AdamantParser.GlobalDeclaration"/>.
+	/// Visit a parse tree produced by <see cref="AdamantParser.VariableDeclaration"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -101,7 +101,7 @@ public partial class AdamantParserBaseVisitor<Result> : AbstractParseTreeVisitor
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitGlobalDeclaration([NotNull] AdamantParser.GlobalDeclarationContext context) { return VisitChildren(context); }
+	public virtual Result VisitVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="AdamantParser.FunctionDeclaration"/>.
 	/// <para>
@@ -603,7 +603,7 @@ public partial class AdamantParserBaseVisitor<Result> : AbstractParseTreeVisitor
 	/// <return>The visitor result.</return>
 	public virtual Result VisitDeleteStatement([NotNull] AdamantParser.DeleteStatementContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="AdamantParser.variableDeclaration"/>.
+	/// Visit a parse tree produced by <see cref="AdamantParser.localVariableDeclaration"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -611,7 +611,7 @@ public partial class AdamantParserBaseVisitor<Result> : AbstractParseTreeVisitor
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context) { return VisitChildren(context); }
+	public virtual Result VisitLocalVariableDeclaration([NotNull] AdamantParser.LocalVariableDeclarationContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="AdamantParser.NullCheckExpression"/>.
 	/// <para>

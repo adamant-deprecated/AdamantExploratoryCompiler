@@ -113,14 +113,19 @@
   <ItemGroup>
     <Compile Include="Antlr\RestrictedVisitor.cs" />
     <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
-    <Compile Include="Symbols\GlobalSymbols.cs" />
+    <Compile Include="Symbols\CompilationUnitScope.cs" />
     <Compile Include="Symbols\NameScope.cs" />
+    <Compile Include="Symbols\NamespaceScope.cs" />
+    <Compile Include="Symbols\UsingStatementsScope.cs" />
     <Compile Include="Syntax\AccessModifier.cs" />
+    <Compile Include="Syntax\Definition.cs" />
+    <Compile Include="Syntax\Definitions.cs" />
+    <Compile Include="Syntax\NamespaceDefinition.cs" />
     <Compile Include="Syntax\ScopeDeclarations\CompilationUnit.cs" />
     <Compile Include="Syntax\Declaration.cs" />
     <Compile Include="Syntax\EntityDeclarations\ClassDeclaration.cs" />
     <Compile Include="Syntax\EntityDeclarations\FunctionDeclaration.cs" />
-    <Compile Include="Syntax\EntityDeclarations\GlobalDeclaration.cs" />
+    <Compile Include="Syntax\EntityDeclarations\VariableDeclaration.cs" />
     <Compile Include="Syntax\EntityDeclarations\Parameter.cs" />
     <Compile Include="Syntax\EntityDeclaration.cs" />
     <Compile Include="Syntax\Expression.cs" />
@@ -132,7 +137,7 @@
     <Compile Include="Syntax\Expressions\NewExpression.cs" />
     <Compile Include="Syntax\Expressions\NewObjectExpression.cs" />
     <Compile Include="Syntax\Expressions\VariableExpression.cs" />
-    <Compile Include="Syntax\ScopeDeclaration.cs" />
+    <Compile Include="Syntax\ScopeWithUsingStatements.cs" />
     <Compile Include="Syntax\ScopeDeclarations\NamespaceDeclaration.cs" />
     <Compile Include="Syntax\ScopeDeclarations\UsingStatement.cs" />
     <Compile Include="Syntax\TextPosition.cs" />
@@ -143,8 +148,8 @@
     <Compile Include="Syntax\Members\MethodLike.cs" />
     <Compile Include="Syntax\Members\Property.cs" />
     <Compile Include="Symbols\Symbol.cs" />
-    <Compile Include="Syntax\Node.cs" />
-    <Compile Include="Syntax\Project.cs" />
+    <Compile Include="Syntax\SyntaxTree.cs" />
+    <Compile Include="Syntax\Package.cs" />
     <Compile Include="Symbols\FullyQualifiedName.cs" />
     <Compile Include="Syntax\Safety.cs" />
     <Compile Include="Syntax\Statement.cs" />
@@ -161,7 +166,7 @@
     <Compile Include="Syntax\Types\OwnershipType.cs" />
     <Compile Include="Syntax\Types\PlainType.cs" />
     <Compile Include="Syntax\Types\TypeName.cs" />
-    <Compile Include="Symbols\UsingScope.cs" />
+    <Compile Include="Symbols\GlobalScope.cs" />
     <Compile Include="Preprocessor\Conditional.cs" />
     <Compile Include="Preprocessor\PreprocessorState.cs" />
     <Compile Include="Preprocessor\PreprocessorVisitor.cs" />

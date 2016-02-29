@@ -94,17 +94,17 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitClassDeclaration([NotNull] AdamantParser.ClassDeclarationContext context);
 	/// <summary>
-	/// Enter a parse tree produced by the <c>GlobalDeclaration</c>
+	/// Enter a parse tree produced by the <c>VariableDeclaration</c>
 	/// labeled alternative in <see cref="AdamantParser.declaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterGlobalDeclaration([NotNull] AdamantParser.GlobalDeclarationContext context);
+	void EnterVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context);
 	/// <summary>
-	/// Exit a parse tree produced by the <c>GlobalDeclaration</c>
+	/// Exit a parse tree produced by the <c>VariableDeclaration</c>
 	/// labeled alternative in <see cref="AdamantParser.declaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitGlobalDeclaration([NotNull] AdamantParser.GlobalDeclarationContext context);
+	void ExitVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>FunctionDeclaration</c>
 	/// labeled alternative in <see cref="AdamantParser.declaration"/>.
@@ -670,15 +670,15 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitDeleteStatement([NotNull] AdamantParser.DeleteStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.variableDeclaration"/>.
+	/// Enter a parse tree produced by <see cref="AdamantParser.localVariableDeclaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context);
+	void EnterLocalVariableDeclaration([NotNull] AdamantParser.LocalVariableDeclarationContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.variableDeclaration"/>.
+	/// Exit a parse tree produced by <see cref="AdamantParser.localVariableDeclaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context);
+	void ExitLocalVariableDeclaration([NotNull] AdamantParser.LocalVariableDeclarationContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>NullCheckExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.

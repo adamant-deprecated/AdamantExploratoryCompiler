@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations
 {
-	public class UsingStatement : Node
+	public class UsingStatement : SyntaxTree
 	{
 		public readonly TextPosition Position;
 		public readonly FullyQualifiedName UsingName;

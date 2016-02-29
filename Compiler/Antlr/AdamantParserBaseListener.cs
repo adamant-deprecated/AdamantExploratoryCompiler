@@ -106,17 +106,17 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitClassDeclaration([NotNull] AdamantParser.ClassDeclarationContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.GlobalDeclaration"/>.
+	/// Enter a parse tree produced by <see cref="AdamantParser.VariableDeclaration"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterGlobalDeclaration([NotNull] AdamantParser.GlobalDeclarationContext context) { }
+	public virtual void EnterVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.GlobalDeclaration"/>.
+	/// Exit a parse tree produced by <see cref="AdamantParser.VariableDeclaration"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitGlobalDeclaration([NotNull] AdamantParser.GlobalDeclarationContext context) { }
+	public virtual void ExitVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.FunctionDeclaration"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -718,17 +718,17 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitDeleteStatement([NotNull] AdamantParser.DeleteStatementContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.variableDeclaration"/>.
+	/// Enter a parse tree produced by <see cref="AdamantParser.localVariableDeclaration"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context) { }
+	public virtual void EnterLocalVariableDeclaration([NotNull] AdamantParser.LocalVariableDeclarationContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.variableDeclaration"/>.
+	/// Exit a parse tree produced by <see cref="AdamantParser.localVariableDeclaration"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context) { }
+	public virtual void ExitLocalVariableDeclaration([NotNull] AdamantParser.LocalVariableDeclarationContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.NullCheckExpression"/>.
 	/// <para>The default implementation does nothing.</para>

@@ -1,14 +1,6 @@
-﻿using Adamant.Exploratory.Compiler.Symbols;
-
-namespace Adamant.Exploratory.Compiler.Syntax
+﻿namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public abstract class Declaration : Node
+	public interface Declaration
 	{
-		protected Declaration(FullyQualifiedName @namespace)
-		{
-			Namespace = @namespace;
-		}
-
-		public FullyQualifiedName Namespace { get; }
 	}
 }

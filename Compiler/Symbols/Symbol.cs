@@ -6,11 +6,9 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	public class Symbol
 	{
 		private readonly string value;
-		public readonly TextPosition Position;
 
-		public Symbol(string symbol, TextPosition position)
+		public Symbol(string symbol)
 		{
-			Position = position;
 			if(string.IsNullOrEmpty(symbol)) throw new ArgumentNullException(nameof(symbol));
 			if(symbol.Contains("."))
 				throw new ArgumentException("Symbol can't contain '.' becuase then it is a Qualified Name");

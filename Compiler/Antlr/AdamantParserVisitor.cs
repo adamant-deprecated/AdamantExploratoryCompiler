@@ -69,12 +69,12 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitClassDeclaration([NotNull] AdamantParser.ClassDeclarationContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>GlobalDeclaration</c>
+	/// Visit a parse tree produced by the <c>VariableDeclaration</c>
 	/// labeled alternative in <see cref="AdamantParser.declaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitGlobalDeclaration([NotNull] AdamantParser.GlobalDeclarationContext context);
+	Result VisitVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>FunctionDeclaration</c>
 	/// labeled alternative in <see cref="AdamantParser.declaration"/>.
@@ -408,11 +408,11 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitDeleteStatement([NotNull] AdamantParser.DeleteStatementContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="AdamantParser.variableDeclaration"/>.
+	/// Visit a parse tree produced by <see cref="AdamantParser.localVariableDeclaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitVariableDeclaration([NotNull] AdamantParser.VariableDeclarationContext context);
+	Result VisitLocalVariableDeclaration([NotNull] AdamantParser.LocalVariableDeclarationContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>NullCheckExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
