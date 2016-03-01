@@ -23,7 +23,38 @@ namespace Adamant.Exploratory.Compiler.Analysis
 
 		private static IEnumerable<Definition> UsingDefinitions(this UsingStatement usingStatement, GlobalScope globalScope)
 		{
-			throw new NotImplementedException();
+			FullyQualifiedName currentItemName = null;
+			var definitions = globalScope.Definitions;
+
+			foreach(var name in usingStatement.UsingName.Namespace().Parts())
+			{
+				currentItemName = currentItemName.Append(name);
+				var definition = definitions.TryGetValue(name);
+				if(definition == null)
+					throw new Exception($"Using statement referes to name that does not exist '{currentItemName}'");
+
+				definition.Match()
+					.With<NamespaceDefinition>(@namespace => definitions = @namespace.Definitions)
+					.With<ClassDeclaration>(@class =>
+					{
+						/* TODO get static definitions */
+						throw new NotImplementedException();
+					})
+					.With<EntityDeclaration>(entity =>
+					{
+						throw new Exception($"Using statement referes to name that does not exist '{usingStatement.UsingName}'");
+					})
+					.Exhaustive();
+			}
+
+			return definitions.TryGetValue(usingStatement.UsingName.Name()).Match().Returning<IEnumerable<Definition>>()
+				.With<NamespaceDefinition>(@namespace => @namespace.Definitions)
+				.With<EntityDeclaration>(entity => new[] { entity })
+				.Null(() =>
+				{
+					throw new Exception($"Using statement referes to name that does not exist '{usingStatement.UsingName}'");
+				})
+				.Exhaustive();
 		}
 
 		public static void BindNames(this Declaration declaration, GlobalScope globalScope, NameScope scope)

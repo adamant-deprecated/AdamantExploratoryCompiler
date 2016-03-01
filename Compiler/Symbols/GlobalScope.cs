@@ -15,6 +15,8 @@ namespace Adamant.Exploratory.Compiler.Symbols
 			this.dependencies = dependencies.ToList();
 		}
 
+		public Definitions Definitions => globalDefinitions;
+
 		public override Definition LookupInScope(Symbol name)
 		{
 			return globalDefinitions.TryGetValue(name);

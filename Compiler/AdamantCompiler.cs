@@ -8,6 +8,8 @@ using Adamant.Exploratory.Compiler.Antlr.Builders;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
+using Antlr4.Runtime;
+using Antlr4.Runtime.Atn;
 
 namespace Adamant.Exploratory.Compiler
 {
@@ -18,6 +20,13 @@ namespace Adamant.Exploratory.Compiler
 		public CompilationUnit Parse(string sourcePath)
 		{
 			var parser = new AdamantParser(sourcePath);
+			// Stupid ANTLR make it difficult to do this in the constructor
+			parser.RemoveErrorListeners();
+			parser.AddErrorListener(new FileNameErrorListener(sourcePath));
+			parser.AddErrorListener(new ConsoleErrorListener<IToken>());
+			parser.AddErrorListener(new DiagnosticErrorListener());
+			parser.Interpreter.PredictionMode = PredictionMode.LlExactAmbigDetection;
+
 			var tree = parser.compilationUnit();
 			var syntaxCheck = new SyntaxCheckVisitor();
 			tree.Accept(syntaxCheck);

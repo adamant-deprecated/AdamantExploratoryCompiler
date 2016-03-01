@@ -39,6 +39,10 @@ namespace Adamant.Exploratory.Forge.Commands
 			var projectConfig = JsonConvert.DeserializeObject<ProjectConfig>(File.ReadAllText(projectFilePath));
 			projectConfig.Name = projectConfig.Name ?? Path.GetFileName(projectDirPath);
 
+			// TODO this should be controlled by the compiler plugin so that the version matches
+			if(projectConfig.Name != "System.Runtime")
+				projectConfig.Dependencies.Add("System.Runtime", new DependencyConfig() { Version = "*" });
+
 			BuildDependencies(projectDirPath, projectConfig, projects, compiler);
 			var targetDirPath = BuildProject(projectDirPath, projectConfig, projects, compiler);
 			BuildProjects(projectDirPath, projectConfig, projects, targetDirPath, compiler);

@@ -78,12 +78,12 @@ namespace Adamant.Exploratory.Compiler.Symbols
 			return value.Split('.').Select(p => new Symbol(p));
 		}
 
-		public string Name()
+		public Symbol Name()
 		{
 			if(!value.Contains("."))
-				return value;
+				return new Symbol(value);
 
-			return value.Substring(value.LastIndexOf('.') + 1);
+			return new Symbol(value.Substring(value.LastIndexOf('.') + 1));
 		}
 	}
 
