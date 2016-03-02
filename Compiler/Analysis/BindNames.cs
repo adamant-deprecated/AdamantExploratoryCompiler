@@ -5,7 +5,9 @@ using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.EntityDeclarations;
+using Adamant.Exploratory.Compiler.Syntax.Members;
 using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
+using Adamant.Exploratory.Compiler.Syntax.Types;
 using Type = Adamant.Exploratory.Compiler.Syntax.Type;
 
 namespace Adamant.Exploratory.Compiler.Analysis
@@ -101,7 +103,13 @@ namespace Adamant.Exploratory.Compiler.Analysis
 
 		public static void BindNames(this Member member, NameScope scope)
 		{
-			throw new NotImplementedException();
+			member.Match()
+				.With<Field>(field =>
+				{
+					field.Type.BindNames(scope);
+					field.InitExpression?.BindNames(scope);
+				})
+				.Exhaustive();
 		}
 
 		public static void BindNames(this Expression expression, NameScope scope)
@@ -111,7 +119,22 @@ namespace Adamant.Exploratory.Compiler.Analysis
 
 		public static void BindNames(this Type type, NameScope scope)
 		{
-			throw new NotImplementedException();
+			type.Match()
+				.With<TypeName>(typeName =>
+				{
+					typeName.Bind(scope);
+				})
+				.With<OwnershipType>(ownershipType =>
+				{
+					ownershipType.Type.BindNames(scope);
+				})
+				.With<ArraySliceType>(arraySliceType =>
+				{
+					arraySliceType.ElementType.BindNames(scope);
+				})
+				.Ignore<StringType>()
+				.Ignore<NumericType>()
+				.Exhaustive();
 		}
 	}
 }

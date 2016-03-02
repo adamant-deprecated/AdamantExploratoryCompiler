@@ -260,6 +260,18 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitArraySliceType([NotNull] AdamantParser.ArraySliceTypeContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>StringType</c>
+	/// labeled alternative in <see cref="AdamantParser.plainType"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterStringType([NotNull] AdamantParser.StringTypeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>StringType</c>
+	/// labeled alternative in <see cref="AdamantParser.plainType"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitStringType([NotNull] AdamantParser.StringTypeContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>NamedType</c>
 	/// labeled alternative in <see cref="AdamantParser.plainType"/>.
 	/// </summary>
@@ -271,6 +283,18 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitNamedType([NotNull] AdamantParser.NamedTypeContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>PrimitiveNumericType</c>
+	/// labeled alternative in <see cref="AdamantParser.plainType"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterPrimitiveNumericType([NotNull] AdamantParser.PrimitiveNumericTypeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>PrimitiveNumericType</c>
+	/// labeled alternative in <see cref="AdamantParser.plainType"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitPrimitiveNumericType([NotNull] AdamantParser.PrimitiveNumericTypeContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>FunctionType</c>
 	/// labeled alternative in <see cref="AdamantParser.plainType"/>.

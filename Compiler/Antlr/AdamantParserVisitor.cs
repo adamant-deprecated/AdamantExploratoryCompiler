@@ -167,12 +167,26 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitArraySliceType([NotNull] AdamantParser.ArraySliceTypeContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>StringType</c>
+	/// labeled alternative in <see cref="AdamantParser.plainType"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStringType([NotNull] AdamantParser.StringTypeContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>NamedType</c>
 	/// labeled alternative in <see cref="AdamantParser.plainType"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitNamedType([NotNull] AdamantParser.NamedTypeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>PrimitiveNumericType</c>
+	/// labeled alternative in <see cref="AdamantParser.plainType"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPrimitiveNumericType([NotNull] AdamantParser.PrimitiveNumericTypeContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>FunctionType</c>
 	/// labeled alternative in <see cref="AdamantParser.plainType"/>.

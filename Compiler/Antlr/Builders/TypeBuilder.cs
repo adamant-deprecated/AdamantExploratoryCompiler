@@ -1,5 +1,4 @@
-﻿using Adamant.Exploratory.Compiler.Symbols;
-using Adamant.Exploratory.Compiler.Syntax;
+﻿using System;
 using Adamant.Exploratory.Compiler.Syntax.Types;
 using Type = Adamant.Exploratory.Compiler.Syntax.Type;
 
@@ -57,7 +56,17 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override Type VisitMaybeType(AdamantParser.MaybeTypeContext context)
 		{
 			// TODO return a generic type Maybe<T>
-			return context.typeName().Accept(this);
+			return context.plainType().Accept(this);
+		}
+
+		public override Type VisitPrimitiveNumericType(AdamantParser.PrimitiveNumericTypeContext context)
+		{
+			return new NumericType(context.GetText());
+		}
+
+		public override Type VisitStringType(AdamantParser.StringTypeContext context)
+		{
+			return new StringType();
 		}
 	}
 }

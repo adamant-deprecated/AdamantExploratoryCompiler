@@ -76,21 +76,23 @@ Var : 'var';
 Let : 'let';
 Get : 'get';
 Set : 'set';
-Do : 'do';
-While : 'while';
-If : 'if';
-Else : 'else';
 Abstract : 'abstract';
 Params : 'params';
-For : 'for';
-Foreach : 'foreach';
-In : 'in';
 Ref : 'ref';
 Base : 'base';
 Const : 'const';
 Sealed : 'sealed';
 Override : 'override';
 Partial : 'partial';
+
+// Control Flow
+Do : 'do';
+While : 'while';
+If : 'if';
+Else : 'else';
+For : 'for';
+In : 'in';
+Foreach : 'foreach';
 Yield : 'yeild';
 Switch : 'switch';
 Break : 'break';
@@ -125,6 +127,18 @@ Immutable : 'immut';
 // Async
 Async: 'async';
 Await: 'await';
+
+//*************
+// Primitive Types
+//*************
+String : 'string';
+ByteType : 'byte';
+IntType : 'int' IntLiteral?;
+UIntType : 'uint' IntLiteral?;
+FloatType : 'float' IntLiteral?;
+FixedType : 'fixed' IntLiteral '.' IntLiteral;
+DecimalType : 'decimal' IntLiteral?;
+SizeType : 'size';
 
 //*************
 // Literals

@@ -163,9 +163,11 @@
     <Compile Include="Syntax\Type.cs" />
     <Compile Include="Syntax\Types\ArraySliceType.cs" />
     <Compile Include="Syntax\Types\InferredType.cs" />
+    <Compile Include="Syntax\Types\NumericType.cs" />
     <Compile Include="Syntax\Types\Ownership.cs" />
     <Compile Include="Syntax\Types\OwnershipType.cs" />
     <Compile Include="Syntax\Types\PlainType.cs" />
+    <Compile Include="Syntax\Types\StringType.cs" />
     <Compile Include="Syntax\Types\TypeName.cs" />
     <Compile Include="Symbols\GlobalScope.cs" />
     <Compile Include="Preprocessor\Conditional.cs" />

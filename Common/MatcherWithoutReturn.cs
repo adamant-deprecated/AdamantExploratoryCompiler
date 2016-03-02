@@ -29,6 +29,20 @@ namespace Adamant.Exploratory.Common
 			return this;
 		}
 
+		public MatcherWithoutReturn<TValue> Ignore<T>()
+			where T : class, TValue
+		{
+			if(matched || value == null) return this;
+
+			var matchedValue = value as T;
+			if(matchedValue != null)
+			{
+				return new MatcherWithoutReturn<TValue>(value, true);
+			}
+
+			return this;
+		}
+
 		public MatcherWithoutReturn<TValue> Null(Action action)
 		{
 			if(matched) return this;

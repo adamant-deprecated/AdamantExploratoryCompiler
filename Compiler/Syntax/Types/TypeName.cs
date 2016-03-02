@@ -12,5 +12,10 @@ namespace Adamant.Exploratory.Compiler.Syntax.Types
 
 		public TypeName OuterType { get; }
 		public Symbol Symbol { get; }
+
+		public void Bind(NameScope scope)
+		{
+			throw new System.NotImplementedException();
+		}
 	}
 }

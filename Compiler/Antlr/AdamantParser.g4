@@ -87,7 +87,9 @@ ownershipType // these are types with ownership modifiers
 
 plainType
 	: typeName																#NamedType
-	| typeName '?'															#MaybeType
+	| 'string'																#StringType
+	| ('byte'|IntType|UIntType|FloatType|FixedType|DecimalType|SizeType)	#PrimitiveNumericType
+	| plainType '?'															#MaybeType
 	| valueType=plainType '*'												#PointerType
 	| elementType=plainType '[' constExpression (',' constExpression)* ']'	#ArrayType
 	| elementType=plainType '[' dimensions+=','* ']'						#ArraySliceType
