@@ -8,30 +8,20 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 	{
 		public override Type VisitMutableType(AdamantParser.MutableTypeContext context)
 		{
-			var isReference = context.@ref != null;
 			var type = (PlainType)context.plainType().Accept(this);
-			return new OwnershipType(isReference, Ownership.MutableBorrow, type);
+			return new OwnershipType(Ownership.BorrowMutable, type);
 		}
 
 		public override Type VisitOwnedType(AdamantParser.OwnedTypeContext context)
 		{
-			var isReference = context.@ref != null;
 			var type = (PlainType)context.plainType().Accept(this);
-			return new OwnershipType(isReference, Ownership.Owned, type);
+			return new OwnershipType(Ownership.OwnedMutable, type);
 		}
 
 		public override Type VisitImmutableType(AdamantParser.ImmutableTypeContext context)
 		{
-			var isReference = context.@ref != null;
 			var type = (PlainType)context.plainType().Accept(this);
-			return new OwnershipType(isReference, Ownership.ImmutableBorrow, type);
-		}
-
-		public override Type VisitImplicitType(AdamantParser.ImplicitTypeContext context)
-		{
-			var isReference = context.@ref != null;
-			var type = (PlainType)context.plainType().Accept(this);
-			return new OwnershipType(isReference, Ownership.Inferred, type);
+			return new OwnershipType(Ownership.BorrowImmutable, type);
 		}
 
 		public override Type VisitNamedType(AdamantParser.NamedTypeContext context)

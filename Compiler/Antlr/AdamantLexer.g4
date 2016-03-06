@@ -16,10 +16,6 @@ SingleLineDocComment
 	: '///' InputChar* -> channel(DocComments)
 	;
 
-BlockDocComment
-	: '/**' .*? '*/' -> channel(DocComments)
-	;
-
 SingleLineComment
 	: '//' InputChar* -> skip
 	;
@@ -67,23 +63,24 @@ Class : 'class';
 Enum : 'enum';
 New : 'new';
 Delete : 'delete';
-Operator : 'operator';
-This : 'this';
-Return : 'return';
+Self : 'self';
 Uninitialized : 'uninitialized';
 Where : 'where';
+Base : 'base';
+
+// Properties
 Var : 'var';
 Let : 'let';
 Get : 'get';
 Set : 'set';
-Abstract : 'abstract';
-Params : 'params';
-Ref : 'ref';
-Base : 'base';
-Const : 'const';
+
+// Modifiers
 Sealed : 'sealed';
 Override : 'override';
 Partial : 'partial';
+Abstract : 'abstract';
+Params : 'params';
+Extern : 'extern';
 
 // Control Flow
 Do : 'do';
@@ -97,8 +94,9 @@ Yield : 'yeild';
 Switch : 'switch';
 Break : 'break';
 Continue : 'continue';
+Return : 'return';
 
-//Exceptions
+// Exceptions
 Try : 'try';
 Catch : 'catch';
 Finally : 'finally';
@@ -119,7 +117,7 @@ Package : 'package';
 Safe : 'safe';
 Unsafe : 'unsafe';
 
-// Ownership
+// Lifetime
 Own : 'own';
 Mutable : 'mut';
 Immutable : 'immut';
@@ -165,13 +163,14 @@ StringLiteral
 Semicolon : ';';
 Colon : ':';
 Dot : '.';
+ColonColon: '::';
+Tilde : '~';
 Comma : ',';
-Arrow : '->';
-Lambda : '=>';
+Lambda : '->';
 LeftBrace : '{';
 RightBrace : '}';
-LeftAngle: '<';
-RightAngle: '>';
+LeftAngle : '<';
+RightAngle : '>';
 LeftBracket : '[';
 RightBracket : ']';
 LeftParen : '(';
@@ -179,7 +178,7 @@ RightParen : ')';
 Asterisk : '*';
 AtSign : '@';
 AddressOf : '&';
-Coalesce : '??'; // TODO this may need to be handled in the grammar level
+Coalesce : '??';
 IsNull : '?';
 Equal : '==';
 NotEqual : '<>';
@@ -189,20 +188,23 @@ TypeList : '...';
 Plus : '+';
 Minus : '-';
 Divide : '/';
+Pipe : '|';
 And : 'and';
 Xor : 'xor';
 Or : 'or';
 Not : 'not';
-Increment : '++';
-Decrement : '--';
+BitAnd : 'bit_and';
+BitOr : 'bit_or';
+BitXor : 'bit_xor';
+BitNot : 'bit_not';
+BitShiftLeft : 'bit_shift_left';
+BitShiftRight : 'bit_shift_right';
 
 Assign : '=';
 AddAssign : '+=';
 SubtractAssign : '-=';
 MultiplyAssign : '*=';
 DivideAssign : '/=';
-LeftShiftAssign : '<<=';
-RightShiftAssign : '>>=';
 AndAssign : 'and=';
 XorAssign : 'xor=';
 OrAssign : 'or=';
@@ -213,7 +215,7 @@ Identifier
 	;
 
 EscapedIdentifier
-	: '@' IdentifierStartChar IdentifierPartChar*
+	: '`' IdentifierStartChar IdentifierPartChar*
 	;
 
 //*************

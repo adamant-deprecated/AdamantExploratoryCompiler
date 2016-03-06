@@ -48,7 +48,8 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		protected static Symbol Symbol(AdamantParser.IdentifierContext context)
 		{
-			return new Symbol(context.GetText());
+			var name = context?.GetText();
+			return name != null ? new Symbol(name) : null;
 		}
 	}
 }

@@ -31,7 +31,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 				{
 					foreach(var parameter in function.Parameters)
 					{
-						//TODO parameter.Type.DefaultOwnership(Ownership.ImmutableBorrow);
+						//TODO parameter.Type.DefaultOwnership(Ownership.BorrowImmutable);
 					}
 
 					foreach(var statement in function.Body)
@@ -41,13 +41,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 				})
 				.With<VariableDeclaration>(global =>
 				{
-					if(global.InitExpression == null)
-						global.Type.DefaultOwnership(Ownership.Owned);
-					else
-					{
-						var expressionOwnership = global.InitExpression.CheckLifetimes();
-						global.Type.AssignValueWithOwnership(expressionOwnership);
-					}
+					throw new NotImplementedException();
 				})
 				.Exhaustive();
 		}
@@ -55,22 +49,18 @@ namespace Adamant.Exploratory.Compiler.Analysis
 		public static void CheckLifetimes(this Member member)
 		{
 			member.Match()
-				.With<Constructor>(constructor => {
+				.With<Constructor>(constructor =>
+				{
 					foreach(var parameter in constructor.Parameters)
 					{
-						//TODO parameter.Type.DefaultOwnership(Ownership.ImmutableBorrow);
+						//TODO parameter.Type.DefaultOwnership(Ownership.BorrowImmutable);
 					}
 
 					throw new NotImplementedException();
 				})
-				.With<Field>(field => {
-					if(field.InitExpression == null)
-						field.Type.DefaultOwnership(Ownership.Owned);
-					else
-					{
-						var expressionOwnership = field.InitExpression.CheckLifetimes();
-						field.Type.AssignValueWithOwnership(expressionOwnership);
-					}
+				.With<Field>(field =>
+				{
+					throw new NotImplementedException();
 				})
 				.Exhaustive();
 		}
@@ -78,8 +68,8 @@ namespace Adamant.Exploratory.Compiler.Analysis
 		public static Ownership CheckLifetimes(this Expression expression)
 		{
 			return expression.Match().Returning<Ownership>()
-				.With<NewObjectExpression>(_ => Ownership.Owned)
-				.With<LiteralExpression>(_ => Ownership.ImmutableBorrow)
+				.With<NewObjectExpression>(_ => Ownership.OwnedMutable)
+				.With<LiteralExpression>(_ => Ownership.BorrowImmutable)
 				.Exhaustive();
 		}
 	}

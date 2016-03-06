@@ -2,9 +2,9 @@
 {
 	public enum Ownership
 	{
-		Inferred = 0,
-		Owned = 1,
-		MutableBorrow,
-		ImmutableBorrow,
+		OwnedImmutable = 1,
+		OwnedMutable,
+		BorrowImmutable,
+		BorrowMutable,
 	}
 }

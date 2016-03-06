@@ -24,12 +24,20 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			return new Constructor(accessModifier, name, parameters, body);
 		}
 
+		public override Member VisitDestructor(AdamantParser.DestructorContext context)
+		{
+			var accessModifier = GetAccessModifier(context.modifier());
+			var parameters = build.Parameters(context.parameterList());
+			var body = context.methodBody().statement().Select(s => s.Accept(build.Statement));
+			return new Destructor(accessModifier, parameters, body);
+		}
+
 		public override Member VisitField(AdamantParser.FieldContext context)
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var isMutableReference = context.kind.Type == AdamantLexer.Var;
 			var name = Symbol(context.identifier());
-			var type = (OwnershipType)context.ownershipType()?.Accept(build.Type) ?? OwnershipType.NewInferred();
+			var type = (OwnershipType)context.ownershipType()?.Accept(build.Type);
 			var initExpression = context.expression()?.Accept(build.Expression);
 			return new Field(accessModifier, isMutableReference, name, type, initExpression);
 		}

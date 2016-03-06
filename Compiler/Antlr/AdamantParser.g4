@@ -33,7 +33,7 @@ declaration
 		typeParameterConstraintClause*
 		'{' member* '}' #ClassDeclaration
 	| attribute* modifier* kind=('var'|'let') name=identifier (':' ownershipType)? ('=' expression)? ';' #VariableDeclaration
-	| attribute* modifier* name=identifier typeArguments? parameterList '=>' returnType=ownershipType typeParameterConstraintClause* methodBody	 #FunctionDeclaration
+	| attribute* modifier* name=identifier typeArguments? parameterList '->' returnType=ownershipType typeParameterConstraintClause* methodBody	 #FunctionDeclaration
 	;
 
 attribute
@@ -57,8 +57,8 @@ modifier
 	| Symbol='explicit'
 	| Symbol='sealed'
 	| Symbol='override'
-	| Symbol='const'
 	| Symbol='async'
+	| Symbol='extern'
 	;
 
 typeParameterList
@@ -79,10 +79,9 @@ typeArguments
 	;
 
 ownershipType // these are types with ownership modifiers
-	: ref='ref'? 'mut' plainType	#MutableType
-	| ref='ref'? 'own' plainType	#OwnedType
-	| ref='ref'? 'immut' plainType	#ImmutableType
-	| ref='ref'? plainType			#ImplicitType
+	: 'mut' plainType			#MutableType
+	| 'own' 'mut'? plainType	#OwnedType
+	| plainType					#ImmutableType
 	;
 
 plainType
@@ -93,7 +92,7 @@ plainType
 	| valueType=plainType '*'												#PointerType
 	| elementType=plainType '[' constExpression (',' constExpression)* ']'	#ArrayType
 	| elementType=plainType '[' dimensions+=','* ']'						#ArraySliceType
-	| funcTypeParameterList '=>' ownershipType								#FunctionType
+	| funcTypeParameterList '->' ownershipType								#FunctionType
 	;
 
 funcTypeParameterList
@@ -123,13 +122,12 @@ typeParameterConstraint
 	;
 
 member
-	: attribute* modifier* 'new' name=identifier? parameterList ('=>' returnType=ownershipType)? constructorInitializer? methodBody						#Constructor
-	| attribute* modifier* 'delete' parameterList methodBody																						#Destructor
-	| attribute* modifier* 'conversion' typeArguments? parameterList '=>' ownershipType typeParameterConstraintClause* methodBody					#ConversionMethod
-	| attribute* modifier* 'operator' overloadableOperator parameterList '=>' ownershipType methodBody												#OperatorOverloadMethod
-	| attribute* modifier* kind=('var'|'let') identifier (':' ownershipType)? ('=' expression)? ';'													#Field
-	| attribute* modifier* kind=('get'|'set') identifier typeArguments? parameterList '=>' ownershipType typeParameterConstraintClause* methodBody	#Property
-	| attribute* modifier* name=identifier typeArguments? parameterList '=>' returnType=ownershipType typeParameterConstraintClause* methodBody		#Method
+	: attribute* modifier* 'new' name=identifier? parameterList ('->' returnType=ownershipType)? constructorInitializer? methodBody									#Constructor
+	| attribute* modifier* 'delete' parameterList methodBody																										#Destructor
+	| attribute* modifier* 'conversion' typeArguments? parameterList '->' ownershipType typeParameterConstraintClause* methodBody									#ConversionMethod
+	| attribute* modifier* kind=('var'|'let') identifier (':' ownershipType)? ('=' expression)? ';'																	#Field
+	| attribute* modifier* kind=('get'|'set') (name=identifier|('[' ']')) typeArguments? parameterList '->' ownershipType typeParameterConstraintClause* methodBody	#Property
+	| attribute* modifier* name=identifier typeArguments? parameterList '->' returnType=ownershipType typeParameterConstraintClause* methodBody						#Method
 	;
 
 parameterList
@@ -138,8 +136,8 @@ parameterList
 	;
 
 parameter
-	: modifiers+=parameterModifier* name=identifier? ':' type=ownershipType
-	| modifiers+=parameterModifier* 'this' (':' 'mut')?
+	: modifiers+=parameterModifier* name=identifier? ':' type=ownershipType #namedParameter
+	| modifiers+=parameterModifier* 'own'? 'mut'? 'self'					#selfParameter
 	;
 
 parameterModifier
@@ -148,7 +146,7 @@ parameterModifier
 
 constructorInitializer
 	: ':' 'base' '(' argumentList ')'
-	| ':' 'this' '(' argumentList ')'
+	| ':' 'self' '(' argumentList ')'
 	;
 
 argumentList
@@ -197,7 +195,7 @@ expression
 	| expression '(' argumentList ')'						#CallExpression
 	| expression '[' argumentList ']'						#ArrayAccessExpression
 	| expression '?'										#NullCheckExpression
-	| op=('+'|'-'|'not'|'++'|'--'|'&'|'*') expression		#UnaryExpression
+	| op=('+'|'-'|'not'|'&'|'*') expression					#UnaryExpression
 	| expression op=('*'|'/') expression					#MultiplicativeExpression
 	| expression op=('+'|'-') expression					#AdditiveExpression
 	| expression (ops+='<' ops+='<' | ops+='>' ops+='>') expression #ShiftExpression
@@ -208,13 +206,13 @@ expression
 	| expression 'or' expression							#OrExpression
 	| expression '??' expression							#CoalesceExpression
 	| <assoc=right> condition=expression '?' then=expression ':' else=expression #IfExpression
-	| <assoc=right> lvalue=expression op=('='|'*='|'/='|'+='|'-='|'<<='|'>>='|'and='|'xor='|'or=') rvalue=expression #AssignmentExpression
+	| <assoc=right> lvalue=expression op=('='|'*='|'/='|'+='|'-='|'and='|'xor='|'or=') rvalue=expression #AssignmentExpression
 	| identifier											#VariableExpression
 	// Since new Class.Constructor() is indistiguishable from new Namespace.Class() we can't parse for named constructor calls here
 	| 'new' typeName '(' argumentList ')'					#NewExpression
 	| 'new' baseTypes? '(' argumentList ')' '{' member* '}'	#NewObjectExpression
 	| 'null'												#NullLiteralExpression
-	| 'this'												#ThisExpression
+	| 'self'												#SelfExpression
 	| BooleanLiteral										#BooleanLiteralExpression
 	| IntLiteral											#IntLiteralExpression
 	| 'uninitialized'										#UninitializedExpression

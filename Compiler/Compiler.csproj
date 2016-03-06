@@ -123,6 +123,9 @@
     <Compile Include="Syntax\AccessModifier.cs" />
     <Compile Include="Syntax\Definition.cs" />
     <Compile Include="Syntax\Definitions.cs" />
+    <Compile Include="Syntax\Expressions\AssignmentExpression.cs" />
+    <Compile Include="Syntax\Expressions\SelfExpression.cs" />
+    <Compile Include="Syntax\Members\Destructor.cs" />
     <Compile Include="Syntax\NamespaceDefinition.cs" />
     <Compile Include="Syntax\ScopeDeclarations\CompilationUnit.cs" />
     <Compile Include="Syntax\Declaration.cs" />
@@ -164,7 +167,6 @@
     <Compile Include="Syntax\Statements\VariableDeclarationStatement.cs" />
     <Compile Include="Syntax\Type.cs" />
     <Compile Include="Syntax\Types\ArraySliceType.cs" />
-    <Compile Include="Syntax\Types\InferredType.cs" />
     <Compile Include="Syntax\Types\NumericType.cs" />
     <Compile Include="Syntax\Types\Ownership.cs" />
     <Compile Include="Syntax\Types\OwnershipType.cs" />

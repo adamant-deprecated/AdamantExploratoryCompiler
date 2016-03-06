@@ -6,12 +6,12 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 {
 	public class Constructor : MethodLike
 	{
-		public Constructor(AccessModifier access, Symbol symbol, IEnumerable<Parameter> parameters, IEnumerable<Statement> body)
+		public Constructor(AccessModifier access, Symbol name, IEnumerable<Parameter> parameters, IEnumerable<Statement> body)
 			: base(access, parameters, body)
 		{
-			Symbol = symbol;
+			Name = name;
 		}
 
-		public Symbol Symbol { get; }
+		public Symbol Name { get; }
 	}
 }

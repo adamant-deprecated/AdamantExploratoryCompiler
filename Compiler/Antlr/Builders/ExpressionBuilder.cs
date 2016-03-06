@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Expressions;
 using Adamant.Exploratory.Compiler.Syntax.Types;
@@ -33,7 +32,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override Expression VisitEqualityExpression(AdamantParser.EqualityExpressionContext context)
 		{
 			var lhs = context.lhs.Accept(this);
-			var rhs = context.lhs.Accept(this);
+			var rhs = context.rhs.Accept(this);
 			return new BinaryOperatorExpression(lhs, rhs);
 		}
 
@@ -81,6 +80,18 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override Expression VisitStringLiteralExpression(AdamantParser.StringLiteralExpressionContext context)
 		{
 			return new LiteralExpression();
+		}
+
+		public override Expression VisitAssignmentExpression(AdamantParser.AssignmentExpressionContext context)
+		{
+			var lvalue = context.lvalue.Accept(this);
+			var rvalue = context.rvalue.Accept(this);
+			return new AssignmentExpression(lvalue, rvalue);
+		}
+
+		public override Expression VisitSelfExpression(AdamantParser.SelfExpressionContext context)
+		{
+			return new SelfExpression();
 		}
 	}
 }

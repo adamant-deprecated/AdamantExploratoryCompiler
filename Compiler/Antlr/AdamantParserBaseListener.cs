@@ -250,18 +250,6 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitImmutableType([NotNull] AdamantParser.ImmutableTypeContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.ImplicitType"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterImplicitType([NotNull] AdamantParser.ImplicitTypeContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.ImplicitType"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitImplicitType([NotNull] AdamantParser.ImplicitTypeContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.ArrayType"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -478,18 +466,6 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitConversionMethod([NotNull] AdamantParser.ConversionMethodContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.OperatorOverloadMethod"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterOperatorOverloadMethod([NotNull] AdamantParser.OperatorOverloadMethodContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.OperatorOverloadMethod"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitOperatorOverloadMethod([NotNull] AdamantParser.OperatorOverloadMethodContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.Field"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -538,17 +514,29 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitParameterList([NotNull] AdamantParser.ParameterListContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.parameter"/>.
+	/// Enter a parse tree produced by <see cref="AdamantParser.namedParameter"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterParameter([NotNull] AdamantParser.ParameterContext context) { }
+	public virtual void EnterNamedParameter([NotNull] AdamantParser.NamedParameterContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.parameter"/>.
+	/// Exit a parse tree produced by <see cref="AdamantParser.namedParameter"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitParameter([NotNull] AdamantParser.ParameterContext context) { }
+	public virtual void ExitNamedParameter([NotNull] AdamantParser.NamedParameterContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.selfParameter"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSelfParameter([NotNull] AdamantParser.SelfParameterContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.selfParameter"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSelfParameter([NotNull] AdamantParser.SelfParameterContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.parameterModifier"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -838,18 +826,6 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitNewObjectExpression([NotNull] AdamantParser.NewObjectExpressionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.ThisExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterThisExpression([NotNull] AdamantParser.ThisExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.ThisExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitThisExpression([NotNull] AdamantParser.ThisExpressionContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.AndExpression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -873,6 +849,18 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitAssignmentExpression([NotNull] AdamantParser.AssignmentExpressionContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.SelfExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSelfExpression([NotNull] AdamantParser.SelfExpressionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.SelfExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSelfExpression([NotNull] AdamantParser.SelfExpressionContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.BooleanLiteralExpression"/>.
 	/// <para>The default implementation does nothing.</para>

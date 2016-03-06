@@ -65,7 +65,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			var accessModifier = GetAccessModifier(context.modifier());
 			var isMutableReference = context.kind.Type == AdamantLexer.Var;
 			var name = Symbol(context.name);
-			var type = (OwnershipType)context.ownershipType()?.Accept(Type) ?? OwnershipType.NewInferred();
+			var type = (OwnershipType)context.ownershipType()?.Accept(Type);
 			var initExpression = context.expression()?.Accept(Expression);
 			return new VariableDeclaration(accessModifier, isMutableReference, CurrentNamespace, name, type, initExpression);
 		}

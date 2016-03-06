@@ -55,7 +55,7 @@ fragment DigitChar
 	;
 
 fragment ConnectingChar
-	: Unicode_Ll
+	: Unicode_Pc
 	;
 
 fragment CombiningChar
