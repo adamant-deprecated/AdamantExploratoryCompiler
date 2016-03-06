@@ -1,4 +1,5 @@
-﻿using Adamant.Exploratory.Compiler.Symbols;
+﻿using System.Linq;
+using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
@@ -12,9 +13,11 @@ namespace Adamant.Exploratory.Compiler.Syntax
 			Definitions = new Definitions();
 		}
 
+		// TODO it is bad that we have to keep recalculating this
+		public AccessModifier Access => Definitions.Any(d => d.Access == AccessModifier.Public) ? AccessModifier.Public : AccessModifier.Package;
 		public FullyQualifiedName Namespace { get; }
 		public Symbol Name { get; }
 		public FullyQualifiedName FullyQualifiedName { get; }
-		public Definitions Definitions { get;  }
+		public Definitions Definitions { get; }
 	}
 }

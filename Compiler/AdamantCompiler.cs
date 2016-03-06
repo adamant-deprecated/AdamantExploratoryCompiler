@@ -33,7 +33,7 @@ namespace Adamant.Exploratory.Compiler
 			return tree.Accept(CompilationUnitBuilder);
 		}
 
-		public Package CompileProject(IEnumerable<CompilationUnit> compilationUnits, IEnumerable<Package> dependencies)
+		public Package CompileProject(string packageName, IEnumerable<CompilationUnit> compilationUnits, IEnumerable<Package> dependencies)
 		{
 			var units = compilationUnits.ToList();
 			var globalDefinitions = new Definitions();
@@ -45,7 +45,7 @@ namespace Adamant.Exploratory.Compiler
 			foreach(var compilationUnit in units)
 				compilationUnit.BindNames(globalScope);
 
-			var project = new Package(globalDefinitions, projectDependencies);
+			var project = new Package(packageName, globalDefinitions, projectDependencies);
 
 			// TODO run borrow checker
 			//var borrowChecker = new BorrowChecker();

@@ -4,11 +4,17 @@ namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 {
 	public class VariableExpression : Expression
 	{
-		public readonly Symbol Symbol;
+		public readonly Symbol Name;
 
-		public VariableExpression(Symbol symbol)
+		public VariableExpression(Symbol name)
 		{
-			Symbol = symbol;
+			Name = name;
+		}
+
+		public void Bind(NameScope scope)
+		{
+			var definition = scope.Lookup(Name).Resolve();
+			// TODO store the definition
 		}
 	}
 }

@@ -5,8 +5,10 @@ using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.EntityDeclarations;
+using Adamant.Exploratory.Compiler.Syntax.Expressions;
 using Adamant.Exploratory.Compiler.Syntax.Members;
 using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
+using Adamant.Exploratory.Compiler.Syntax.Statements;
 using Adamant.Exploratory.Compiler.Syntax.Types;
 using Type = Adamant.Exploratory.Compiler.Syntax.Type;
 
@@ -25,31 +27,9 @@ namespace Adamant.Exploratory.Compiler.Analysis
 
 		private static IEnumerable<Definition> UsingDefinitions(this UsingStatement usingStatement, GlobalScope globalScope)
 		{
-			FullyQualifiedName currentItemName = null;
-			var definitions = globalScope.Definitions;
+			var definition = globalScope.Lookup(usingStatement.UsingName).Resolve();
 
-			foreach(var name in usingStatement.UsingName.Namespace().Parts())
-			{
-				currentItemName = currentItemName.Append(name);
-				var definition = definitions.TryGetValue(name);
-				if(definition == null)
-					throw new Exception($"Using statement referes to name that does not exist '{currentItemName}'");
-
-				definition.Match()
-					.With<NamespaceDefinition>(@namespace => definitions = @namespace.Definitions)
-					.With<ClassDeclaration>(@class =>
-					{
-						/* TODO get static definitions */
-						throw new NotImplementedException();
-					})
-					.With<EntityDeclaration>(entity =>
-					{
-						throw new Exception($"Using statement referes to name that does not exist '{usingStatement.UsingName}'");
-					})
-					.Exhaustive();
-			}
-
-			return definitions.TryGetValue(usingStatement.UsingName.Name()).Match().Returning<IEnumerable<Definition>>()
+			return definition.Match().Returning<IEnumerable<Definition>>()
 				.With<NamespaceDefinition>(@namespace => @namespace.Definitions)
 				.With<EntityDeclaration>(entity => new[] { entity })
 				.Null(() =>
@@ -59,18 +39,18 @@ namespace Adamant.Exploratory.Compiler.Analysis
 				.Exhaustive();
 		}
 
-		public static void BindNames(this Declaration declaration, GlobalScope globalScope, NameScope scope)
+		public static void BindNames(this Declaration declaration, GlobalScope globalScope, UsingStatementsScope scope)
 		{
 			declaration.Match()
 				.With<NamespaceDeclaration>(@namespace =>
 				{
 					foreach(var name in @namespace.Name.Parts())
 					{
-						var definition = (NamespaceDefinition)scope.LookupInScope(name);
+						var definition = (NamespaceDefinition)scope.LookupLocal(name);
 						var isFullNamespace = definition.FullyQualifiedName == @namespace.FullyQualifiedName;
 						var usingDefinitions = isFullNamespace ? @namespace.UsingStatements.SelectMany(u => u.UsingDefinitions(globalScope))
 																: Enumerable.Empty<Definition>();
-						scope = new NamespaceScope(definition, usingDefinitions);
+						scope = new NamespaceScope(definition, usingDefinitions, scope);
 					}
 
 					foreach(var nestedDeclaration in @namespace.Declarations)
@@ -98,7 +78,12 @@ namespace Adamant.Exploratory.Compiler.Analysis
 
 		public static void BindNames(this Statement statement, NameScope scope)
 		{
-			throw new NotImplementedException();
+			statement.Match()
+				.With<ExpressionStatement>(expressionStatement =>
+				{
+					expressionStatement.Expression.BindNames(scope);
+				})
+				.Exhaustive();
 		}
 
 		public static void BindNames(this Member member, NameScope scope)
@@ -114,7 +99,22 @@ namespace Adamant.Exploratory.Compiler.Analysis
 
 		public static void BindNames(this Expression expression, NameScope scope)
 		{
-			throw new NotImplementedException();
+			expression.Match()
+				.With<CallExpression>(call =>
+				{
+					call.Expression.BindNames(scope);
+					foreach(var argument in call.Arguments)
+						argument.BindNames(scope);
+				})
+				.With<MemberExpression>(member =>
+				{
+					member.Expression.BindNames(scope);
+				})
+				.With<VariableExpression>(variable =>
+				{
+					variable.Bind(scope);
+				})
+				.Exhaustive();
 		}
 
 		public static void BindNames(this Type type, NameScope scope)
@@ -132,7 +132,10 @@ namespace Adamant.Exploratory.Compiler.Analysis
 				{
 					arraySliceType.ElementType.BindNames(scope);
 				})
-				.Ignore<StringType>()
+				.With<StringType>(stringType =>
+				{
+					stringType.Bind(scope);
+				})
 				.Ignore<NumericType>()
 				.Exhaustive();
 		}

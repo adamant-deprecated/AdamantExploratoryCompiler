@@ -117,6 +117,8 @@
     <Compile Include="Symbols\CompilationUnitScope.cs" />
     <Compile Include="Symbols\NameScope.cs" />
     <Compile Include="Symbols\NamespaceScope.cs" />
+    <Compile Include="Symbols\SymbolDefinition.cs" />
+    <Compile Include="Symbols\SymbolDefinitions.cs" />
     <Compile Include="Symbols\UsingStatementsScope.cs" />
     <Compile Include="Syntax\AccessModifier.cs" />
     <Compile Include="Syntax\Definition.cs" />

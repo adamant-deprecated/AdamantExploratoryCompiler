@@ -1,5 +1,4 @@
 ﻿using System;
-using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {

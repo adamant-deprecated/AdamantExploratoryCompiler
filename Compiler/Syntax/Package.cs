@@ -5,16 +5,18 @@ namespace Adamant.Exploratory.Compiler.Syntax
 {
 	public class Package
 	{
+		public readonly string Name;
+		private readonly Definitions globalDefinitions;
 		private readonly List<Package> dependencies;
-		private readonly List<Definition> globalDefinitions;
 
-		internal Package(IEnumerable<Definition> globalDefinitions, IEnumerable<Package> dependencies)
+		internal Package(string name, IEnumerable<Definition> globalDefinitions, IEnumerable<Package> dependencies)
 		{
-			this.globalDefinitions = globalDefinitions.ToList();
+			Name = name;
+			this.globalDefinitions = new Definitions(globalDefinitions);
 			this.dependencies = dependencies.ToList();
 		}
 
-		public IReadOnlyList<Definition> GlobalDefinitions => globalDefinitions;
+		public Definitions GlobalDefinitions => globalDefinitions;
 		public IReadOnlyList<Package> Dependencies => dependencies;
 	}
 }

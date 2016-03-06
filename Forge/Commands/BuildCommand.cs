@@ -84,7 +84,7 @@ namespace Adamant.Exploratory.Forge.Commands
 			var sourceFiles = new DirectoryInfo(Path.Combine(projectDirPath, "src")).GetFiles("*.adam", SearchOption.AllDirectories);
 
 			var dependencies = projectConfig.Dependencies.Select(dependency => projects[dependency.Key]);
-			var project = compiler.CompileProject(sourceFiles.Select(sourceFile => compiler.Parse(sourceFile.FullName)), dependencies);
+			var project = compiler.CompileProject(projectConfig.Name, sourceFiles.Select(sourceFile => compiler.Parse(sourceFile.FullName)), dependencies);
 
 			var isApp = projectConfig.Template == "app";
 			var targetDirPath = Path.Combine(projectDirPath, "targets/debug");
