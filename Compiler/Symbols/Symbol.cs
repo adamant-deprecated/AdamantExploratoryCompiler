@@ -27,8 +27,25 @@ namespace Adamant.Exploratory.Compiler.Symbols
 
 		public override bool Equals(object obj)
 		{
-			var other = obj as Symbol;
-			return other != null && Equals(value, other.value);
+			if(ReferenceEquals(null, obj)) return false;
+			if(ReferenceEquals(this, obj)) return true;
+			if(obj.GetType() != GetType()) return false;
+			return Equals((Symbol)obj);
+		}
+
+		protected bool Equals(Symbol other)
+		{
+			return value == other.value;
+		}
+
+		public static bool operator ==(Symbol left, Symbol right)
+		{
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(Symbol left, Symbol right)
+		{
+			return !Equals(left, right);
 		}
 
 		public override string ToString()

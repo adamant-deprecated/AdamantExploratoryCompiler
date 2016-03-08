@@ -4,13 +4,13 @@ using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public class Definitions : KeyedCollection<Symbol, Definition>
+	public class DefinitionCollection : KeyedCollection<Symbol, Definition>
 	{
-		public Definitions()
+		public DefinitionCollection()
 		{
 		}
 
-		public Definitions(IEnumerable<Definition> definitions)
+		public DefinitionCollection(IEnumerable<Definition> definitions)
 		{
 			foreach(var definition in definitions)
 				Add(definition);

@@ -10,7 +10,7 @@ namespace Adamant.Exploratory.Compiler.Syntax
 			Namespace = @namespace;
 			Name = name;
 			FullyQualifiedName = @namespace.Append(name);
-			Definitions = new Definitions();
+			Definitions = new DefinitionCollection();
 		}
 
 		// TODO it is bad that we have to keep recalculating this
@@ -18,6 +18,6 @@ namespace Adamant.Exploratory.Compiler.Syntax
 		public FullyQualifiedName Namespace { get; }
 		public Symbol Name { get; }
 		public FullyQualifiedName FullyQualifiedName { get; }
-		public Definitions Definitions { get; }
+		public DefinitionCollection Definitions { get; }
 	}
 }

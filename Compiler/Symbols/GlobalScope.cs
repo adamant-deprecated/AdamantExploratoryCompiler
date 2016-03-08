@@ -6,16 +6,16 @@ namespace Adamant.Exploratory.Compiler.Symbols
 {
 	public class GlobalScope : NameScope
 	{
-		private readonly Definitions globalDefinitions;
+		private readonly DefinitionCollection globalDefinitions;
 		private readonly List<Package> dependencies;
 
-		public GlobalScope(Definitions globalDefinitions, IEnumerable<Package> dependencies)
+		public GlobalScope(DefinitionCollection globalDefinitions, IEnumerable<Package> dependencies)
 		{
 			this.globalDefinitions = globalDefinitions;
 			this.dependencies = dependencies.ToList();
 		}
 
-		public Definitions Definitions => globalDefinitions;
+		public DefinitionCollection Definitions => globalDefinitions;
 
 		public override GlobalScope Globals => this;
 

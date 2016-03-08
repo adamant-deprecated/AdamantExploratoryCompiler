@@ -6,11 +6,11 @@ namespace Adamant.Exploratory.Compiler.Symbols
 {
 	public abstract class ScopeWithUsingStatements : NameScope
 	{
-		private readonly Definitions usingDefinitions;
+		private readonly DefinitionCollection usingDefinitions;
 
 		protected ScopeWithUsingStatements(IEnumerable<Definition> usingDefinitions)
 		{
-			this.usingDefinitions = new Definitions(usingDefinitions);
+			this.usingDefinitions = new DefinitionCollection(usingDefinitions);
 		}
 
 		protected SymbolDefinitions LookupInUsingStatements(Symbol name, DefinitionKind kind)

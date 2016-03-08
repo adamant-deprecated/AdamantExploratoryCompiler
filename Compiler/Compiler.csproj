@@ -123,10 +123,12 @@
     <Compile Include="Symbols\ScopeWithUsingStatements.cs" />
     <Compile Include="Syntax\AccessModifier.cs" />
     <Compile Include="Syntax\Definition.cs" />
-    <Compile Include="Syntax\Definitions.cs" />
+    <Compile Include="Syntax\DefinitionCollection.cs" />
     <Compile Include="Syntax\Expressions\AssignmentExpression.cs" />
     <Compile Include="Syntax\Expressions\SelfExpression.cs" />
+    <Compile Include="Syntax\NamedMemberCollection.cs" />
     <Compile Include="Syntax\Members\Destructor.cs" />
+    <Compile Include="Syntax\NamedMember.cs" />
     <Compile Include="Syntax\NamespaceDefinition.cs" />
     <Compile Include="Syntax\ScopeDeclarations\CompilationUnit.cs" />
     <Compile Include="Syntax\Declaration.cs" />
@@ -152,7 +154,6 @@
     <Compile Include="Syntax\Members\Constructor.cs" />
     <Compile Include="Syntax\Members\Field.cs" />
     <Compile Include="Syntax\Members\Method.cs" />
-    <Compile Include="Syntax\Members\MethodLike.cs" />
     <Compile Include="Syntax\Members\Property.cs" />
     <Compile Include="Symbols\Symbol.cs" />
     <Compile Include="Syntax\SyntaxTree.cs" />

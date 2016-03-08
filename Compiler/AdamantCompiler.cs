@@ -36,7 +36,7 @@ namespace Adamant.Exploratory.Compiler
 		public Package CompileProject(string packageName, IEnumerable<CompilationUnit> compilationUnits, IEnumerable<Package> dependencies)
 		{
 			var units = compilationUnits.ToList();
-			var globalDefinitions = new Definitions();
+			var globalDefinitions = new DefinitionCollection();
 			foreach(var compilationUnit in units)
 				AddToDefinitions(globalDefinitions, compilationUnit.Declarations);
 
@@ -53,7 +53,7 @@ namespace Adamant.Exploratory.Compiler
 			return project;
 		}
 
-		private void AddToDefinitions(Definitions globalDefinitions, IEnumerable<Declaration> declarations)
+		private void AddToDefinitions(DefinitionCollection globalDefinitions, IEnumerable<Declaration> declarations)
 		{
 			foreach(var declaration in declarations)
 			{
@@ -64,7 +64,7 @@ namespace Adamant.Exploratory.Compiler
 			}
 		}
 
-		private void AddNamespaceToDefinitions(Definitions definitions, NamespaceDeclaration @namespace)
+		private void AddNamespaceToDefinitions(DefinitionCollection definitions, NamespaceDeclaration @namespace)
 		{
 			var containingNamespace = @namespace.Namespace;
 			foreach(var name in @namespace.Name.Parts())

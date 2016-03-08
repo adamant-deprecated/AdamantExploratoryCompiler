@@ -8,6 +8,6 @@ namespace Adamant.Exploratory.Compiler.Syntax
 		FullyQualifiedName Namespace { get; }
 		Symbol Name { get; }
 		FullyQualifiedName FullyQualifiedName { get; }
-		Definitions Definitions { get; }
+		DefinitionCollection Definitions { get; }
 	}
 }

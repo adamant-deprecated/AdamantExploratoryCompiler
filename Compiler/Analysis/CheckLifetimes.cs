@@ -22,7 +22,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 			declaration.Match()
 				.With<ClassDeclaration>(@class =>
 				{
-					foreach(var member in @class.Members)
+					foreach(var member in @class.NamedMembers)
 					{
 						member.CheckLifetimes();
 					}

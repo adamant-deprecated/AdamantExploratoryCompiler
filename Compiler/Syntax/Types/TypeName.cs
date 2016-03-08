@@ -1,22 +1,32 @@
-﻿using Adamant.Exploratory.Compiler.Symbols;
+﻿using System;
+using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Adamant.Exploratory.Compiler.Syntax.Types
 {
 	public class TypeName : PlainType
 	{
-		public TypeName(TypeName outerType, Symbol symbol)
+		public TypeName(TypeName outerType, Symbol name)
 		{
+			if(name == null) throw new ArgumentNullException(nameof(name));
 			OuterType = outerType;
-			Symbol = symbol;
+			Name = name;
 		}
 
 		public TypeName OuterType { get; }
-		public Symbol Symbol { get; }
+		public Symbol Name { get; }
+		public Definition Definition { get; private set; }
 
 		public void Bind(NameScope scope)
 		{
-			
-			throw new System.NotImplementedException();
+			if(OuterType != null)
+			{
+				OuterType.Bind(scope);
+				var definition = OuterType.Definition.Definitions.TryGetValue(Name);
+				if(definition == null) throw new Exception($"{Name} is not defined in scope");
+				Definition = definition;
+			}
+
+			Definition = scope.Lookup(Name, DefinitionKind.NamespaceOrType).Resolve();
 		}
 	}
 }

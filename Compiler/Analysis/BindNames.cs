@@ -59,7 +59,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 				.With<ClassDeclaration>(@class =>
 				{
 					// TODO class scope with members defined
-					foreach(var member in @class.Members)
+					foreach(var member in @class.NamedMembers)
 						member.BindNames(scope);
 				})
 				.With<FunctionDeclaration>(function =>
