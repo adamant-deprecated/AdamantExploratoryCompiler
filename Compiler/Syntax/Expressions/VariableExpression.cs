@@ -13,7 +13,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 
 		public void Bind(NameScope scope)
 		{
-			var definition = scope.Lookup(Name).Resolve();
+			var definition = scope.Lookup(Name, DefinitionKind.NamespaceOrType).Resolve();
 			// TODO store the definition
 		}
 	}

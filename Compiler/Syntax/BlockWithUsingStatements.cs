@@ -5,12 +5,12 @@ using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public abstract class ScopeWithUsingStatements : SyntaxTree
+	public abstract class BlockWithUsingStatements : SyntaxTree
 	{
 		private readonly List<Declaration> declarations;
 		private readonly List<UsingStatement> usingStatements;
 
-		protected ScopeWithUsingStatements(IEnumerable<UsingStatement> usingStatements, IEnumerable<Declaration> declarations)
+		protected BlockWithUsingStatements(IEnumerable<UsingStatement> usingStatements, IEnumerable<Declaration> declarations)
 		{
 
 			this.usingStatements = usingStatements.ToList();
@@ -25,7 +25,7 @@ namespace Adamant.Exploratory.Compiler.Syntax
 		{
 			get
 			{
-				var scopes = new Stack<ScopeWithUsingStatements>();
+				var scopes = new Stack<BlockWithUsingStatements>();
 				scopes.Push(this);
 				while(scopes.Count != 0)
 				{

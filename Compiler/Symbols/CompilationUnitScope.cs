@@ -4,7 +4,7 @@ using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
-	public class CompilationUnitScope : UsingStatementsScope
+	public class CompilationUnitScope : ScopeWithUsingStatements
 	{
 		private readonly GlobalScope globalScope;
 
@@ -17,21 +17,21 @@ namespace Adamant.Exploratory.Compiler.Symbols
 
 		public override GlobalScope Globals => globalScope;
 
-		public override Definition LookupLocal(Symbol name)
+		public override SymbolDefinitions Lookup(Symbol name, DefinitionKind kind = DefinitionKind.Any)
 		{
-			return globalScope.LookupLocal(name);
-		}
-
-		public override SymbolDefinitions Lookup(Symbol name)
-		{
-			var usingDefinitions = LookupInUsingStatements(name);
+			var usingDefinitions = LookupInUsingStatements(name, kind);
 			if(usingDefinitions.HasAccessibleDefinitions())
 				return usingDefinitions;
 
-			var globalDefinitions = globalScope.Lookup(name);
+			var globalDefinitions = globalScope.Lookup(name, kind);
 			return globalDefinitions.HasAccessibleDefinitions() || usingDefinitions.Count == 0
 				? globalDefinitions
 				: usingDefinitions;
+		}
+
+		public override Definition LookupInCurrentScopeOnly(Symbol name, DefinitionKind kind = DefinitionKind.Any)
+		{
+			return globalScope.LookupInCurrentScopeOnly(name, kind);
 		}
 	}
 }

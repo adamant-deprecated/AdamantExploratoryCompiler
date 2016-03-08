@@ -15,6 +15,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Types
 
 		public void Bind(NameScope scope)
 		{
+			
 			throw new System.NotImplementedException();
 		}
 	}

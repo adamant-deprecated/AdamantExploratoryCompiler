@@ -115,11 +115,12 @@
     <Compile Include="Antlr\RestrictedVisitor.cs" />
     <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
     <Compile Include="Symbols\CompilationUnitScope.cs" />
+    <Compile Include="Symbols\DefinitionKind.cs" />
     <Compile Include="Symbols\NameScope.cs" />
     <Compile Include="Symbols\NamespaceScope.cs" />
     <Compile Include="Symbols\SymbolDefinition.cs" />
     <Compile Include="Symbols\SymbolDefinitions.cs" />
-    <Compile Include="Symbols\UsingStatementsScope.cs" />
+    <Compile Include="Symbols\ScopeWithUsingStatements.cs" />
     <Compile Include="Syntax\AccessModifier.cs" />
     <Compile Include="Syntax\Definition.cs" />
     <Compile Include="Syntax\Definitions.cs" />
@@ -143,7 +144,7 @@
     <Compile Include="Syntax\Expressions\NewExpression.cs" />
     <Compile Include="Syntax\Expressions\NewObjectExpression.cs" />
     <Compile Include="Syntax\Expressions\VariableExpression.cs" />
-    <Compile Include="Syntax\ScopeWithUsingStatements.cs" />
+    <Compile Include="Syntax\BlockWithUsingStatements.cs" />
     <Compile Include="Syntax\ScopeDeclarations\NamespaceDeclaration.cs" />
     <Compile Include="Syntax\ScopeDeclarations\UsingStatement.cs" />
     <Compile Include="Syntax\TextPosition.cs" />

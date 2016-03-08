@@ -4,16 +4,16 @@ using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
-	public abstract class UsingStatementsScope : NameScope
+	public abstract class ScopeWithUsingStatements : NameScope
 	{
 		private readonly Definitions usingDefinitions;
 
-		protected UsingStatementsScope(IEnumerable<Definition> usingDefinitions)
+		protected ScopeWithUsingStatements(IEnumerable<Definition> usingDefinitions)
 		{
 			this.usingDefinitions = new Definitions(usingDefinitions);
 		}
 
-		protected SymbolDefinitions LookupInUsingStatements(Symbol name)
+		protected SymbolDefinitions LookupInUsingStatements(Symbol name, DefinitionKind kind)
 		{
 			throw new NotImplementedException();
 		}

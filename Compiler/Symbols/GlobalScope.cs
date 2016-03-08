@@ -19,13 +19,9 @@ namespace Adamant.Exploratory.Compiler.Symbols
 
 		public override GlobalScope Globals => this;
 
-		public override Definition LookupLocal(Symbol name)
+		public override SymbolDefinitions Lookup(Symbol name, DefinitionKind kind = DefinitionKind.Any)
 		{
-			return globalDefinitions.TryGetValue(name);
-		}
-
-		public override SymbolDefinitions Lookup(Symbol name)
-		{
+			// TODO deal with kind
 			var definition = globalDefinitions.TryGetValue(name);
 			var currentPackage = definition != null
 									? new[] { new SymbolDefinition(definition, true) }
@@ -35,6 +31,12 @@ namespace Adamant.Exploratory.Compiler.Symbols
 				.Select(d => new SymbolDefinition(d, false));
 
 			return new SymbolDefinitions(name, currentPackage.Concat(otherPackages));
+		}
+
+		public override Definition LookupInCurrentScopeOnly(Symbol name, DefinitionKind kind = DefinitionKind.Any)
+		{
+			// TODO deal with kind
+			return globalDefinitions.TryGetValue(name);
 		}
 
 		public SymbolDefinitions LookupInPackage(Symbol name, string packageName)

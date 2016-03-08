@@ -27,7 +27,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 
 		private static IEnumerable<Definition> UsingDefinitions(this UsingStatement usingStatement, GlobalScope globalScope)
 		{
-			var definition = globalScope.Lookup(usingStatement.UsingName).Resolve();
+			var definition = globalScope.Lookup(usingStatement.UsingName, DefinitionKind.NamespaceOrType).Resolve();
 
 			return definition.Match().Returning<IEnumerable<Definition>>()
 				.With<NamespaceDefinition>(@namespace => @namespace.Definitions)
@@ -39,18 +39,18 @@ namespace Adamant.Exploratory.Compiler.Analysis
 				.Exhaustive();
 		}
 
-		public static void BindNames(this Declaration declaration, GlobalScope globalScope, UsingStatementsScope scope)
+		public static void BindNames(this Declaration declaration, GlobalScope globalScope, ScopeWithUsingStatements scope)
 		{
 			declaration.Match()
 				.With<NamespaceDeclaration>(@namespace =>
 				{
 					foreach(var name in @namespace.Name.Parts())
 					{
-						var definition = (NamespaceDefinition)scope.LookupLocal(name);
+						var definition = (NamespaceDefinition)scope.LookupInCurrentScopeOnly(name, DefinitionKind.NamespaceOrType);
 						var isFullNamespace = definition.FullyQualifiedName == @namespace.FullyQualifiedName;
 						var usingDefinitions = isFullNamespace ? @namespace.UsingStatements.SelectMany(u => u.UsingDefinitions(globalScope))
 																: Enumerable.Empty<Definition>();
-						scope = new NamespaceScope(definition, usingDefinitions, scope);
+						scope = new NamespaceScope(scope, definition, usingDefinitions);
 					}
 
 					foreach(var nestedDeclaration in @namespace.Declarations)

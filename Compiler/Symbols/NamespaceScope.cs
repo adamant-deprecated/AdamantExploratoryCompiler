@@ -1,45 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
-	public class NamespaceScope : UsingStatementsScope
+	public class NamespaceScope : ScopeWithUsingStatements
 	{
+		private readonly ScopeWithUsingStatements containingScope;
 		private readonly NamespaceDefinition @namespace;
-		private readonly UsingStatementsScope containingScope;
 
-		public NamespaceScope(NamespaceDefinition @namespace, IEnumerable<Definition> usingDefinitions, UsingStatementsScope containingScope)
+		public NamespaceScope(ScopeWithUsingStatements containingScope, NamespaceDefinition @namespace, IEnumerable<Definition> usingDefinitions)
 			: base(usingDefinitions)
 		{
 			if(@namespace == null) throw new ArgumentNullException(nameof(@namespace));
 			if(containingScope == null) throw new ArgumentNullException(nameof(containingScope));
-			this.@namespace = @namespace;
+
 			this.containingScope = containingScope;
+			this.@namespace = @namespace;
 		}
 
 		public override GlobalScope Globals => containingScope.Globals;
 
-		public override Definition LookupLocal(Symbol name)
-		{
-			return @namespace.Definitions.TryGetValue(name);
-		}
-
-		public override SymbolDefinitions Lookup(Symbol name)
+		public override SymbolDefinitions Lookup(Symbol name, DefinitionKind kind = DefinitionKind.Any)
 		{
 			Definition definition;
 			if(@namespace.Definitions.TryGetValue(name, out definition))
 				return new SymbolDefinitions(name, new SymbolDefinition(definition, true));
 
-			var usingDefinitions = LookupInUsingStatements(name);
+			var usingDefinitions = LookupInUsingStatements(name, kind);
 			if(usingDefinitions.HasAccessibleDefinitions())
 				return usingDefinitions;
 
-			var containingDefinitions = containingScope.Lookup(name);
+			var containingDefinitions = containingScope.Lookup(name, kind);
 			return containingDefinitions.HasAccessibleDefinitions() || usingDefinitions.Count == 0
 				? containingDefinitions
 				: usingDefinitions;
+		}
+
+		public override Definition LookupInCurrentScopeOnly(Symbol name, DefinitionKind kind = DefinitionKind.Any)
+		{
+			// TODO watch out for kind
+			return @namespace.Definitions.TryGetValue(name);
 		}
 	}
 }

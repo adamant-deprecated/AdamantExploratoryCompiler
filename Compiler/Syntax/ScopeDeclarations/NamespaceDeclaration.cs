@@ -3,7 +3,7 @@ using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations
 {
-	public class NamespaceDeclaration : ScopeWithUsingStatements, Declaration
+	public class NamespaceDeclaration : BlockWithUsingStatements, Declaration
 	{
 		public NamespaceDeclaration(FullyQualifiedName @namespace, FullyQualifiedName name, IEnumerable<UsingStatement> usingStatements, IEnumerable<Declaration> declarations)
 			: base(usingStatements, declarations)
