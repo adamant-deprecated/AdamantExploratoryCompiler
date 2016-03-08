@@ -3,7 +3,7 @@
 	/// <summary>
 	/// A node of the syntax tree.  Not clear if this type is actually needed/useful
 	/// </summary>
-	public abstract class SyntaxTree
+	public abstract class SyntaxNode
 	{
 	}
 }

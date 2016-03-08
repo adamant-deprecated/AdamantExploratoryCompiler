@@ -3,7 +3,7 @@ using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public abstract class EntityDeclaration : SyntaxTree, Declaration, Definition
+	public abstract class EntityDeclaration : SyntaxNode, Declaration, Definition
 	{
 		protected EntityDeclaration(
 			AccessModifier access,

@@ -4,7 +4,7 @@ using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations
 {
-	public class UsingStatement : SyntaxTree
+	public class UsingStatement : SyntaxNode
 	{
 		public readonly TextPosition Position;
 		public readonly FullyQualifiedName UsingName;

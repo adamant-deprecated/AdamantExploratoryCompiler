@@ -5,7 +5,7 @@ using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public abstract class BlockWithUsingStatements : SyntaxTree
+	public abstract class BlockWithUsingStatements : SyntaxNode
 	{
 		private readonly List<Declaration> declarations;
 		private readonly List<UsingStatement> usingStatements;
