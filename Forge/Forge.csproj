@@ -69,7 +69,7 @@
     <Compile Include="Config\DependencyConfig.cs" />
     <Compile Include="Config\ProjectConfig.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Project.cs" />
+    <Compile Include="ProjectFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

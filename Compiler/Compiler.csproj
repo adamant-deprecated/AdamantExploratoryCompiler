@@ -157,7 +157,7 @@
     <Compile Include="Syntax\Members\Property.cs" />
     <Compile Include="Symbols\Symbol.cs" />
     <Compile Include="Syntax\SyntaxNode.cs" />
-    <Compile Include="Syntax\Package.cs" />
+    <Compile Include="Syntax\Project.cs" />
     <Compile Include="Symbols\FullyQualifiedName.cs" />
     <Compile Include="Syntax\Safety.cs" />
     <Compile Include="Syntax\Statement.cs" />

@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Adamant.Exploratory.Compiler;
+using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Forge.Config;
 using Newtonsoft.Json;
-using Package = Adamant.Exploratory.Compiler.Syntax.Package;
 
 namespace Adamant.Exploratory.Forge.Commands
 {
@@ -21,7 +21,7 @@ namespace Adamant.Exploratory.Forge.Commands
 		{
 			try
 			{
-				var projects = new Dictionary<string, Package>();
+				var projects = new Dictionary<string, Project>();
 				var compiler = new AdamantCompiler();
 				Forge(ProjectPath, projects, compiler);
 				return 0;
@@ -33,7 +33,7 @@ namespace Adamant.Exploratory.Forge.Commands
 			}
 		}
 
-		private static void Forge(string projectFilePath, IDictionary<string, Package> projects, AdamantCompiler compiler)
+		private static void Forge(string projectFilePath, IDictionary<string, Project> projects, AdamantCompiler compiler)
 		{
 			var projectDirPath = Path.GetFullPath(Path.GetDirectoryName(projectFilePath));
 			var projectConfig = JsonConvert.DeserializeObject<ProjectConfig>(File.ReadAllText(projectFilePath));
@@ -48,7 +48,7 @@ namespace Adamant.Exploratory.Forge.Commands
 			BuildProjects(projectDirPath, projectConfig, projects, targetDirPath, compiler);
 		}
 
-		private static void BuildDependencies(string projectDirPath, ProjectConfig projectConfig, IDictionary<string, Package> projects, AdamantCompiler compiler)
+		private static void BuildDependencies(string projectDirPath, ProjectConfig projectConfig, IDictionary<string, Project> projects, AdamantCompiler compiler)
 		{
 			foreach(var dependency in projectConfig.Dependencies)
 			{
@@ -75,7 +75,7 @@ namespace Adamant.Exploratory.Forge.Commands
 			throw new Exception("Could not find dependency");
 		}
 
-		private static string BuildProject(string projectDirPath, ProjectConfig projectConfig, IDictionary<string, Package> projects, AdamantCompiler compiler)
+		private static string BuildProject(string projectDirPath, ProjectConfig projectConfig, IDictionary<string, Project> projects, AdamantCompiler compiler)
 		{
 			Console.WriteLine($"Building {projectConfig.Name} ...");
 			var compileDirPath = Path.Combine(projectDirPath, ".forge-cache");
@@ -102,7 +102,7 @@ namespace Adamant.Exploratory.Forge.Commands
 		private static void BuildProjects(
 			string projectDirPath,
 			ProjectConfig projectConfig,
-			IDictionary<string, Package> projects,
+			IDictionary<string, Project> projects,
 			string targetDirPath,
 			AdamantCompiler compiler)
 		{

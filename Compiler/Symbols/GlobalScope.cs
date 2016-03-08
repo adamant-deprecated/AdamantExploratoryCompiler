@@ -7,9 +7,9 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	public class GlobalScope : NameScope
 	{
 		private readonly DefinitionCollection globalDefinitions;
-		private readonly List<Package> dependencies;
+		private readonly List<Project> dependencies;
 
-		public GlobalScope(DefinitionCollection globalDefinitions, IEnumerable<Package> dependencies)
+		public GlobalScope(DefinitionCollection globalDefinitions, IEnumerable<Project> dependencies)
 		{
 			this.globalDefinitions = globalDefinitions;
 			this.dependencies = dependencies.ToList();
