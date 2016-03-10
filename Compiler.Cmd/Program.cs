@@ -145,7 +145,7 @@ namespace Adamant.Exploratory.Compiler.Cmd
 		{
 			var parser = new AdamantParser(codePath) { BuildParseTree = true };
 			var tree = parser.compilationUnit();
-			var diagnostics = new DiagnosticsBuilder(new SourceFile(new FileInfo(codePath)));
+			var diagnostics = new ParseDiagnosticsBuilder(new SourceFile(new FileInfo(codePath)));
 			var syntaxCheck = new SyntaxCheckVisitor(diagnostics);
 			tree.Accept(syntaxCheck);
 			// TODO print syntax check errors

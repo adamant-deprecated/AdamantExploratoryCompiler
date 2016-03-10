@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Adamant.Exploratory.Common;
 
 namespace Adamant.Exploratory.Compiler.Symbols
@@ -7,17 +6,19 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	/// <summary>
 	/// A Symbol represents some named entity in code
 	/// </summary>
-	public class Symbol
+	public abstract class Symbol
 	{
 		public readonly string Name;
-		public readonly IReadOnlyList<Location> Locations;
+		private readonly List<Location> locations = new List<Location>();
 
-		public Symbol(string name, IEnumerable<Location> locations)
+		public Symbol(string name)
 		{
-			Requires.NotNullOrEmpty(name, nameof(name));
+			Requires.NotNull(name, nameof(name));
 
 			Name = name;
-			Locations = locations.ToList();
 		}
+
+		public abstract PackageSymbol ContainingPackage { get; }
+		public IReadOnlyList<Location> Locations => locations;
 	}
 }

@@ -2,23 +2,26 @@
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Syntax.Directives;
-using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 {
 	public class NamespaceDeclaration : Declaration
 	{
-		public readonly Name Name;
+		public readonly IReadOnlyList<Token> Names;
 		public readonly IReadOnlyList<UsingDirective> UsingDirectives;
-		public readonly IReadOnlyList<Declaration> Declarations;
+		public readonly IReadOnlyList<Declaration> Members;
 
-		public NamespaceDeclaration(Name name, IEnumerable<UsingDirective> usingDirectives, IEnumerable<Declaration> declarations)
+		public NamespaceDeclaration(IEnumerable<Token> names, IEnumerable<UsingDirective> usingDirectives, IEnumerable<Declaration> declarations)
 		{
-			Requires.NotNull(name, nameof(name));
-
-			Name = name;
+			Names = names.ToList();
+			Requires.That(Names.Count > 0, nameof(names), "Must be at least one name");
+			foreach(var token in Names)
+			{
+				Requires.NotNull(token, "name");
+				SyntaxRequires.TypeIs(token, TokenType.Identifier, "name");
+			}
 			UsingDirectives = usingDirectives.ToList();
-			Declarations = declarations.ToList();
+			Members = declarations.ToList();
 		}
 	}
 }

@@ -47,7 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\DecimalTests.cs" />
     <Compile Include="System\DoubleTests.cs" />
-    <Compile Include="Testing.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

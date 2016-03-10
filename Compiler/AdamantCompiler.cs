@@ -19,7 +19,7 @@ namespace Adamant.Exploratory.Compiler
 			//   * Language Version
 			//   * Dependency Names
 			//   * Defined Preprocessor Symbols
-			var diagnostics = new DiagnosticsBuilder(sourceFile);
+			var diagnostics = new ParseDiagnosticsBuilder(sourceFile);
 			var parser = new AdamantParser(sourceFile.Path);
 			// Stupid ANTLR makes it difficult to do this in the constructor
 			parser.RemoveErrorListeners();
@@ -37,7 +37,8 @@ namespace Adamant.Exploratory.Compiler
 
 		public CompiledPackage Compile(Package package, IEnumerable<CompiledPackage> dependencies)
 		{
-			var packageSymbol = package.BuildSymbolTable();
+			var diagnostics = new DiagnosticsBuilder(package.Diagnostics);
+			var symbolTable = new SymbolTableBuilder(package).Build(diagnostics);
 
 			//var units = compilationUnits.ToList();
 			//var globalDefinitions = new DefinitionCollection();

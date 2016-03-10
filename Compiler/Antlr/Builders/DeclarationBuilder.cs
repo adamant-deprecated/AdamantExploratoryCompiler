@@ -40,9 +40,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		public override Declaration VisitNamespaceDeclaration(AdamantParser.NamespaceDeclarationContext context)
 		{
-			var name = context.namespaceName()
-				._identifiers.Select(Identifier)
-				.Aggregate(default(Name), (left, identifier) => left == null ? (Name)new IdentifierName(identifier) : new QualifiedName(left, new IdentifierName(identifier)));
+			var name = context.namespaceName()._identifiers.Select(Identifier).ToList();
 			var usingDirectives = UsingDirective(context.usingDirective());
 			var declarations = context.declaration().Select(d => d.Accept(this));
 			return new NamespaceDeclaration(name, usingDirectives, declarations);

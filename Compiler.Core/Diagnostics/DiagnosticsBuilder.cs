@@ -4,26 +4,28 @@ namespace Adamant.Exploratory.Compiler.Core.Diagnostics
 {
 	public class DiagnosticsBuilder
 	{
-		public readonly ISourceFile SourceFile;
 		private List<Diagnostic> diagnostics = new List<Diagnostic>();
 
-		public DiagnosticsBuilder(ISourceFile sourceFile)
+		public DiagnosticsBuilder()
 		{
-			SourceFile = sourceFile;
+		}
+
+		public DiagnosticsBuilder(IEnumerable<Diagnostic> diagnostics)
+		{
+			this.diagnostics.AddRange(diagnostics);
+		}
+
+		public void Add(IEnumerable<Diagnostic> diagnostics)
+		{
+			this.diagnostics.AddRange(diagnostics);
 		}
 
 		public IReadOnlyList<Diagnostic> Complete()
 		{
 			var result = diagnostics;
 			diagnostics = null;
+			result.Sort();
 			return result;
-		}
-
-		public Diagnostic ParseError(TextPosition position, string message)
-		{
-			var diagnostic = new Diagnostic(true, CompilerPhase.Parsing, SourceFile, position, message);
-			diagnostics.Add(diagnostic);
-			return diagnostic;
 		}
 	}
 }

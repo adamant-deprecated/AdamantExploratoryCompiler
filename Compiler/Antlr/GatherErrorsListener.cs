@@ -7,9 +7,9 @@ namespace Adamant.Exploratory.Compiler.Antlr
 {
 	public class GatherErrorsListener : IAntlrErrorListener<IToken>
 	{
-		private readonly DiagnosticsBuilder diagnostics;
+		private readonly ParseDiagnosticsBuilder diagnostics;
 
-		public GatherErrorsListener(DiagnosticsBuilder diagnostics)
+		public GatherErrorsListener(ParseDiagnosticsBuilder diagnostics)
 		{
 			this.diagnostics = diagnostics;
 		}

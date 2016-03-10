@@ -13,9 +13,9 @@ namespace Adamant.Exploratory.Compiler.Antlr
 		private static readonly IList<int?> AccessModifier = new List<int?>() { AdamantLexer.Public, AdamantLexer.Private, AdamantLexer.Protected, AdamantLexer.Package };
 		private static readonly IList<IList<int?>> MethodModifiers = new List<IList<int?>>() { AccessModifier };
 
-		private readonly DiagnosticsBuilder diagnostics;
+		private readonly ParseDiagnosticsBuilder diagnostics;
 
-		public SyntaxCheckVisitor(DiagnosticsBuilder diagnostics)
+		public SyntaxCheckVisitor(ParseDiagnosticsBuilder diagnostics)
 		{
 			this.diagnostics = diagnostics;
 		}

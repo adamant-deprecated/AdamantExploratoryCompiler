@@ -44,6 +44,7 @@
     <Compile Include="MatcherWithoutReturn.cs" />
     <Compile Include="MatcherWithReturn.cs" />
     <Compile Include="MatchNotExhaustiveException.cs" />
+    <Compile Include="MultiDictionary.cs" />
     <Compile Include="Null.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

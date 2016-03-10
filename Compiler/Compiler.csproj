@@ -33,10 +33,13 @@
     <Compile Include="Antlr\Builders\NameBuilder.cs" />
     <Compile Include="Antlr\Builders\ReferenceTypeBuilder.cs" />
     <Compile Include="Antlr\Builders\SimpleNameBuilder.cs" />
-    <Compile Include="Symbols\BuildSymbolTable.cs" />
+    <Compile Include="Symbols\DeclarationSymbol.cs" />
     <Compile Include="Symbols\Location.cs" />
+    <Compile Include="Symbols\NamespaceSymbol.cs" />
     <Compile Include="Symbols\PackageSymbol.cs" />
     <Compile Include="Symbols\Symbol.cs" />
+    <Compile Include="Symbols\SymbolTable.cs" />
+    <Compile Include="Symbols\SymbolTableBuilder.cs" />
     <Reference Include="Antlr4.Runtime">
       <HintPath>..\lib\Antlr4.Runtime.dll</HintPath>
     </Reference>

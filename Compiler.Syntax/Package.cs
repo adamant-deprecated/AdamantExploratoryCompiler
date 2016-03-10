@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Adamant.Exploratory.Common;
+using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Syntax.PackageConfig;
 
 namespace Adamant.Exploratory.Compiler.Syntax
@@ -16,6 +17,7 @@ namespace Adamant.Exploratory.Compiler.Syntax
 		public readonly string Name;
 		public readonly IReadOnlyList<CompilationUnit> CompilationUnits;
 		public readonly IReadOnlyDictionary<string, PackageDependency> Dependencies;
+		public readonly IReadOnlyList<Diagnostic> Diagnostics;
 		// TODO Language version
 
 		public Package(string name, IEnumerable<PackageDependency> dependencies)
@@ -30,6 +32,11 @@ namespace Adamant.Exploratory.Compiler.Syntax
 			Name = name;
 			CompilationUnits = compilationUnits;
 			Dependencies = dependencies;
+			var diagnostics = new DiagnosticsBuilder();
+			foreach(var compilationUnit in CompilationUnits)
+				diagnostics.Add(compilationUnit.Diagnostics);
+
+			Diagnostics = diagnostics.Complete();
 		}
 
 		[Pure]
