@@ -13,6 +13,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 			Token name)
 		{
 			Requires.EnumIn(access, nameof(access), AccessModifier.Public, AccessModifier.Package);
+			Requires.NotNull(name, nameof(name));
 			SyntaxRequires.TypeIs(name, TokenType.Identifier, nameof(name));
 
 			Access = access;

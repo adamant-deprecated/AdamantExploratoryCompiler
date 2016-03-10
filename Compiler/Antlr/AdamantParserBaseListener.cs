@@ -166,17 +166,17 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitModifier([NotNull] AdamantParser.ModifierContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.typeParameterList"/>.
+	/// Enter a parse tree produced by <see cref="AdamantParser.typeParameters"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterTypeParameterList([NotNull] AdamantParser.TypeParameterListContext context) { }
+	public virtual void EnterTypeParameters([NotNull] AdamantParser.TypeParametersContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.typeParameterList"/>.
+	/// Exit a parse tree produced by <see cref="AdamantParser.typeParameters"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitTypeParameterList([NotNull] AdamantParser.TypeParameterListContext context) { }
+	public virtual void ExitTypeParameters([NotNull] AdamantParser.TypeParametersContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.typeParameter"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -190,18 +190,6 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitTypeParameter([NotNull] AdamantParser.TypeParameterContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.typeName"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterTypeName([NotNull] AdamantParser.TypeNameContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.typeName"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitTypeName([NotNull] AdamantParser.TypeNameContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.typeArguments"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -214,41 +202,53 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitTypeArguments([NotNull] AdamantParser.TypeArgumentsContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.MutableType"/>.
+	/// Enter a parse tree produced by <see cref="AdamantParser.IdentifierName"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterMutableType([NotNull] AdamantParser.MutableTypeContext context) { }
+	public virtual void EnterIdentifierName([NotNull] AdamantParser.IdentifierNameContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.MutableType"/>.
+	/// Exit a parse tree produced by <see cref="AdamantParser.IdentifierName"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitMutableType([NotNull] AdamantParser.MutableTypeContext context) { }
+	public virtual void ExitIdentifierName([NotNull] AdamantParser.IdentifierNameContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.OwnedType"/>.
+	/// Enter a parse tree produced by <see cref="AdamantParser.GenericName"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterOwnedType([NotNull] AdamantParser.OwnedTypeContext context) { }
+	public virtual void EnterGenericName([NotNull] AdamantParser.GenericNameContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.OwnedType"/>.
+	/// Exit a parse tree produced by <see cref="AdamantParser.GenericName"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitOwnedType([NotNull] AdamantParser.OwnedTypeContext context) { }
+	public virtual void ExitGenericName([NotNull] AdamantParser.GenericNameContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.ImmutableType"/>.
+	/// Enter a parse tree produced by <see cref="AdamantParser.SimpleNameName"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterImmutableType([NotNull] AdamantParser.ImmutableTypeContext context) { }
+	public virtual void EnterSimpleNameName([NotNull] AdamantParser.SimpleNameNameContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.ImmutableType"/>.
+	/// Exit a parse tree produced by <see cref="AdamantParser.SimpleNameName"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitImmutableType([NotNull] AdamantParser.ImmutableTypeContext context) { }
+	public virtual void ExitSimpleNameName([NotNull] AdamantParser.SimpleNameNameContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.QualifiedName"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterQualifiedName([NotNull] AdamantParser.QualifiedNameContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.QualifiedName"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitQualifiedName([NotNull] AdamantParser.QualifiedNameContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.StringType"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -333,6 +333,54 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitPointerType([NotNull] AdamantParser.PointerTypeContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.ImmutableReferenceType"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterImmutableReferenceType([NotNull] AdamantParser.ImmutableReferenceTypeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.ImmutableReferenceType"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitImmutableReferenceType([NotNull] AdamantParser.ImmutableReferenceTypeContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.MutableReferenceType"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterMutableReferenceType([NotNull] AdamantParser.MutableReferenceTypeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.MutableReferenceType"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitMutableReferenceType([NotNull] AdamantParser.MutableReferenceTypeContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.OwnedImmutableReferenceType"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterOwnedImmutableReferenceType([NotNull] AdamantParser.OwnedImmutableReferenceTypeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.OwnedImmutableReferenceType"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitOwnedImmutableReferenceType([NotNull] AdamantParser.OwnedImmutableReferenceTypeContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.OwnedMutableReferenceType"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterOwnedMutableReferenceType([NotNull] AdamantParser.OwnedMutableReferenceTypeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.OwnedMutableReferenceType"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitOwnedMutableReferenceType([NotNull] AdamantParser.OwnedMutableReferenceTypeContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.funcTypeParameterList"/>.
 	/// <para>The default implementation does nothing.</para>

@@ -14,13 +14,12 @@ compilationUnit
 	;
 
 usingDirective
-	: 'using' namespaceName ';'
+	: 'using' namespaceName ';' // TODO using names are allowed to be more complicated than this
 	;
 
 identifier
-	: name=Identifier
-	| name=EscapedIdentifier
-	| name='conversion'
+	: token=Identifier
+	| token=EscapedIdentifier
 	;
 
 namespaceName
@@ -29,69 +28,75 @@ namespaceName
 
 declaration
 	: 'namespace' namespaceName '{' usingDirective* declaration* '}'  #NamespaceDeclaration
-	| attribute* modifier* 'class' name=identifier typeParameterList? baseTypes?
+	| attribute* modifier* 'class' identifier typeParameters? baseTypes?
 		typeParameterConstraintClause*
 		'{' member* '}' #ClassDeclaration
-	| attribute* modifier* kind=('var'|'let') name=identifier (':' ownershipType)? ('=' expression)? ';' #VariableDeclaration
-	| attribute* modifier* name=identifier typeArguments? parameterList '->' returnType=ownershipType typeParameterConstraintClause* methodBody	 #FunctionDeclaration
+	| attribute* modifier* kind=('var'|'let') identifier (':' referenceType)? ('=' expression)? ';' #VariableDeclaration
+	| attribute* modifier* identifier typeArguments? parameterList '->' returnType=referenceType typeParameterConstraintClause* methodBody	 #FunctionDeclaration
 	;
 
 attribute
-	: EscapedIdentifier ('(' ')')?
+	: EscapedIdentifier ('(' ')')? // TODO needs fixed now that escaped identifiers use ` but attributes should still be @
 	;
 
 baseTypes
-	: (':' baseType=typeName? (':' interfaces+=typeName (',' interfaces+=typeName)*)?)
+	: (':' baseType=name? (':' interfaces+=name (',' interfaces+=name)*)?)
 	;
 
 modifier
-	: Symbol='public'
-	| Symbol='private'
-	| Symbol='protected'
-	| Symbol='package'
-	| Symbol='safe'
-	| Symbol='unsafe'
-	| Symbol='abstract'
-	| Symbol='partial'
-	| Symbol='implicit'
-	| Symbol='explicit'
-	| Symbol='sealed'
-	| Symbol='override'
-	| Symbol='async'
-	| Symbol='extern'
+	: token='public'
+	| token='private'
+	| token='protected'
+	| token='package'
+	| token='safe'
+	| token='unsafe'
+	| token='abstract'
+	| token='partial'
+	| token='implicit'
+	| token='explicit'
+	| token='sealed'
+	| token='override'
+	| token='async'
+	| token='extern'
 	;
 
-typeParameterList
+typeParameters
 	: '<' typeParameter (',' typeParameter)* '>'
 	;
 
 typeParameter
-	: name=identifier isList='...'? (':' baseType=typeName)?
-	;
-
-typeName
-	: outerType=typeName '.' identifier typeArguments?
-	| identifier typeArguments?
+	: identifier isList='...'? (':' baseType=valueType)?
 	;
 
 typeArguments
-	: '<' ownershipType (',' ownershipType)* '>'
+	: '<' referenceType (',' referenceType)* '>'
 	;
 
-ownershipType // these are types with ownership modifiers
-	: 'mut' plainType			#MutableType
-	| 'own' 'mut'? plainType	#OwnedType
-	| plainType					#ImmutableType
+simpleName
+	: identifier				#IdentifierName
+	| identifier typeArguments	#GenericName
 	;
 
-plainType
-	: typeName																#NamedType
-	| 'string'																#StringType
-	| name=('byte'|IntType|UIntType|FloatType|FixedType|DecimalType|SizeType)	#PrimitiveNumericType
-	| plainType '?'															#MaybeType
-	| valueType=plainType '*'												#PointerType
-	| ('[' elementTypes+=plainType (',' elementTypes+=plainType)* ']' | '[' ']') #TupleType
-	| funcTypeParameterList '->' ownershipType								#FunctionType
+name
+	: simpleName								#SimpleNameName
+	| leftName=name '.' rightName=simpleName	#QualifiedName
+	;
+
+valueType
+	: name																		#NamedType
+	| token='string'															#StringType
+	| token=('byte'|IntType|UIntType|FloatType|FixedType|DecimalType|SizeType)	#PrimitiveNumericType
+	| valueType '?'																#MaybeType
+	| valueType '*'																#PointerType
+	| ('[' types+=valueType (',' types+=valueType)* ']' | '[' ']')				#TupleType
+	| funcTypeParameterList '->' referenceType									#FunctionType
+	;
+
+referenceType // these are types with lifetimes
+	: valueType				#ImmutableReferenceType
+	| 'mut' valueType		#MutableReferenceType
+	| 'own' valueType		#OwnedImmutableReferenceType
+	| 'own' 'mut' valueType	#OwnedMutableReferenceType
 	;
 
 funcTypeParameterList
@@ -100,7 +105,7 @@ funcTypeParameterList
 	;
 
 funcTypeParameter
-	: parameterModifier* ownershipType
+	: parameterModifier* referenceType
 	;
 
 constExpression
@@ -116,18 +121,18 @@ typeParameterConstraintClause
 
 typeParameterConstraint
 	: 'new' '(' ')'			#ConstructorConstraint
-	| typeName				#TypeConstraint
+	| valueType				#TypeConstraint
 	| typeParameter			#TypeListParameterConstraint // will only be hit for type lists (i.e. "foo...")
 	;
 
 member
-	: attribute* modifier* 'new' name=identifier? parameterList ('->' returnType=ownershipType)? constructorInitializer? methodBody									#Constructor
-	| attribute* modifier* 'delete' parameterList methodBody																										#Destructor
-	| attribute* modifier* 'conversion' typeArguments? parameterList '->' ownershipType typeParameterConstraintClause* methodBody									#ConversionMethod
-	| attribute* modifier* kind=('var'|'let') identifier (':' ownershipType)? ('=' expression)? ';'																	#Field
-	| attribute* modifier* kind=('get'|'set') name=identifier typeArguments? parameterList '->' ownershipType typeParameterConstraintClause* methodBody	#Accessor
-	| attribute* modifier* kind=('get'|'set') '[' ']' typeArguments? parameterList '->' ownershipType typeParameterConstraintClause* methodBody	#Indexer
-	| attribute* modifier* name=identifier typeArguments? parameterList '->' returnType=ownershipType typeParameterConstraintClause* methodBody						#Method
+	: attribute* modifier* 'new' identifier? parameterList ('->' returnType=referenceType)? constructorInitializer? methodBody						#Constructor
+	| attribute* modifier* 'delete' parameterList methodBody																						#Destructor
+	| attribute* modifier* 'conversion' typeArguments? parameterList '->' referenceType typeParameterConstraintClause* methodBody					#ConversionMethod
+	| attribute* modifier* kind=('var'|'let') identifier (':' referenceType)? ('=' expression)? ';'													#Field
+	| attribute* modifier* kind=('get'|'set') identifier typeArguments? parameterList '->' referenceType typeParameterConstraintClause* methodBody	#Accessor
+	| attribute* modifier* kind=('get'|'set') '[' ']' typeArguments? parameterList '->' referenceType typeParameterConstraintClause* methodBody		#Indexer
+	| attribute* modifier* identifier typeArguments? parameterList '->' returnType=referenceType typeParameterConstraintClause* methodBody			#Method
 	;
 
 parameterList
@@ -136,8 +141,8 @@ parameterList
 	;
 
 parameter
-	: modifiers+=parameterModifier* name=identifier? ':' type=ownershipType #namedParameter
-	| modifiers+=parameterModifier* 'own'? 'mut'? name='self'				#selfParameter
+	: modifiers+=parameterModifier* identifier? ':' referenceType	#namedParameter
+	| modifiers+=parameterModifier* 'own'? 'mut'? token='self'		#selfParameter
 	;
 
 parameterModifier
@@ -186,7 +191,7 @@ statement
 	;
 
 localVariableDeclaration
-	: kind=('var'|'let') identifier (':' ownershipType)? ('=' expression)?
+	: kind=('var'|'let') identifier (':' referenceType)? ('=' expression)?
 	;
 
 expression
@@ -208,7 +213,7 @@ expression
 	| <assoc=right> lvalue=expression op=('='|'*='|'/='|'+='|'-='|'and='|'xor='|'or=') rvalue=expression #AssignmentExpression
 	| identifier											#VariableExpression
 	// Since new Class.Constructor() is indistiguishable from new Namespace.Class() we can't parse for named constructor calls here
-	| 'new' typeName '(' argumentList ')'					#NewExpression
+	| 'new' name '(' argumentList ')'						#NewExpression
 	| 'new' baseTypes? '(' argumentList ')' '{' member* '}'	#NewObjectExpression
 	| 'null'												#NullLiteralExpression
 	| 'self'												#SelfExpression

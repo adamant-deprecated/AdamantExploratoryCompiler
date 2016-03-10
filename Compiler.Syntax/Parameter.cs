@@ -5,12 +5,12 @@ namespace Adamant.Exploratory.Compiler.Syntax
 	public class Parameter : SyntaxNode
 	{
 		public readonly Token Name;
-		public readonly Type Type;
+		public readonly ReferenceType Type;
 
-		public Parameter(Token name, Type type)
+		public Parameter(Token name, ReferenceType type)
 		{
+			Requires.NotNull(name, nameof(name));
 			SyntaxRequires.TypeIs(name, TokenType.Identifier, nameof(name));
-			Requires.NotNull(type, nameof(type));
 
 			Name = name;
 			Type = type;

@@ -1,11 +1,14 @@
-﻿namespace Adamant.Exploratory.Compiler.Syntax.Types
+﻿using Adamant.Exploratory.Common;
+
+namespace Adamant.Exploratory.Compiler.Syntax.ValueTypes
 {
-	public class NumericType : PlainType
+	public class NumericType : ValueType
 	{
 		public readonly Token Name;
 
 		public NumericType(Token name)
 		{
+			Requires.NotNull(name, nameof(name));
 			SyntaxRequires.TypeIs(name, TokenType.Identifier, nameof(name));
 
 			Name = name;

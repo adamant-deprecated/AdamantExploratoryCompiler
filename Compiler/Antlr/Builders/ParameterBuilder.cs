@@ -4,9 +4,9 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public class ParameterBuilder : Builder<Parameter>
 	{
-		private readonly DeclarationBuilder build;
+		private readonly IBuildContext build;
 
-		public ParameterBuilder(DeclarationBuilder build)
+		public ParameterBuilder(IBuildContext build)
 		{
 			this.build = build;
 		}
@@ -15,8 +15,8 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			// TODO modifiers
 			// TODO this parameter
-			var name = Identifier(context.name);
-			var type = context.type.Accept(build.Type);
+			var name = Identifier(context.identifier());
+			var type = context.referenceType().Accept(build.ReferenceType);
 			return new Parameter(name, type);
 		}
 
@@ -24,7 +24,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			// TODO modifiers
 			// TODO this parameter
-			var name = Identifier(context.name);
+			var name = Identifier(context.token);
 			return new Parameter(name, null);
 		}
 	}

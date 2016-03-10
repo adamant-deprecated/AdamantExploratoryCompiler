@@ -1,25 +1,21 @@
-﻿using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Syntax.Modifiers;
-using Adamant.Exploratory.Compiler.Syntax.Types;
+﻿using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
 namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 {
 	public class VariableDeclaration : EntityDeclaration
 	{
 		public bool IsMutableBinding;
-		public OwnershipType Type;
+		public ReferenceType Type;
 		public Expression InitExpression;
 
 		public VariableDeclaration(
 			AccessModifier access,
 			bool isMutableBinding,
 			Token name,
-			OwnershipType type,
+			ReferenceType type,
 			Expression initExpression)
 			: base(access, name)
 		{
-			Requires.NotNull(type, nameof(type));
-
 			IsMutableBinding = isMutableBinding;
 			Type = type;
 			InitExpression = initExpression;

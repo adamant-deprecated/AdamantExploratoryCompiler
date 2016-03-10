@@ -21,8 +21,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			// TODO global attributes
 			var usingDirectives = UsingDirective(context.usingDirective());
-			var visitor = new DeclarationBuilder();
-			var declarations = context.declaration().Select(d => d.Accept(visitor));
+			var declarations = context.declaration().Select(d => d.Accept(DeclarationBuilder.Instance));
 			return new CompilationUnit(sourceFile, usingDirectives, declarations, errors);
 		}
 	}

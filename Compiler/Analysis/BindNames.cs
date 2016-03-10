@@ -10,8 +10,7 @@ using Adamant.Exploratory.Compiler.Syntax.Directives;
 using Adamant.Exploratory.Compiler.Syntax.Expressions;
 using Adamant.Exploratory.Compiler.Syntax.Members;
 using Adamant.Exploratory.Compiler.Syntax.Statements;
-using Adamant.Exploratory.Compiler.Syntax.Types;
-using Type = Adamant.Exploratory.Compiler.Syntax.Type;
+using Type = Adamant.Exploratory.Compiler.Syntax.ValueType;
 
 namespace Adamant.Exploratory.Compiler.Analysis
 {

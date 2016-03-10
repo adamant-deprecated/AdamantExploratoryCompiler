@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Antlr\Builders\NameBuilder.cs" />
+    <Compile Include="Antlr\Builders\ReferenceTypeBuilder.cs" />
+    <Compile Include="Antlr\Builders\SimpleNameBuilder.cs" />
     <Compile Include="Symbols\BuildSymbolTable.cs" />
     <Compile Include="Symbols\Location.cs" />
     <Compile Include="Symbols\PackageSymbol.cs" />
@@ -76,7 +79,7 @@
     <Compile Include="Antlr\Builders\MemberBuilder.cs" />
     <Compile Include="Antlr\Builders\ParameterBuilder.cs" />
     <Compile Include="Antlr\Builders\StatementBuilder.cs" />
-    <Compile Include="Antlr\Builders\TypeBuilder.cs" />
+    <Compile Include="Antlr\Builders\ValueTypeBuilder.cs" />
     <Compile Include="Antlr\GatherErrorsListener.cs" />
     <Compile Include="Antlr\PreprocessorLineLexer.cs">
       <DependentUpon>PreprocessorLineLexer.g4</DependentUpon>

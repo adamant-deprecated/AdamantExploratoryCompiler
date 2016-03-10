@@ -3,26 +3,35 @@ using System.Linq;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Adamant.Exploratory.Compiler.Syntax.Modifiers;
-using Adamant.Exploratory.Compiler.Syntax.Types;
+using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public class DeclarationBuilder : Builder<Declaration>, IBuildContext
 	{
+		public static readonly DeclarationBuilder Instance = new DeclarationBuilder();
+
 		private readonly ParameterBuilder parameterBuilder;
 
-		public DeclarationBuilder()
+		private DeclarationBuilder()
 		{
 			parameterBuilder = new ParameterBuilder(this);
+			ValueType = new ValueTypeBuilder(this);
 			Member = new MemberBuilder(this);
 			Expression = new ExpressionBuilder(this);
 			Statement = new StatementBuilder(this);
+			Name = new NameBuilder(this);
+			ReferenceType = new ReferenceTypeBuilder(this);
+			SimpleName = new SimpleNameBuilder();
 		}
 
-		public TypeBuilder Type { get; } = new TypeBuilder();
+		public ValueTypeBuilder ValueType { get; }
 		public StatementBuilder Statement { get; }
 		public ExpressionBuilder Expression { get; }
 		public MemberBuilder Member { get; }
+		public NameBuilder Name { get; }
+		public ReferenceTypeBuilder ReferenceType { get; }
+		public SimpleNameBuilder SimpleName { get; }
 
 		public IList<Parameter> Parameters(AdamantParser.ParameterListContext context)
 		{
@@ -35,8 +44,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 				._identifiers.Select(Identifier)
 				.Aggregate(default(Name), (left, identifier) => left == null ? (Name)new IdentifierName(identifier) : new QualifiedName(left, new IdentifierName(identifier)));
 			var usingDirectives = UsingDirective(context.usingDirective());
-			var visitor = new DeclarationBuilder();
-			var declarations = context.declaration().Select(d => d.Accept(visitor));
+			var declarations = context.declaration().Select(d => d.Accept(this));
 			return new NamespaceDeclaration(name, usingDirectives, declarations);
 		}
 
@@ -49,7 +57,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			var safety = GetSafety(context.modifier());
 			var isAbstract = Has(context.modifier(), AdamantLexer.Abstract);
 			var isSealed = Has(context.modifier(), AdamantLexer.Sealed);
-			var name = Identifier(context.name);
+			var name = Identifier(context.identifier());
 			// TODO base types
 			// TODO type parameter constraints
 			var members = context.member().Select(m => m.Accept(Member));
@@ -60,8 +68,8 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var isMutableBinding = context.kind.Type == AdamantLexer.Var;
-			var name = Identifier(context.name);
-			var type = (OwnershipType)context.ownershipType()?.Accept(Type);
+			var name = Identifier(context.identifier());
+			var type = context.referenceType()?.Accept(ReferenceType);
 			var initExpression = context.expression()?.Accept(Expression);
 			return new VariableDeclaration(accessModifier, isMutableBinding, name, type, initExpression);
 		}
@@ -70,21 +78,21 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var parameters = Parameters(context.parameterList());
-			var name = Identifier(context.name);
-			var returnType = context.returnType.Accept(Type);
+			var name = Identifier(context.identifier());
+			var returnType = context.returnType.Accept(ValueType);
 			var body = context.methodBody().statement().Select(s => s.Accept(Statement));
 			return new FunctionDeclaration(accessModifier, name, parameters, returnType, body);
 		}
 
 		private static bool Has(AdamantParser.ModifierContext[] modifiers, int desiredModifier)
 		{
-			return modifiers.Any(modifier => modifier.Symbol.Type == desiredModifier);
+			return modifiers.Any(modifier => modifier.token.Type == desiredModifier);
 		}
 
 		private static Safety GetSafety(AdamantParser.ModifierContext[] modifiers)
 		{
 			foreach(var modifier in modifiers)
-				switch(modifier.Symbol.Type)
+				switch(modifier.token.Type)
 				{
 					case AdamantLexer.Safe:
 						return Safety.ExplicitSafe;

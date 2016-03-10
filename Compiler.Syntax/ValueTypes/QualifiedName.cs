@@ -1,6 +1,6 @@
 ﻿using Adamant.Exploratory.Common;
 
-namespace Adamant.Exploratory.Compiler.Syntax.Types
+namespace Adamant.Exploratory.Compiler.Syntax.ValueTypes
 {
 	public class QualifiedName : Name
 	{

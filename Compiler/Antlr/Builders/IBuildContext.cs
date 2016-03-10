@@ -5,10 +5,13 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public interface IBuildContext
 	{
-		TypeBuilder Type { get; }
+		ValueTypeBuilder ValueType { get; }
 		StatementBuilder Statement { get; }
 		ExpressionBuilder Expression { get; }
 		MemberBuilder Member { get; }
+		NameBuilder Name { get; }
+		ReferenceTypeBuilder ReferenceType { get; }
+		SimpleNameBuilder SimpleName { get; }
 
 		IList<Parameter> Parameters(AdamantParser.ParameterListContext context);
 	}

@@ -6,12 +6,12 @@ namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 {
 	public class NewObjectExpression : Expression
 	{
-		public readonly Type BaseClass;
-		public readonly IReadOnlyList<Type> Interfaces;
+		public readonly ValueType BaseClass;
+		public readonly IReadOnlyList<ValueType> Interfaces;
 		public readonly IReadOnlyList<Expression> Arguments;
 		public readonly IReadOnlyList<Member> Members;
 
-		public NewObjectExpression(Type baseClass, IEnumerable<Type> interfaces, IEnumerable<Expression> arguments, IEnumerable<Member> members)
+		public NewObjectExpression(ValueType baseClass, IEnumerable<ValueType> interfaces, IEnumerable<Expression> arguments, IEnumerable<Member> members)
 		{
 			Requires.NotNull(baseClass, nameof(baseClass));
 

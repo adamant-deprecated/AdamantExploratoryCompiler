@@ -42,7 +42,7 @@ namespace Adamant.Exploratory.Compiler.Antlr
 			foreach(var expectedModifier in expected)
 			{
 				var modifier = modifiers[0];
-				if(expectedModifier.Contains(modifier.Symbol.Type))
+				if(expectedModifier.Contains(modifier.token.Type))
 				{
 					// It is one of the values we expected.
 					adjustedModifiers.RemoveAt(0);

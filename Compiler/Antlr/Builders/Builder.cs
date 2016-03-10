@@ -5,7 +5,7 @@ using Adamant.Exploratory.Compiler.Core;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Directives;
 using Adamant.Exploratory.Compiler.Syntax.Modifiers;
-using Adamant.Exploratory.Compiler.Syntax.Types;
+using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 using Antlr4.Runtime;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
@@ -23,7 +23,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			// Return the first access modifier
 			foreach(var modifier in modifiers)
-				switch(modifier.Symbol.Type)
+				switch(modifier.token.Type)
 				{
 					case AdamantLexer.Public:
 						return AccessModifier.Public;
@@ -45,7 +45,8 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		protected static Token Identifier(IToken token)
 		{
-			Requires.EnumIn(token.Type, nameof(token), AdamantParser.Identifier, AdamantParser.EscapedIdentifier, AdamantParser.SizeType);
+			if(token == null) return null;
+			Requires.EnumIn(token.Type, nameof(token), AdamantParser.Identifier, AdamantParser.EscapedIdentifier, AdamantParser.SizeType, AdamantParser.Self);
 
 			var text = token.Text;
 			var valueText = text;
@@ -56,7 +57,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		protected static Token Identifier(AdamantParser.IdentifierContext context)
 		{
-			return Identifier(context.name);
+			return Identifier(context?.token);
 		}
 	}
 }

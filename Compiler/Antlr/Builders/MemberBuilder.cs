@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Members;
-using Adamant.Exploratory.Compiler.Syntax.Types;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
@@ -36,7 +35,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			var access = GetAccessModifier(context.modifier());
 			var isMutableReference = context.kind.Type == AdamantLexer.Var;
 			var name = Identifier(context.identifier());
-			var type = (OwnershipType)context.ownershipType()?.Accept(build.Type);
+			var type = context.referenceType()?.Accept(build.ReferenceType);
 			var initExpression = context.expression()?.Accept(build.Expression);
 			return new Field(access, isMutableReference, name, type, initExpression);
 		}
@@ -45,7 +44,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			var access = GetAccessModifier(context.modifier());
 			var accessorType = context.kind.Type == AdamantParser.Get ? AccessorType.Get : AccessorType.Set;
-			var name = Identifier(context.name);
+			var name = Identifier(context.identifier());
 			var parameters = build.Parameters(context.parameterList());
 			var body = context.methodBody().statement().Select(s => s.Accept(build.Statement));
 			return new AccessorMethod(access, accessorType, name, parameters, body);
@@ -63,7 +62,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override Member VisitMethod(AdamantParser.MethodContext context)
 		{
 			var access = GetAccessModifier(context.modifier());
-			var name = Identifier(context.name);
+			var name = Identifier(context.identifier());
 			var parameters = build.Parameters(context.parameterList());
 			var body = context.methodBody().statement().Select(s => s.Accept(build.Statement));
 			return new Method(access, name, parameters, body);

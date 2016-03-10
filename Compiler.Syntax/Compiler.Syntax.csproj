@@ -69,11 +69,12 @@
     <Compile Include="Members\AccessorMethod.cs" />
     <Compile Include="Members\NamedMember.cs" />
     <Compile Include="SyntaxRequires.cs" />
-    <Compile Include="Types\GenericName.cs" />
-    <Compile Include="Types\IdentifierName.cs" />
-    <Compile Include="Types\Name.cs" />
-    <Compile Include="Types\QualifiedName.cs" />
-    <Compile Include="Types\SimpleName.cs" />
+    <Compile Include="ValueTypes\GenericName.cs" />
+    <Compile Include="ValueTypes\IdentifierName.cs" />
+    <Compile Include="ValueTypes\Name.cs" />
+    <Compile Include="ValueTypes\QualifiedName.cs" />
+    <Compile Include="ReferenceType.cs" />
+    <Compile Include="ValueTypes\SimpleName.cs" />
     <Compile Include="Package.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modifiers\Safety.cs" />
@@ -90,13 +91,9 @@
     <Compile Include="SyntaxNode.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="TokenType.cs" />
-    <Compile Include="Type.cs" />
-    <Compile Include="Types\NumericType.cs" />
-    <Compile Include="Types\Ownership.cs" />
-    <Compile Include="Types\OwnershipType.cs" />
-    <Compile Include="Types\PlainType.cs" />
-    <Compile Include="Types\StringType.cs" />
-    <Compile Include="Types\TypeName.cs" />
+    <Compile Include="ValueType.cs" />
+    <Compile Include="ValueTypes\NumericType.cs" />
+    <Compile Include="ValueTypes\StringType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

@@ -4,7 +4,6 @@ using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Adamant.Exploratory.Compiler.Syntax.Expressions;
 using Adamant.Exploratory.Compiler.Syntax.Members;
-using Adamant.Exploratory.Compiler.Syntax.Types;
 
 namespace Adamant.Exploratory.Compiler.Analysis
 {
@@ -60,12 +59,12 @@ namespace Adamant.Exploratory.Compiler.Analysis
 				.Exhaustive();
 		}
 
-		public static Ownership CheckLifetimes(this Expression expression)
-		{
-			return expression.Match().Returning<Ownership>()
-				.With<NewObjectExpression>(_ => Ownership.OwnedMutable)
-				.With<LiteralExpression>(_ => Ownership.BorrowImmutable)
-				.Exhaustive();
-		}
+		//public static Ownership CheckLifetimes(this Expression expression)
+		//{
+		//	return expression.Match().Returning<Ownership>()
+		//		.With<NewObjectExpression>(_ => Ownership.OwnedMutable)
+		//		.With<LiteralExpression>(_ => Ownership.BorrowImmutable)
+		//		.Exhaustive();
+		//}
 	}
 }

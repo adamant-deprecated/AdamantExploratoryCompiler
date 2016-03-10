@@ -2,7 +2,7 @@
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Syntax.Directives;
-using Adamant.Exploratory.Compiler.Syntax.Types;
+using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 {

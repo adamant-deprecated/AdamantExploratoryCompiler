@@ -2,15 +2,15 @@
 using System.Linq;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Expressions;
-using Adamant.Exploratory.Compiler.Syntax.Types;
+using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public class ExpressionBuilder : Builder<Expression>
 	{
-		private readonly DeclarationBuilder build;
+		private readonly IBuildContext build;
 
-		public ExpressionBuilder(DeclarationBuilder build)
+		public ExpressionBuilder(IBuildContext build)
 		{
 			this.build = build;
 		}
@@ -52,7 +52,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		public override Expression VisitNewExpression(AdamantParser.NewExpressionContext context)
 		{
-			var type = (TypeName)context.typeName().Accept(build.Type);
+			var type = context.name().Accept(build.Name);
 			var arguments = context.argumentList()._expressions.Select(exp => exp.Accept(this));
 			return new NewExpression(type, arguments);
 		}
@@ -60,8 +60,8 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override Expression VisitNewObjectExpression(AdamantParser.NewObjectExpressionContext context)
 		{
 			var baseTypes = context.baseTypes();
-			var baseClass = baseTypes?.baseType?.Accept(build.Type);
-			var interfaces = baseTypes?._interfaces.Select(i => i.Accept(build.Type)).ToList() ?? new List<Type>();
+			var baseClass = baseTypes?.baseType?.Accept(build.ValueType);
+			var interfaces = baseTypes?._interfaces.Select(i => i.Accept(build.ValueType)).ToList() ?? new List<ValueType>();
 			var arguments = context.argumentList()._expressions.Select(exp => exp.Accept(this));
 			var members = context.member().Select(m => m.Accept(build.Member));
 			return new NewObjectExpression(baseClass, interfaces, arguments, members);

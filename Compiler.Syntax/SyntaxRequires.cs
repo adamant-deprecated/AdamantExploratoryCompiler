@@ -8,8 +8,8 @@ namespace Adamant.Exploratory.Compiler.Syntax
 		[Conditional("DEBUG")]
 		public static void TypeIs(Token token, TokenType type, string paramName)
 		{
-			Requires.NotNull(token, paramName);
-			Requires.That(token.Type == type,paramName, $"Token must be {type}");
+			if(token != null)
+				Requires.That(token.Type == type, paramName, $"Token must be {type}");
 		}
 	}
 }

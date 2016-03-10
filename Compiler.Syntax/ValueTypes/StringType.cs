@@ -1,6 +1,6 @@
-﻿namespace Adamant.Exploratory.Compiler.Syntax.Types
+﻿namespace Adamant.Exploratory.Compiler.Syntax.ValueTypes
 {
-	public class StringType : PlainType
+	public class StringType : ValueType
 	{
 		//private static readonly Symbol SystemSymbol = new Symbol("System");
 		//private static readonly Symbol RuntimeSymbol = new Symbol("Runtime");
@@ -16,5 +16,11 @@
 		//		.LookupInPackage(SystemSymbol, "System.Runtime").Lookup(RuntimeSymbol).Lookup(StringSymbol)
 		//		.Single().Definition;
 		//}
+		public readonly Token Token;
+
+		public StringType(Token token)
+		{
+			Token = token;
+		}
 	}
 }
