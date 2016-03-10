@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Analysis;
 using Adamant.Exploratory.Compiler.Antlr;
 using Adamant.Exploratory.Compiler.Antlr.Builders;
 using Adamant.Exploratory.Compiler.Compiled;
-using Adamant.Exploratory.Compiler.OldSymbols;
+using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Antlr4.Runtime.Atn;
 
 namespace Adamant.Exploratory.Compiler
@@ -23,19 +19,19 @@ namespace Adamant.Exploratory.Compiler
 			//   * Language Version
 			//   * Dependency Names
 			//   * Defined Preprocessor Symbols
-
+			var diagnostics = new DiagnosticsBuilder(sourceFile);
 			var parser = new AdamantParser(sourceFile.Path);
 			// Stupid ANTLR makes it difficult to do this in the constructor
 			parser.RemoveErrorListeners();
-			var errorsListener = new GatherErrorsListener(sourceFile);
+			var errorsListener = new GatherErrorsListener(diagnostics);
 			parser.AddErrorListener(errorsListener);
 			parser.Interpreter.PredictionMode = PredictionMode.LlExactAmbigDetection;
 
 			var tree = parser.compilationUnit();
-			var syntaxCheck = new SyntaxCheckVisitor();
+			var syntaxCheck = new SyntaxCheckVisitor(diagnostics);
 			tree.Accept(syntaxCheck);
 
-			var compilationUnitBuilder = new CompilationUnitBuilder(sourceFile, errorsListener.Errors);
+			var compilationUnitBuilder = new CompilationUnitBuilder(sourceFile, diagnostics.Complete());
 			return tree.Accept(compilationUnitBuilder);
 		}
 

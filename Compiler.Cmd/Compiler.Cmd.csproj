@@ -65,6 +65,10 @@
       <Project>{041ee85b-e098-4454-9dd9-d7b6723ddf83}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
+      <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
+      <Name>Compiler.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Compiler\Compiler.csproj">
       <Project>{884126DA-5100-4924-8068-B60E5DD01D59}</Project>
       <Name>Compiler</Name>

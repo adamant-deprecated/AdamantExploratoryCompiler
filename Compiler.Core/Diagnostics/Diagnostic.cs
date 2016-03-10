@@ -10,7 +10,7 @@ namespace Adamant.Exploratory.Compiler.Core.Diagnostics
 		public readonly TextPosition Position;
 		public readonly string Message;
 
-		private Diagnostic(bool isError, CompilerPhase phase, ISourceFile file, TextPosition position, string message)
+		internal Diagnostic(bool isError, CompilerPhase phase, ISourceFile file, TextPosition position, string message)
 		{
 			Requires.EnumDefined(phase, nameof(phase));
 			Requires.NotNull(file, nameof(file));
@@ -21,11 +21,6 @@ namespace Adamant.Exploratory.Compiler.Core.Diagnostics
 			File = file;
 			Position = position;
 			Message = message;
-		}
-
-		public static Diagnostic ParseError(ISourceFile file, TextPosition position, string message)
-		{
-			return new Diagnostic(true, CompilerPhase.Parsing, file, position, message);
 		}
 	}
 }

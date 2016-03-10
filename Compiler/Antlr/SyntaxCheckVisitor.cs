@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Void = Adamant.Exploratory.Common.Void;
 
 namespace Adamant.Exploratory.Compiler.Antlr
@@ -12,6 +12,13 @@ namespace Adamant.Exploratory.Compiler.Antlr
 	{
 		private static readonly IList<int?> AccessModifier = new List<int?>() { AdamantLexer.Public, AdamantLexer.Private, AdamantLexer.Protected, AdamantLexer.Package };
 		private static readonly IList<IList<int?>> MethodModifiers = new List<IList<int?>>() { AccessModifier };
+
+		private readonly DiagnosticsBuilder diagnostics;
+
+		public SyntaxCheckVisitor(DiagnosticsBuilder diagnostics)
+		{
+			this.diagnostics = diagnostics;
+		}
 
 		public override Void VisitMethod(AdamantParser.MethodContext context)
 		{

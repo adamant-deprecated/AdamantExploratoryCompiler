@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Adamant.Exploratory.Compiler.Antlr;
 using Adamant.Exploratory.Compiler.Cmd.Options;
+using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Antlr4.Runtime;
 using NDesk.Options;
 using NDesk.Options.Extensions;
@@ -144,8 +145,10 @@ namespace Adamant.Exploratory.Compiler.Cmd
 		{
 			var parser = new AdamantParser(codePath) { BuildParseTree = true };
 			var tree = parser.compilationUnit();
-			var syntaxCheck = new SyntaxCheckVisitor();
+			var diagnostics = new DiagnosticsBuilder(new SourceFile(new FileInfo(codePath)));
+			var syntaxCheck = new SyntaxCheckVisitor(diagnostics);
 			tree.Accept(syntaxCheck);
+			// TODO print syntax check errors
 			output.WriteLine(tree.ToStringTree(parser));
 		}
 	}
