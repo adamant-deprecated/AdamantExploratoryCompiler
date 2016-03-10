@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
-using Adamant.Exploratory.Compiler.Symbols;
-using Adamant.Exploratory.Compiler.Syntax.EntityDeclarations;
+using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public interface IBuildContext
 	{
-		FullyQualifiedName CurrentNamespace { get; }
-
 		TypeBuilder Type { get; }
 		StatementBuilder Statement { get; }
 		ExpressionBuilder Expression { get; }

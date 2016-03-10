@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.EntityDeclarations;
-using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
+using Adamant.Exploratory.Compiler.Syntax.Declarations;
+using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 using Adamant.Exploratory.Compiler.Syntax.Types;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
@@ -12,17 +11,14 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 	{
 		private readonly ParameterBuilder parameterBuilder;
 
-		public DeclarationBuilder(FullyQualifiedName currentNamespace)
+		public DeclarationBuilder()
 		{
-			CurrentNamespace = currentNamespace;
-
 			parameterBuilder = new ParameterBuilder(this);
 			Member = new MemberBuilder(this);
 			Expression = new ExpressionBuilder(this);
 			Statement = new StatementBuilder(this);
 		}
 
-		public FullyQualifiedName CurrentNamespace { get; }
 		public TypeBuilder Type { get; } = new TypeBuilder();
 		public StatementBuilder Statement { get; }
 		public ExpressionBuilder Expression { get; }
@@ -36,12 +32,12 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override Declaration VisitNamespaceDeclaration(AdamantParser.NamespaceDeclarationContext context)
 		{
 			var name = context.namespaceName()
-				._identifiers.Select(Symbol)
-				.Aggregate(default(FullyQualifiedName), (ns, n) => ns.Append(n));
-			var usingStatements = UsingStatements(context.usingStatement());
-			var visitor = new DeclarationBuilder(name);
+				._identifiers.Select(Identifier)
+				.Aggregate(default(Name), (left, identifier) => left == null ? (Name)new IdentifierName(identifier) : new QualifiedName(left, new IdentifierName(identifier)));
+			var usingDirectives = UsingDirective(context.usingDirective());
+			var visitor = new DeclarationBuilder();
 			var declarations = context.declaration().Select(d => d.Accept(visitor));
-			return new NamespaceDeclaration(CurrentNamespace, name, usingStatements, declarations);
+			return new NamespaceDeclaration(name, usingDirectives, declarations);
 		}
 
 		public override Declaration VisitClassDeclaration(AdamantParser.ClassDeclarationContext context)
@@ -53,31 +49,31 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			var safety = GetSafety(context.modifier());
 			var isAbstract = Has(context.modifier(), AdamantLexer.Abstract);
 			var isSealed = Has(context.modifier(), AdamantLexer.Sealed);
-			var name = Symbol(context.name);
+			var name = Identifier(context.name);
 			// TODO base types
 			// TODO type parameter constraints
 			var members = context.member().Select(m => m.Accept(Member));
-			return new ClassDeclaration(accessModifier, isPartial, safety, isSealed, isAbstract, CurrentNamespace, name, members);
+			return new ClassDeclaration(accessModifier, isPartial, safety, isSealed, isAbstract, name, members);
 		}
 
 		public override Declaration VisitVariableDeclaration(AdamantParser.VariableDeclarationContext context)
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
-			var isMutableReference = context.kind.Type == AdamantLexer.Var;
-			var name = Symbol(context.name);
+			var isMutableBinding = context.kind.Type == AdamantLexer.Var;
+			var name = Identifier(context.name);
 			var type = (OwnershipType)context.ownershipType()?.Accept(Type);
 			var initExpression = context.expression()?.Accept(Expression);
-			return new VariableDeclaration(accessModifier, isMutableReference, CurrentNamespace, name, type, initExpression);
+			return new VariableDeclaration(accessModifier, isMutableBinding, name, type, initExpression);
 		}
 
 		public override Declaration VisitFunctionDeclaration(AdamantParser.FunctionDeclarationContext context)
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var parameters = Parameters(context.parameterList());
-			var name = Symbol(context.name);
+			var name = Identifier(context.name);
 			var returnType = context.returnType.Accept(Type);
 			var body = context.methodBody().statement().Select(s => s.Accept(Statement));
-			return new FunctionDeclaration(accessModifier, CurrentNamespace, name, parameters, returnType, body);
+			return new FunctionDeclaration(accessModifier, name, parameters, returnType, body);
 		}
 
 		private static bool Has(AdamantParser.ModifierContext[] modifiers, int desiredModifier)

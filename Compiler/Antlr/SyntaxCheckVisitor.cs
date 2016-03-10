@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Void = Adamant.Exploratory.Common.Void;
 
 namespace Adamant.Exploratory.Compiler.Antlr
 {
@@ -9,15 +10,6 @@ namespace Adamant.Exploratory.Compiler.Antlr
 	/// </summary>
 	public class SyntaxCheckVisitor : AdamantParserBaseVisitor<Void>
 	{
-		public override Void VisitShiftExpression(AdamantParser.ShiftExpressionContext context)
-		{
-			var op1 = context._ops[0];
-			var op2 = context._ops[1];
-			if(op1.StopIndex != op2.StartIndex - 1)
-				throw new NotImplementedException(); // TODO report error on op2 as invalid expression
-			return base.VisitShiftExpression(context);
-		}
-
 		private static readonly IList<int?> AccessModifier = new List<int?>() { AdamantLexer.Public, AdamantLexer.Private, AdamantLexer.Protected, AdamantLexer.Package };
 		private static readonly IList<IList<int?>> MethodModifiers = new List<IList<int?>>() { AccessModifier };
 

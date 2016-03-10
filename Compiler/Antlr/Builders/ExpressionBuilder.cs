@@ -18,7 +18,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override Expression VisitMemberExpression(AdamantParser.MemberExpressionContext context)
 		{
 			var expression = context.expression().Accept(this);
-			var member = context.identifier().GetText();
+			var member = Identifier(context.identifier());
 			return new MemberExpression(expression, member);
 		}
 
@@ -46,8 +46,8 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		public override Expression VisitVariableExpression(AdamantParser.VariableExpressionContext context)
 		{
-			var name = Symbol(context.identifier());
-			return new VariableExpression(name);
+			var name = Identifier(context.identifier());
+			return new VariableExpression(new IdentifierName(name));
 		}
 
 		public override Expression VisitNewExpression(AdamantParser.NewExpressionContext context)

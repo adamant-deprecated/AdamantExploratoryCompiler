@@ -16,7 +16,7 @@ namespace Adamant.Exploratory.Compiler.Preprocessor
 		}
 
 		private Conditional()
-			:this(true)
+			: this(true)
 		{
 			IsRegion = true;
 		}

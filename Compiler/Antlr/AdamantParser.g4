@@ -7,13 +7,13 @@ options
 }
 
 compilationUnit
-	: usingStatement*
+	: usingDirective*
 	  // globalAttribute*
 	  declaration*
 	  EOF
 	;
 
-usingStatement
+usingDirective
 	: 'using' namespaceName ';'
 	;
 
@@ -28,7 +28,7 @@ namespaceName
 	;
 
 declaration
-	: 'namespace' namespaceName '{' usingStatement* declaration* '}'  #NamespaceDeclaration
+	: 'namespace' namespaceName '{' usingDirective* declaration* '}'  #NamespaceDeclaration
 	| attribute* modifier* 'class' name=identifier typeParameterList? baseTypes?
 		typeParameterConstraintClause*
 		'{' member* '}' #ClassDeclaration
@@ -87,11 +87,10 @@ ownershipType // these are types with ownership modifiers
 plainType
 	: typeName																#NamedType
 	| 'string'																#StringType
-	| ('byte'|IntType|UIntType|FloatType|FixedType|DecimalType|SizeType)	#PrimitiveNumericType
+	| name=('byte'|IntType|UIntType|FloatType|FixedType|DecimalType|SizeType)	#PrimitiveNumericType
 	| plainType '?'															#MaybeType
 	| valueType=plainType '*'												#PointerType
-	| elementType=plainType '[' constExpression (',' constExpression)* ']'	#ArrayType
-	| elementType=plainType '[' dimensions+=','* ']'						#ArraySliceType
+	| ('[' elementTypes+=plainType (',' elementTypes+=plainType)* ']' | '[' ']') #TupleType
 	| funcTypeParameterList '->' ownershipType								#FunctionType
 	;
 
@@ -126,7 +125,8 @@ member
 	| attribute* modifier* 'delete' parameterList methodBody																										#Destructor
 	| attribute* modifier* 'conversion' typeArguments? parameterList '->' ownershipType typeParameterConstraintClause* methodBody									#ConversionMethod
 	| attribute* modifier* kind=('var'|'let') identifier (':' ownershipType)? ('=' expression)? ';'																	#Field
-	| attribute* modifier* kind=('get'|'set') (name=identifier|('[' ']')) typeArguments? parameterList '->' ownershipType typeParameterConstraintClause* methodBody	#Property
+	| attribute* modifier* kind=('get'|'set') name=identifier typeArguments? parameterList '->' ownershipType typeParameterConstraintClause* methodBody	#Accessor
+	| attribute* modifier* kind=('get'|'set') '[' ']' typeArguments? parameterList '->' ownershipType typeParameterConstraintClause* methodBody	#Indexer
 	| attribute* modifier* name=identifier typeArguments? parameterList '->' returnType=ownershipType typeParameterConstraintClause* methodBody						#Method
 	;
 
@@ -137,7 +137,7 @@ parameterList
 
 parameter
 	: modifiers+=parameterModifier* name=identifier? ':' type=ownershipType #namedParameter
-	| modifiers+=parameterModifier* 'own'? 'mut'? 'self'					#selfParameter
+	| modifiers+=parameterModifier* 'own'? 'mut'? name='self'				#selfParameter
 	;
 
 parameterModifier
@@ -198,7 +198,6 @@ expression
 	| op=('+'|'-'|'not'|'&'|'*') expression					#UnaryExpression
 	| expression op=('*'|'/') expression					#MultiplicativeExpression
 	| expression op=('+'|'-') expression					#AdditiveExpression
-	| expression (ops+='<' ops+='<' | ops+='>' ops+='>') expression #ShiftExpression
 	| expression op=('<'|'<='|'>'|'>=') expression			#ComparativeExpression
 	| lhs=expression op=('=='|'<>') rhs=expression			#EqualityExpression
 	| expression 'and' expression							#AndExpression

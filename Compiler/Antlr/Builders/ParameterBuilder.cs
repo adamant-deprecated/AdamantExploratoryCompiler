@@ -1,4 +1,4 @@
-﻿using Adamant.Exploratory.Compiler.Syntax.EntityDeclarations;
+﻿using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
@@ -15,7 +15,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			// TODO modifiers
 			// TODO this parameter
-			var name = context.name.GetText();
+			var name = Identifier(context.name);
 			var type = context.type.Accept(build.Type);
 			return new Parameter(name, type);
 		}
@@ -24,7 +24,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		{
 			// TODO modifiers
 			// TODO this parameter
-			var name = "self";
+			var name = Identifier(context.name);
 			return new Parameter(name, null);
 		}
 	}

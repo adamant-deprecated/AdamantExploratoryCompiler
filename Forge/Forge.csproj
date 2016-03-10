@@ -77,6 +77,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
+      <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
+      <Name>Compiler.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler.Syntax\Compiler.Syntax.csproj">
+      <Project>{3DFA5C38-11A2-4B3D-918E-C22A5B5CCB2D}</Project>
+      <Name>Compiler.Syntax</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Compiler\Compiler.csproj">
       <Project>{884126DA-5100-4924-8068-B60E5DD01D59}</Project>
       <Name>Compiler</Name>

@@ -1,10 +1,9 @@
 ﻿using System;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.EntityDeclarations;
+using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Adamant.Exploratory.Compiler.Syntax.Expressions;
 using Adamant.Exploratory.Compiler.Syntax.Members;
-using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
 using Adamant.Exploratory.Compiler.Syntax.Types;
 
 namespace Adamant.Exploratory.Compiler.Analysis
@@ -13,8 +12,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 	{
 		public static void CheckLifetimes(this CompilationUnit compilationUnit)
 		{
-			foreach(var declaration in compilationUnit.Entities)
-				declaration.CheckLifetimes();
+			throw new NotImplementedException();
 		}
 
 		public static void CheckLifetimes(this EntityDeclaration declaration)
@@ -22,10 +20,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 			declaration.Match()
 				.With<ClassDeclaration>(@class =>
 				{
-					foreach(var member in @class.NamedMembers)
-					{
-						member.CheckLifetimes();
-					}
+					throw new NotImplementedException();
 				})
 				.With<FunctionDeclaration>(function =>
 				{

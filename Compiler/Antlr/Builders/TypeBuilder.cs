@@ -1,5 +1,4 @@
-﻿using System;
-using Adamant.Exploratory.Compiler.Syntax.Types;
+﻿using Adamant.Exploratory.Compiler.Syntax.Types;
 using Type = Adamant.Exploratory.Compiler.Syntax.Type;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
@@ -32,15 +31,8 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override Type VisitTypeName(AdamantParser.TypeNameContext context)
 		{
 			var outerType = (TypeName)context.outerType?.Accept(this);
-			var name = Symbol(context.identifier());
+			var name = Identifier(context.identifier());
 			return new TypeName(outerType, name);
-		}
-
-		public override Type VisitArraySliceType(AdamantParser.ArraySliceTypeContext context)
-		{
-			var elementType = context.elementType.Accept(this);
-			var dimensions = context._dimensions.Count + 1;
-			return new ArraySliceType(elementType, dimensions);
 		}
 
 		public override Type VisitMaybeType(AdamantParser.MaybeTypeContext context)
@@ -51,7 +43,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		public override Type VisitPrimitiveNumericType(AdamantParser.PrimitiveNumericTypeContext context)
 		{
-			return new NumericType(context.GetText());
+			return new NumericType(Identifier(context.name));
 		}
 
 		public override Type VisitStringType(AdamantParser.StringTypeContext context)

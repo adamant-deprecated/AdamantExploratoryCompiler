@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Symbols\BuildSymbolTable.cs" />
+    <Compile Include="Symbols\Location.cs" />
+    <Compile Include="Symbols\PackageSymbol.cs" />
+    <Compile Include="Symbols\Symbol.cs" />
     <Reference Include="Antlr4.Runtime">
       <HintPath>..\lib\Antlr4.Runtime.dll</HintPath>
     </Reference>
@@ -73,7 +77,7 @@
     <Compile Include="Antlr\Builders\ParameterBuilder.cs" />
     <Compile Include="Antlr\Builders\StatementBuilder.cs" />
     <Compile Include="Antlr\Builders\TypeBuilder.cs" />
-    <Compile Include="Antlr\FileNameErrorListener.cs" />
+    <Compile Include="Antlr\GatherErrorsListener.cs" />
     <Compile Include="Antlr\PreprocessorLineLexer.cs">
       <DependentUpon>PreprocessorLineLexer.g4</DependentUpon>
     </Compile>
@@ -114,68 +118,23 @@
   <ItemGroup>
     <Compile Include="Antlr\RestrictedVisitor.cs" />
     <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
-    <Compile Include="Symbols\CompilationUnitScope.cs" />
-    <Compile Include="Symbols\DefinitionKind.cs" />
-    <Compile Include="Symbols\NameScope.cs" />
-    <Compile Include="Symbols\NamespaceScope.cs" />
-    <Compile Include="Symbols\SymbolDefinition.cs" />
-    <Compile Include="Symbols\SymbolDefinitions.cs" />
-    <Compile Include="Symbols\ScopeWithUsingStatements.cs" />
-    <Compile Include="Syntax\AccessModifier.cs" />
-    <Compile Include="Syntax\Definition.cs" />
-    <Compile Include="Syntax\DefinitionCollection.cs" />
-    <Compile Include="Syntax\Expressions\AssignmentExpression.cs" />
-    <Compile Include="Syntax\Expressions\SelfExpression.cs" />
-    <Compile Include="Syntax\NamedMemberCollection.cs" />
-    <Compile Include="Syntax\Members\Destructor.cs" />
-    <Compile Include="Syntax\NamedMember.cs" />
-    <Compile Include="Syntax\NamespaceDefinition.cs" />
-    <Compile Include="Syntax\ScopeDeclarations\CompilationUnit.cs" />
-    <Compile Include="Syntax\Declaration.cs" />
-    <Compile Include="Syntax\EntityDeclarations\ClassDeclaration.cs" />
-    <Compile Include="Syntax\EntityDeclarations\FunctionDeclaration.cs" />
-    <Compile Include="Syntax\EntityDeclarations\VariableDeclaration.cs" />
-    <Compile Include="Syntax\EntityDeclarations\Parameter.cs" />
-    <Compile Include="Syntax\EntityDeclaration.cs" />
-    <Compile Include="Syntax\Expression.cs" />
-    <Compile Include="Syntax\Expressions\BinaryOperatorExpression.cs" />
-    <Compile Include="Syntax\Expressions\CallExpression.cs" />
-    <Compile Include="Syntax\Expressions\IfExpression.cs" />
-    <Compile Include="Syntax\Expressions\LiteralExpression.cs" />
-    <Compile Include="Syntax\Expressions\MemberExpression.cs" />
-    <Compile Include="Syntax\Expressions\NewExpression.cs" />
-    <Compile Include="Syntax\Expressions\NewObjectExpression.cs" />
-    <Compile Include="Syntax\Expressions\VariableExpression.cs" />
-    <Compile Include="Syntax\BlockWithUsingStatements.cs" />
-    <Compile Include="Syntax\ScopeDeclarations\NamespaceDeclaration.cs" />
-    <Compile Include="Syntax\ScopeDeclarations\UsingStatement.cs" />
-    <Compile Include="Syntax\TextPosition.cs" />
-    <Compile Include="Syntax\Member.cs" />
-    <Compile Include="Syntax\Members\Constructor.cs" />
-    <Compile Include="Syntax\Members\Field.cs" />
-    <Compile Include="Syntax\Members\Method.cs" />
-    <Compile Include="Syntax\Members\Property.cs" />
-    <Compile Include="Symbols\Symbol.cs" />
-    <Compile Include="Syntax\SyntaxNode.cs" />
-    <Compile Include="Syntax\Project.cs" />
-    <Compile Include="Symbols\FullyQualifiedName.cs" />
-    <Compile Include="Syntax\Safety.cs" />
-    <Compile Include="Syntax\Statement.cs" />
-    <Compile Include="Syntax\Statements\ExpressionStatement.cs" />
-    <Compile Include="Syntax\Statements\ForeachStatement.cs" />
-    <Compile Include="Syntax\Statements\IfStatement.cs" />
-    <Compile Include="Syntax\Statements\ReturnStatement.cs" />
-    <Compile Include="Syntax\Statements\ThrowStatement.cs" />
-    <Compile Include="Syntax\Statements\VariableDeclarationStatement.cs" />
-    <Compile Include="Syntax\Type.cs" />
-    <Compile Include="Syntax\Types\ArraySliceType.cs" />
-    <Compile Include="Syntax\Types\NumericType.cs" />
-    <Compile Include="Syntax\Types\Ownership.cs" />
-    <Compile Include="Syntax\Types\OwnershipType.cs" />
-    <Compile Include="Syntax\Types\PlainType.cs" />
-    <Compile Include="Syntax\Types\StringType.cs" />
-    <Compile Include="Syntax\Types\TypeName.cs" />
-    <Compile Include="Symbols\GlobalScope.cs" />
+    <Compile Include="Binders\Binder.cs" />
+    <Compile Include="Binders\PackageBinder.cs" />
+    <Compile Include="Compiled\CompiledProject.cs" />
+    <Compile Include="Compiled\CompiledUnit.cs" />
+    <Compile Include="SourceFile.cs" />
+    <Compile Include="OldSymbols\CompilationUnitScope.cs" />
+    <Compile Include="OldSymbols\Definition.cs" />
+    <Compile Include="OldSymbols\DefinitionCollection.cs" />
+    <Compile Include="OldSymbols\DefinitionKind.cs" />
+    <Compile Include="OldSymbols\NameScope.cs" />
+    <Compile Include="Binders\ContainerBinder.cs" />
+    <Compile Include="OldSymbols\SymbolDefinition.cs" />
+    <Compile Include="OldSymbols\SymbolDefinitions.cs" />
+    <Compile Include="OldSymbols\ScopeWithUsingStatements.cs" />
+    <Compile Include="OldSymbols\Symbol.cs" />
+    <Compile Include="OldSymbols\FullyQualifiedName.cs" />
+    <Compile Include="OldSymbols\GlobalScope.cs" />
     <Compile Include="Preprocessor\Conditional.cs" />
     <Compile Include="Preprocessor\PreprocessorState.cs" />
     <Compile Include="Preprocessor\PreprocessorVisitor.cs" />
@@ -185,6 +144,14 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{041ee85b-e098-4454-9dd9-d7b6723ddf83}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
+      <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
+      <Name>Compiler.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler.Syntax\Compiler.Syntax.csproj">
+      <Project>{3dfa5c38-11a2-4b3d-918e-c22a5b5ccb2d}</Project>
+      <Name>Compiler.Syntax</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

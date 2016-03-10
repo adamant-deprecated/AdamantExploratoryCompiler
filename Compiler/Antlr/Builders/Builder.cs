@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Common;
+using Adamant.Exploratory.Compiler.Core;
 using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.ScopeDeclarations;
+using Adamant.Exploratory.Compiler.Syntax.Directives;
+using Adamant.Exploratory.Compiler.Syntax.Modifiers;
+using Adamant.Exploratory.Compiler.Syntax.Types;
 using Antlr4.Runtime;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public abstract class Builder<T> : RestrictedVisitor<T>
 	{
-		protected static IEnumerable<UsingStatement> UsingStatements(AdamantParser.UsingStatementContext[] contexts)
+		protected static IEnumerable<UsingDirective> UsingDirective(AdamantParser.UsingDirectiveContext[] contexts)
 		{
-			return contexts.Select(s => new UsingStatement(PositionOf(s.namespaceName().Start),
-					s.namespaceName()
-						._identifiers.Select(Symbol)
-						.Aggregate(default(FullyQualifiedName), (name, symbol) => name.Append(symbol))));
+			return contexts.Select(s => new UsingDirective(s.namespaceName()
+				._identifiers.Select(Identifier)
+				.Aggregate(default(Name), (left, identifier) => left == null ? (Name)new IdentifierName(identifier) : new QualifiedName(left, new IdentifierName(identifier)))));
 		}
 
 		protected static AccessModifier GetAccessModifier(AdamantParser.ModifierContext[] modifiers)
@@ -41,15 +43,15 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			return new TextPosition(token.StartIndex, token.Line, token.Column);
 		}
 
-		protected static Symbol Symbol(IToken token)
+		protected static Token Identifier(IToken token)
 		{
-			return new Symbol(token.Text);
+			Requires.That(token.Type == AdamantParser.Identifier, nameof(token), "Must be an identifier");
+			return new Token(TokenType.Identifier, PositionOf(token), token.Text);
 		}
 
-		protected static Symbol Symbol(AdamantParser.IdentifierContext context)
+		protected static Token Identifier(AdamantParser.IdentifierContext context)
 		{
-			var name = context?.GetText();
-			return name != null ? new Symbol(name) : null;
+			return Identifier(context.name);
 		}
 	}
 }

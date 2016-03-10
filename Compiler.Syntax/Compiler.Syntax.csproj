@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3DFA5C38-11A2-4B3D-918E-C22A5B5CCB2D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Adamant.Exploratory.Compiler.Syntax</RootNamespace>
+    <AssemblyName>Adamant.Exploratory.Compiler.Syntax</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Members\AccessorType.cs" />
+    <Compile Include="Members\IndexerMethod.cs" />
+    <Compile Include="Modifiers\AccessModifier.cs" />
+    <Compile Include="Declaration.cs" />
+    <Compile Include="Declarations\EntityDeclaration.cs" />
+    <Compile Include="Declarations\ClassDeclaration.cs" />
+    <Compile Include="Declarations\FunctionDeclaration.cs" />
+    <Compile Include="PackageConfig\PackageDependency.cs" />
+    <Compile Include="Parameter.cs" />
+    <Compile Include="Declarations\VariableDeclaration.cs" />
+    <Compile Include="Expression.cs" />
+    <Compile Include="Expressions\AssignmentExpression.cs" />
+    <Compile Include="Expressions\BinaryOperatorExpression.cs" />
+    <Compile Include="Expressions\CallExpression.cs" />
+    <Compile Include="Expressions\IfExpression.cs" />
+    <Compile Include="Expressions\LiteralExpression.cs" />
+    <Compile Include="Expressions\MemberExpression.cs" />
+    <Compile Include="Expressions\NewExpression.cs" />
+    <Compile Include="Expressions\NewObjectExpression.cs" />
+    <Compile Include="Expressions\SelfExpression.cs" />
+    <Compile Include="Expressions\VariableExpression.cs" />
+    <Compile Include="Member.cs" />
+    <Compile Include="Members\Constructor.cs" />
+    <Compile Include="Members\Destructor.cs" />
+    <Compile Include="Members\Field.cs" />
+    <Compile Include="Members\Method.cs" />
+    <Compile Include="Members\AccessorMethod.cs" />
+    <Compile Include="Members\NamedMember.cs" />
+    <Compile Include="SyntaxRequires.cs" />
+    <Compile Include="Types\GenericName.cs" />
+    <Compile Include="Types\IdentifierName.cs" />
+    <Compile Include="Types\Name.cs" />
+    <Compile Include="Types\QualifiedName.cs" />
+    <Compile Include="Types\SimpleName.cs" />
+    <Compile Include="Package.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Modifiers\Safety.cs" />
+    <Compile Include="CompilationUnit.cs" />
+    <Compile Include="Declarations\NamespaceDeclaration.cs" />
+    <Compile Include="Directives\UsingDirective.cs" />
+    <Compile Include="Statement.cs" />
+    <Compile Include="Statements\ExpressionStatement.cs" />
+    <Compile Include="Statements\ForeachStatement.cs" />
+    <Compile Include="Statements\IfStatement.cs" />
+    <Compile Include="Statements\ReturnStatement.cs" />
+    <Compile Include="Statements\ThrowStatement.cs" />
+    <Compile Include="Statements\VariableDeclarationStatement.cs" />
+    <Compile Include="SyntaxNode.cs" />
+    <Compile Include="Token.cs" />
+    <Compile Include="TokenType.cs" />
+    <Compile Include="Type.cs" />
+    <Compile Include="Types\NumericType.cs" />
+    <Compile Include="Types\Ownership.cs" />
+    <Compile Include="Types\OwnershipType.cs" />
+    <Compile Include="Types\PlainType.cs" />
+    <Compile Include="Types\StringType.cs" />
+    <Compile Include="Types\TypeName.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{041ee85b-e098-4454-9dd9-d7b6723ddf83}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
+      <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
+      <Name>Compiler.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
