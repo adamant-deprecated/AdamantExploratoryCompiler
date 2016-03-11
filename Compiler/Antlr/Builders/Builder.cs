@@ -46,7 +46,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		protected static Token Identifier(IToken token)
 		{
 			if(token == null) return null;
-			Requires.EnumIn(token.Type, nameof(token), AdamantParser.Identifier, AdamantParser.EscapedIdentifier, AdamantParser.SizeType, AdamantParser.Self);
+			Requires.EnumIn(token.Type, nameof(token), AdamantParser.Identifier, AdamantParser.EscapedIdentifier, AdamantParser.SizeType, AdamantParser.Self, AdamantParser.String);
 
 			var text = token.Text;
 			var valueText = text;

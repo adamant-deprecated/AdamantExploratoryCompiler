@@ -1,8 +1,9 @@
-﻿using Adamant.Exploratory.Common;
+﻿using System;
+using Adamant.Exploratory.Common;
 
 namespace Adamant.Exploratory.Compiler.Core.Diagnostics
 {
-	public class Diagnostic
+	public class Diagnostic : IComparable<Diagnostic>
 	{
 		public readonly bool IsError;
 		public readonly CompilerPhase Phase;
@@ -21,6 +22,17 @@ namespace Adamant.Exploratory.Compiler.Core.Diagnostics
 			File = file;
 			Position = position;
 			Message = message;
+		}
+
+		public int CompareTo(Diagnostic other)
+		{
+			var compare = File.CompareTo(other.File);
+			if(compare != 0) return compare;
+			compare = Position.CompareTo(other.Position);
+			if(compare != 0) return compare;
+			compare = IsError.CompareTo(other.IsError);
+			if(compare != 0) return compare;
+			return string.Compare(Message, other.Message, StringComparison.InvariantCultureIgnoreCase);
 		}
 	}
 }

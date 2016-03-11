@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using Adamant.Exploratory.Compiler;
 using Adamant.Exploratory.Compiler.Compiled;
+using Adamant.Exploratory.Compiler.Core;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.PackageConfig;
 using Adamant.Exploratory.Forge.Config;
@@ -83,14 +84,20 @@ namespace Adamant.Exploratory.Forge.Commands
 			var compileDirPath = Path.Combine(projectDirPath, ".forge-cache");
 			DeleteDirectoryIfExists(compileDirPath);
 
+			var isApp = projectConfig.Template == "app";
+			var targetDirPath = Path.Combine(projectDirPath, "targets/debug");
+
 			var sourceFiles = new DirectoryInfo(Path.Combine(projectDirPath, "src")).GetFiles("*.adam", SearchOption.AllDirectories);
 			// TODO read trusted from config
 			var package = new Package(projectConfig.Name, projectConfig.Dependencies.Select(d => new PackageDependency(d.Key, null, true)));
 			package = package.With(sourceFiles.Select(fileInfo => compiler.Parse(package, new SourceFile(fileInfo))));
+			if(package.Diagnostics.Count > 0)
+			{
+				PrintDiagnostics(package);
+				return targetDirPath;
+			}
 			var compiledPackage = compiler.Compile(package, packages.Values);
 
-			var isApp = projectConfig.Template == "app";
-			var targetDirPath = Path.Combine(projectDirPath, "targets/debug");
 			DeleteDirectoryIfExists(targetDirPath);
 
 			if(isApp)
@@ -138,6 +145,24 @@ namespace Adamant.Exploratory.Forge.Commands
 				{
 					// Ignore, we want to retry
 				}
+			}
+		}
+
+		private static void PrintDiagnostics(Package package)
+		{
+			ISourceFile file = null;
+			foreach(var diagnostic in package.Diagnostics)
+			{
+				if(file != diagnostic.File)
+				{
+					file = diagnostic.File;
+					Console.WriteLine($"In {file.Name}");
+				}
+				var level = diagnostic.IsError ? "Error" : "Warning";
+				var line = diagnostic.Position.Line + 1;
+				var column = diagnostic.Position.Column + 1;
+				Console.WriteLine($"{level} on line {line} at character {column}: ");
+				Console.WriteLine($"    {diagnostic.Message}");
 			}
 		}
 	}

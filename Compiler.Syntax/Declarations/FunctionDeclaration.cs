@@ -7,14 +7,14 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 	public class FunctionDeclaration : EntityDeclaration
 	{
 		public readonly IReadOnlyList<Parameter> Parameters;
-		public readonly ValueType ReturnType;
+		public readonly ReferenceType ReturnType;
 		public readonly IReadOnlyList<Statement> Body;
 
 		public FunctionDeclaration(
 			AccessModifier access,
 			Token name,
 			IEnumerable<Parameter> parameters,
-			ValueType returnType,
+			ReferenceType returnType,
 			IEnumerable<Statement> body)
 			: base(access, name)
 		{

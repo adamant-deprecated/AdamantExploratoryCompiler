@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Adamant.Exploratory.Compiler.Core;
 
 namespace Adamant.Exploratory.Compiler
@@ -15,5 +16,10 @@ namespace Adamant.Exploratory.Compiler
 		public string Name => fileInfo.FullName;
 
 		public string Path => fileInfo.FullName;
+
+		public int CompareTo(ISourceFile other)
+		{
+			return string.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase);
+		}
 	}
 }

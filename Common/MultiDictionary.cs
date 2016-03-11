@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Adamant.Exploratory.Common
 {
-	// TODO this doesn't really behave like a IDictionary<TKey, IReadOnlyList<TValue>>
+	// TODO this doesn't really behave like an IDictionary<TKey, IReadOnlyList<TValue>>
 	public class MultiDictionary<TKey, TValue> : IDictionary<TKey, IReadOnlyList<TValue>>
 	{
 		private static readonly IReadOnlyList<TValue> Empty = new List<TValue>(0);

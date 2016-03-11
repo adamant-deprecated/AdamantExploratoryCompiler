@@ -27,5 +27,10 @@ namespace Adamant.Exploratory.Compiler.Core.Diagnostics
 			result.Sort();
 			return result;
 		}
+
+		public void AddBindingError(ISourceFile file, TextPosition position, string message)
+		{
+			diagnostics.Add(new Diagnostic(true, CompilerPhase.Binding, file, position, message));
+		}
 	}
 }

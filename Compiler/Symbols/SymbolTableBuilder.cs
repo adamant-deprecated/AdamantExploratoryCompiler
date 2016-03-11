@@ -59,13 +59,29 @@ namespace Adamant.Exploratory.Compiler.Symbols
 						if(existingSymbols.Count > 0)
 							foreach(var symbol in existingSymbols)
 							{
-								// TODO report duplicate error on symbol
+								// TODO report duplicate error on symbol, need to worry about all locations
+								//diagnostics.AddBindingError(symbol.ContainingPackage, TODO, TODO);
 							}
 
+						// TODO need to be dealing with locations here
 						containingNamespace.Add(new NamespaceSymbol(packageSymbol, containingNamespace, name.ValueText));
 					}
+					symbols.Add(@namespace, containingNamespace);
 					foreach(var member in @namespace.Members)
 						Build(member, containingNamespace);
+				})
+				.With<ClassDeclaration>(@class =>
+				{
+					// TODO check for and report duplicate symbols
+					var symbol = new ClassSymbol(packageSymbol, containingNamespace, @class.Name.ValueText);
+					containingNamespace.Add(symbol);
+					symbols.Add(@class, symbol);
+				})
+				.With<FunctionDeclaration>(function =>
+				{
+					var symbol = new FunctionSymbol(packageSymbol, containingNamespace, function.Name.ValueText);
+					containingNamespace.Add(symbol);
+					symbols.Add(function, symbol);
 				})
 				.Exhaustive();
 		}

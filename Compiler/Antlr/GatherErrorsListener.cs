@@ -17,7 +17,7 @@ namespace Adamant.Exploratory.Compiler.Antlr
 		public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
 		{
 			// TODO we really should distinguish lexing and parsing errors
-			diagnostics.ParseError(new TextPosition(0, line, charPositionInLine), msg);
+			diagnostics.ParseError(new TextPosition(offendingSymbol.StartIndex, line - 1, charPositionInLine), msg);
 		}
 	}
 }

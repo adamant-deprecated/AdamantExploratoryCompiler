@@ -77,7 +77,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			var accessModifier = GetAccessModifier(context.modifier());
 			var parameters = Parameters(context.parameterList());
 			var name = Identifier(context.identifier());
-			var returnType = context.returnType.Accept(ValueType);
+			var returnType = context.returnType.Accept(ReferenceType);
 			var body = context.methodBody().statement().Select(s => s.Accept(Statement));
 			return new FunctionDeclaration(accessModifier, name, parameters, returnType, body);
 		}

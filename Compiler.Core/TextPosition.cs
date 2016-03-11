@@ -1,4 +1,5 @@
-﻿using Adamant.Exploratory.Common;
+﻿using System;
+using Adamant.Exploratory.Common;
 
 namespace Adamant.Exploratory.Compiler.Core
 {
@@ -6,7 +7,7 @@ namespace Adamant.Exploratory.Compiler.Core
 	/// Represents a position in a source file. All values are zero based.  Newline chars should be
 	/// reported as on the line they terminate.
 	/// </summary>
-	public struct TextPosition
+	public struct TextPosition : IComparable<TextPosition>
 	{
 		public readonly long Offset;
 		public readonly int Line;
@@ -21,6 +22,11 @@ namespace Adamant.Exploratory.Compiler.Core
 			Offset = offset;
 			Line = line;
 			Column = column;
+		}
+
+		public int CompareTo(TextPosition other)
+		{
+			return Offset.CompareTo(other.Offset);
 		}
 	}
 }
