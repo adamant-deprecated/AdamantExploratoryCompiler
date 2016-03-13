@@ -54,7 +54,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Compile Include="AdamantCompiler.cs" />
-    <Compile Include="Analysis\BindNames.cs" />
+    <Compile Include="Binders\BindSymbolsExtension.cs" />
     <Compile Include="Analysis\CheckLifetimes.cs" />
     <Compile Include="Antlr\AdamantLexer.cs">
       <DependentUpon>AdamantLexer.g4</DependentUpon>
@@ -133,7 +133,6 @@
     <Compile Include="SourceFile.cs" />
     <Compile Include="OldSymbols\CompilationUnitScope.cs" />
     <Compile Include="OldSymbols\Definition.cs" />
-    <Compile Include="OldSymbols\DefinitionCollection.cs" />
     <Compile Include="OldSymbols\DefinitionKind.cs" />
     <Compile Include="OldSymbols\NameScope.cs" />
     <Compile Include="Binders\ContainerBinder.cs" />

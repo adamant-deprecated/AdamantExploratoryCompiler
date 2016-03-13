@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Binders;
-using Adamant.Exploratory.Compiler.OldSymbols;
+﻿using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.Declarations;
-using Adamant.Exploratory.Compiler.Syntax.Directives;
-using Adamant.Exploratory.Compiler.Syntax.Expressions;
-using Adamant.Exploratory.Compiler.Syntax.Members;
-using Adamant.Exploratory.Compiler.Syntax.Statements;
-using Type = Adamant.Exploratory.Compiler.Syntax.ValueType;
 
-namespace Adamant.Exploratory.Compiler.Analysis
+namespace Adamant.Exploratory.Compiler.Binders
 {
-	public static class BindNamesExtensions
+	public static class BindSymbolsExtension
 	{
-		//public static void BindNames(this CompilationUnit compilationUnit, GlobalScope globalScope)
-		//{
-		//	var usingDefinitions = compilationUnit.UsingDirectives.SelectMany(u => u.UsingDefinitions(globalScope));
-		//	var scope = new CompilationUnitScope(globalScope, usingDefinitions);
+		public static void BindSymbols(this Package package, SymbolTable symbolTable)
+		{
+			var packageBinder = new PackageBinder(symbolTable.Package);
+			foreach(var compilationUnit in package.CompilationUnits)
+				compilationUnit.BindSymbols(packageBinder.GlobalNamespace);
+		}
 
-		//	foreach(var declaration in compilationUnit.Declarations)
-		//		declaration.BindNames(globalScope, scope);
-		//}
+		public static void BindSymbols(this CompilationUnit compilationUnit, ContainerBinder containingScope)
+		{
+			//var usingDefinitions = compilationUnit.UsingDirectives.SelectMany(u => u.UsingDefinitions(globalScope));
+			//var scope = new ContainerBinder(compilationUnit, usingDefinitions);
+
+			//foreach(var declaration in compilationUnit.Declarations)
+			//	declaration.BindSymbols(scope);
+		}
 
 		//private static IEnumerable<Definition> UsingDefinitions(this UsingDirective usingDirective, GlobalScope globalScope)
 		//{
@@ -39,8 +35,8 @@ namespace Adamant.Exploratory.Compiler.Analysis
 		//		.Exhaustive();
 		//}
 
-		//public static void BindNames(this Declaration declaration, GlobalScope globalScope, ScopeWithUsingStatements scope)
-		//{
+		public static void BindNames(this Declaration declaration, ContainerBinder containingScope)
+		{
 		//	declaration.Match()
 		//		.With<NamespaceDeclaration>(@namespace =>
 		//		{
@@ -74,7 +70,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 		//			global.InitExpression?.BindNames(scope);
 		//		})
 		//		.Exhaustive();
-		//}
+		}
 
 		//public static void BindNames(this Statement statement, NameScope scope)
 		//{

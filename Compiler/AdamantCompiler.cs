@@ -2,6 +2,7 @@
 using System.Linq;
 using Adamant.Exploratory.Compiler.Antlr;
 using Adamant.Exploratory.Compiler.Antlr.Builders;
+using Adamant.Exploratory.Compiler.Binders;
 using Adamant.Exploratory.Compiler.Compiled;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Symbols;
@@ -43,9 +44,10 @@ namespace Adamant.Exploratory.Compiler
 		public CompiledPackage Compile(Package package, IEnumerable<CompiledPackage> dependencies)
 		{
 			var diagnostics = new DiagnosticsBuilder(package.Diagnostics);
-			// TODO incorperate dependencies into package symbol
+			// TODO incorporate dependencies into package symbol
 			var symbolTable = new SymbolTableBuilder(package).Build(diagnostics);
-			// TODO bind names to symbols
+
+			package.BindSymbols(symbolTable); // TODO bind names to symbols
 			// TODO type check
 			// TODO borrow check
 			return new CompiledPackage(package, symbolTable.Package, symbolTable.Symbols);

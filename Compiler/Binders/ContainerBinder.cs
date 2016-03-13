@@ -1,4 +1,5 @@
-﻿using Adamant.Exploratory.Compiler.Syntax;
+﻿using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
 
 namespace Adamant.Exploratory.Compiler.Binders
@@ -8,6 +9,13 @@ namespace Adamant.Exploratory.Compiler.Binders
 	/// </summary>
 	public class ContainerBinder : Binder
 	{
+		private readonly NamespaceSymbol @namespace;
+
+		public ContainerBinder(NamespaceSymbol @namespace)
+		{
+			this.@namespace = @namespace;
+		}
+
 		//private readonly ScopeWithUsingStatements containingScope;
 		//private readonly NamespaceDefinition @namespace;
 
