@@ -19,23 +19,23 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 				.Aggregate(default(Name), (left, identifier) => left == null ? (Name)new IdentifierName(identifier) : new QualifiedName(left, new IdentifierName(identifier)))));
 		}
 
-		protected static AccessModifier GetAccessModifier(AdamantParser.ModifierContext[] modifiers)
+		protected static Accessibility GetAccessModifier(AdamantParser.ModifierContext[] modifiers)
 		{
 			// Return the first access modifier
 			foreach(var modifier in modifiers)
 				switch(modifier.token.Type)
 				{
 					case AdamantLexer.Public:
-						return AccessModifier.Public;
+						return Accessibility.Public;
 					case AdamantLexer.Protected:
-						return AccessModifier.Protected;
+						return Accessibility.Protected;
 					case AdamantLexer.Package:
-						return AccessModifier.Package;
+						return Accessibility.Package;
 					case AdamantLexer.Private:
-						return AccessModifier.Private;
+						return Accessibility.Private;
 				}
 			// If we don't find an acces modifier
-			return AccessModifier.Private;
+			return Accessibility.Private;
 		}
 
 		protected static TextPosition PositionOf(IToken token)

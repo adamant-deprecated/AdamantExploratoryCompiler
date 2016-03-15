@@ -5,18 +5,18 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 {
 	public abstract class EntityDeclaration : Declaration
 	{
-		public readonly AccessModifier Access;
+		public readonly Accessibility Accessibility;
 		public readonly Token Name;
 
 		protected EntityDeclaration(
-			AccessModifier access,
+			Accessibility accessibility,
 			Token name)
 		{
-			Requires.EnumIn(access, nameof(access), AccessModifier.Public, AccessModifier.Package);
+			Requires.EnumIn(accessibility, nameof(accessibility), Accessibility.Public, Accessibility.Package);
 			Requires.NotNull(name, nameof(name));
 			SyntaxRequires.TypeIs(name, TokenType.Identifier, nameof(name));
 
-			Access = access;
+			Accessibility = accessibility;
 			Name = name;
 		}
 	}

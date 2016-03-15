@@ -5,13 +5,13 @@ namespace Adamant.Exploratory.Compiler.Syntax.Directives
 {
 	public class UsingDirective : SyntaxNode
 	{
-		public Name NamespaceOrType;
+		public Name Name;
 
-		public UsingDirective(Name namespaceOrType)
+		public UsingDirective(Name name)
 		{
-			Requires.NotNull(namespaceOrType, nameof(namespaceOrType));
+			Requires.NotNull(name, nameof(name));
 
-			NamespaceOrType = namespaceOrType;
+			Name = name;
 		}
 	}
 }

@@ -34,16 +34,20 @@
     <Compile Include="Antlr\Builders\ReferenceTypeBuilder.cs" />
     <Compile Include="Antlr\Builders\SimpleNameBuilder.cs" />
     <Compile Include="Binders\ImportedSymbol.cs" />
+    <Compile Include="Binders\LookupResult.cs" />
     <Compile Include="Compiled\CompiledDependency.cs" />
     <Compile Include="Symbols\ClassSymbol.cs" />
     <Compile Include="Symbols\DeclarationSymbol.cs" />
     <Compile Include="Symbols\FunctionSymbol.cs" />
     <Compile Include="Symbols\Location.cs" />
-    <Compile Include="Symbols\NamespaceSymbol.cs" />
+    <Compile Include="Symbols\Namespaces\MergedNamespaceSymbol.cs" />
+    <Compile Include="Symbols\Namespaces\NamespaceSymbol.cs" />
+    <Compile Include="Symbols\Namespaces\PackageNamespaceSymbol.cs" />
     <Compile Include="Symbols\PackageSymbol.cs" />
     <Compile Include="Symbols\Symbol.cs" />
     <Compile Include="Symbols\PackageSymbols.cs" />
     <Compile Include="Symbols\PackageSymbolsBuilder.cs" />
+    <Compile Include="Symbols\SymbolReference.cs" />
     <Reference Include="Antlr4.Runtime">
       <HintPath>..\lib\Antlr4.Runtime.dll</HintPath>
     </Reference>
@@ -134,15 +138,7 @@
     <Compile Include="Compiled\CompiledUnit.cs" />
     <Compile Include="SourceFile.cs" />
     <Compile Include="OldSymbols\CompilationUnitScope.cs" />
-    <Compile Include="OldSymbols\Definition.cs" />
-    <Compile Include="OldSymbols\DefinitionKind.cs" />
-    <Compile Include="OldSymbols\NameScope.cs" />
     <Compile Include="Binders\ContainerBinder.cs" />
-    <Compile Include="OldSymbols\SymbolDefinition.cs" />
-    <Compile Include="OldSymbols\SymbolDefinitions.cs" />
-    <Compile Include="OldSymbols\ScopeWithUsingStatements.cs" />
-    <Compile Include="OldSymbols\Symbol.cs" />
-    <Compile Include="OldSymbols\FullyQualifiedName.cs" />
     <Compile Include="OldSymbols\GlobalScope.cs" />
     <Compile Include="Preprocessor\Conditional.cs" />
     <Compile Include="Preprocessor\PreprocessorState.cs" />

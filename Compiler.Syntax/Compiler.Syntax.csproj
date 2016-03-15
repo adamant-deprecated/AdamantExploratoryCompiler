@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="Members\AccessorType.cs" />
     <Compile Include="Members\IndexerMethod.cs" />
-    <Compile Include="Modifiers\AccessModifier.cs" />
+    <Compile Include="Modifiers\Accessibility.cs" />
     <Compile Include="Declaration.cs" />
     <Compile Include="Declarations\EntityDeclaration.cs" />
     <Compile Include="Declarations\ClassDeclaration.cs" />

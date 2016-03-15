@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Adamant.Exploratory.Common;
+using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
@@ -8,17 +9,20 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	/// </summary>
 	public abstract class Symbol
 	{
-		public readonly string Name;
 		private readonly List<Location> locations = new List<Location>();
 
-		public Symbol(string name)
+		public readonly PackageSymbol ContainingPackage;
+		public readonly Accessibility DeclaredAccessibility;
+		public readonly string Name;
+		public IReadOnlyList<Location> Locations => locations;
+
+		protected Symbol(PackageSymbol containingPackage, Accessibility declaredAccessibility, string name)
 		{
 			Requires.NotNull(name, nameof(name));
 
 			Name = name;
+			ContainingPackage = containingPackage;
+			DeclaredAccessibility = declaredAccessibility;
 		}
-
-		public abstract PackageSymbol ContainingPackage { get; }
-		public IReadOnlyList<Location> Locations => locations;
 	}
 }

@@ -5,12 +5,12 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 {
 	public class Field : NamedMember
 	{
-		public readonly AccessModifier Access;
+		public readonly Accessibility Access;
 		public readonly bool IsMutableBinding;
 		public readonly ReferenceType Type;
 		public readonly Expression InitExpression;
 
-		public Field(AccessModifier access, bool isMutableBinding, Token name, ReferenceType type, Expression initExpression)
+		public Field(Accessibility access, bool isMutableBinding, Token name, ReferenceType type, Expression initExpression)
 			: base(name)
 		{
 			Requires.EnumDefined(access, nameof(access));

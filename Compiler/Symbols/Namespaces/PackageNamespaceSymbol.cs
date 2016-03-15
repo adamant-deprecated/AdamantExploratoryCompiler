@@ -1,31 +1,34 @@
 ﻿using System.Collections.Generic;
 using Adamant.Exploratory.Common;
 
-namespace Adamant.Exploratory.Compiler.Symbols
+namespace Adamant.Exploratory.Compiler.Symbols.Namespaces
 {
-	public class NamespaceSymbol : DeclarationSymbol
+	/// <summary>
+	/// A namespace as declared in a single package
+	/// </summary>
+	public class PackageNamespaceSymbol : NamespaceSymbol
 	{
 		private readonly MultiDictionary<string, DeclarationSymbol> members = new MultiDictionary<string, DeclarationSymbol>();
+
+		public bool IsGlobalNamespace => Name.Length == 0;
 
 		/// <summary>
 		/// Makes a new global namespace
 		/// </summary>
-		public NamespaceSymbol(PackageSymbol containingPackage)
+		public PackageNamespaceSymbol(PackageSymbol containingPackage)
 			: base(containingPackage, null, "")
 		{
 		}
 
-		public NamespaceSymbol(PackageSymbol containingPackage, NamespaceSymbol containingNamespace, string name)
+		public PackageNamespaceSymbol(PackageSymbol containingPackage, PackageNamespaceSymbol containingNamespace, string name)
 			: base(containingPackage, containingNamespace, name)
 		{
 		}
 
-		public IReadOnlyList<DeclarationSymbol> GetMembers(string name)
+		public override IReadOnlyList<DeclarationSymbol> GetMembers(string name)
 		{
 			return members[name];
 		}
-
-		public bool IsGlobalNamespace => Name.Length == 0;
 
 		public void Add(DeclarationSymbol declarationSymbol)
 		{

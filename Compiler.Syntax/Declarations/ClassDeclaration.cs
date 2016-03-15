@@ -14,14 +14,14 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 		public readonly IReadOnlyList<Member> Members;
 
 		public ClassDeclaration(
-			AccessModifier access, 
+			Accessibility accessibility, 
 			bool isPartial, 
 			Safety safety, 
 			bool isSealed,
 			bool isAbstract,
 			Token name,
 			IEnumerable<Member> members)
-			: base(access, name)
+			: base(accessibility, name)
 		{
 			Requires.EnumDefined(safety, nameof(safety));
 

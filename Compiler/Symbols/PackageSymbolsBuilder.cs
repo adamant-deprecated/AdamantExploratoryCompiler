@@ -2,6 +2,7 @@
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
+using Adamant.Exploratory.Compiler.Symbols.Namespaces;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
 
@@ -38,10 +39,10 @@ namespace Adamant.Exploratory.Compiler.Symbols
 		private void Build(CompilationUnit compilationUnit)
 		{
 			foreach(var declaration in compilationUnit.Declarations)
-				Build(declaration, packageSymbol.GlobalNamespace);
+				Build(declaration, packageSymbol.PackageGlobalNamespace);
 		}
 
-		private void Build(Declaration declaration, NamespaceSymbol containingNamespace)
+		private void Build(Declaration declaration, PackageNamespaceSymbol containingNamespace)
 		{
 			declaration.Match()
 				.With<NamespaceDeclaration>(@namespace =>
@@ -49,7 +50,7 @@ namespace Adamant.Exploratory.Compiler.Symbols
 					foreach(var name in @namespace.Names)
 					{
 						var existingSymbols = containingNamespace.GetMembers(name.ValueText);
-						var existingNamespace = existingSymbols.OfType<NamespaceSymbol>().SingleOrDefault();
+						var existingNamespace = existingSymbols.OfType<PackageNamespaceSymbol>().SingleOrDefault();
 						if(existingNamespace != null)
 						{
 							containingNamespace = existingNamespace;
@@ -64,7 +65,7 @@ namespace Adamant.Exploratory.Compiler.Symbols
 							}
 
 						// TODO need to be dealing with locations here
-						containingNamespace.Add(new NamespaceSymbol(packageSymbol, containingNamespace, name.ValueText));
+						containingNamespace.Add(new PackageNamespaceSymbol(packageSymbol, containingNamespace, name.ValueText));
 					}
 					symbols.Add(@namespace, containingNamespace);
 					foreach(var member in @namespace.Members)
@@ -73,13 +74,13 @@ namespace Adamant.Exploratory.Compiler.Symbols
 				.With<ClassDeclaration>(@class =>
 				{
 					// TODO check for and report duplicate symbols
-					var symbol = new ClassSymbol(packageSymbol, containingNamespace, @class.Name.ValueText);
+					var symbol = new ClassSymbol(packageSymbol, containingNamespace, @class.Accessibility, @class.Name.ValueText);
 					containingNamespace.Add(symbol);
 					symbols.Add(@class, symbol);
 				})
 				.With<FunctionDeclaration>(function =>
 				{
-					var symbol = new FunctionSymbol(packageSymbol, containingNamespace, function.Name.ValueText);
+					var symbol = new FunctionSymbol(packageSymbol, containingNamespace, function.Accessibility, function.Name.ValueText);
 					containingNamespace.Add(symbol);
 					symbols.Add(function, symbol);
 				})

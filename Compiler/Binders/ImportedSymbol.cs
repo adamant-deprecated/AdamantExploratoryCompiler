@@ -5,21 +5,19 @@ namespace Adamant.Exploratory.Compiler.Binders
 {
 	public class ImportedSymbol
 	{
-		public readonly Symbol Symbol;
+		public readonly SymbolReference Reference;
 		public readonly string Alias;
-		public string AliadName => Alias ?? Symbol.Name;
+		public string AliasName => Alias ?? Reference.Symbol.Name;
 		public readonly bool IsAlias;
-		public readonly bool IsSamePackage;
 
-		public ImportedSymbol(Symbol symbol, string alias, bool isSamePackage)
+		public ImportedSymbol(SymbolReference reference, string alias)
 		{
-			Requires.NotNull(symbol, nameof(symbol));
+			Requires.NotNull(reference, nameof(reference));
 			Requires.NotEmpty(alias, nameof(alias));
 
-			Symbol = symbol;
+			Reference = reference;
 			Alias = alias;
 			IsAlias = alias != null;
-			IsSamePackage = isSamePackage;
 		}
 	}
 }

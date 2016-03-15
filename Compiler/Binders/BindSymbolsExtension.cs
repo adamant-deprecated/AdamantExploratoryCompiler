@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Compiled;
+using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Symbols.Namespaces;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Directives;
+using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Binders
 {
 	public static class BindSymbolsExtension
 	{
-		public static void BindSymbols(this Package package, PackageSymbols symbols, IEnumerable<CompiledDependency> compiledDependencies)
+		public static void BindSymbols(this Package package, DiagnosticsBuilder diagnostics, PackageSymbols symbols, IEnumerable<CompiledDependency> compiledDependencies)
 		{
 			var packageBinder = new PackageBinder(symbols.Package, compiledDependencies);
 			foreach(var compilationUnit in package.CompilationUnits)
@@ -30,13 +34,14 @@ namespace Adamant.Exploratory.Compiler.Binders
 			this UsingDirective usingDirective,
 			ContainerBinder containingScope)
 		{
-			var imports = containingScope.Package.Dependencies
-				.Select(d => d.Package.Symbols.Package.GlobalNamespace)
-				.Aggregate(Enumerable.Empty<ImportedSymbol>(), (i, ns) => i.Concat(usingDirective.Imports(containingScope, ns, false)));
+			containingScope.LookupInGlobalNamespace(usingDirective.Name);
+			//var imports = containingScope.Package.Dependencies
+			//	.Select(d => d.Package.Symbols.Package.PackageGlobalNamespace)
+			//	.Aggregate(Enumerable.Empty<ImportedSymbol>(), (i, ns) => i.Concat(usingDirective.Imports(containingScope, ns, false)));
 
-			return imports.Concat(usingDirective.Imports(containingScope, containingScope.Package.Symbol.GlobalNamespace, true));
+			//return imports.Concat(usingDirective.Imports(containingScope, containingScope.Package.Symbol.PackageGlobalNamespace, true));
+			throw new NotImplementedException();
 		}
-
 
 		private static IEnumerable<ImportedSymbol> Imports(
 			this UsingDirective usingDirective,
@@ -45,11 +50,21 @@ namespace Adamant.Exploratory.Compiler.Binders
 			bool isSamePackage)
 		{
 			var symbols = new List<Symbol>() { @namespace };
-			//foreach(var VARIABLE in usingDirective.NamespaceOrType)
+			//foreach(var name in usingDirective.Name)
 			//{
-
+			//	name.ResolveUsingName(containingScope);
 			//}
 			throw new NotImplementedException();
+		}
+
+		private static void ResolveUsingName(this Name name, ContainerBinder containingScope)
+		{
+			//			name.Match()
+			//				.With<IdentifierName>(identifierName =>
+			//				{
+
+			//containingScope.identifierName.Identifier
+			//				})
 		}
 
 		public static void BindSymbols(this Declaration declaration, ContainerBinder containingScope)

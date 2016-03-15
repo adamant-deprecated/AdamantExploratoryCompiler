@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Symbols.Namespaces;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
+using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Binders
 {
@@ -11,20 +12,24 @@ namespace Adamant.Exploratory.Compiler.Binders
 	/// </summary>
 	public class ContainerBinder : Binder
 	{
-		private readonly Binder containingScope;
 		private readonly IReadOnlyList<ImportedSymbol> imports;
-		private readonly NamespaceSymbol @namespace;
+		private readonly MergedNamespaceSymbol @namespace;
 
-		public ContainerBinder(Binder containingScope, NamespaceSymbol @namespace)
+		public ContainerBinder(Binder containingScope, MergedNamespaceSymbol @namespace)
+			: base(containingScope)
 		{
-			this.containingScope = containingScope;
 			this.@namespace = @namespace;
 		}
 
 		public ContainerBinder(Binder containingScope, IEnumerable<ImportedSymbol> imports)
+			: base(containingScope)
 		{
-			this.containingScope = containingScope;
 			this.imports = imports.ToList();
+		}
+
+		public override LookupResult Lookup(Name name)
+		{
+			throw new System.NotImplementedException();
 		}
 
 		//private readonly ScopeWithUsingStatements containingScope;

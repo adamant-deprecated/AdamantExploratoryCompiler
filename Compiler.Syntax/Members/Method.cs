@@ -7,11 +7,11 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 {
 	public class Method : NamedMember
 	{
-		public readonly AccessModifier Access;
+		public readonly Accessibility Access;
 		public readonly IReadOnlyList<Parameter> Parameters;
 		public readonly IReadOnlyList<Statement> Body;
 
-		public Method(AccessModifier access, Token name, IEnumerable<Parameter> parameters, IEnumerable<Statement> body)
+		public Method(Accessibility access, Token name, IEnumerable<Parameter> parameters, IEnumerable<Statement> body)
 			: base(name)
 		{
 			Requires.EnumDefined(access, nameof(access));

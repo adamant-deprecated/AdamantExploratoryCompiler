@@ -47,9 +47,9 @@ namespace Adamant.Exploratory.Compiler
 			var diagnostics = new DiagnosticsBuilder(package.Diagnostics);
 			var symbols = new PackageSymbolsBuilder(package).Build(diagnostics);
 
-			package.BindSymbols(symbols, compiledDependencies); // TODO bind names to symbols
-																// TODO type check
-																// TODO borrow check
+			package.BindSymbols(diagnostics, symbols, compiledDependencies); // TODO bind names to symbols
+																			 // TODO type check
+																			 // TODO borrow check
 			return new CompiledPackage(package, symbols);
 		}
 

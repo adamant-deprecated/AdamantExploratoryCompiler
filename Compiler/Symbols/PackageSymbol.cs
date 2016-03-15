@@ -1,5 +1,7 @@
 ﻿using Adamant.Exploratory.Common;
+using Adamant.Exploratory.Compiler.Symbols.Namespaces;
 using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
@@ -9,17 +11,17 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	public class PackageSymbol : Symbol
 	{
 		public readonly Package Package;
-		public readonly NamespaceSymbol GlobalNamespace;
+		public readonly PackageNamespaceSymbol PackageGlobalNamespace;
+		public readonly MergedNamespaceSymbol GlobalNamespace;
 
 		public PackageSymbol(Package package)
-			: base(package?.Name)
+			: base(null, Accessibility.NotApplicable, package?.Name)
 		{
 			Requires.NotNull(package, nameof(package));
 
 			Package = package;
-			GlobalNamespace = new NamespaceSymbol(this);
+			PackageGlobalNamespace = new PackageNamespaceSymbol(this);
+			GlobalNamespace = new MergedNamespaceSymbol(); // TODO merge in dependencies
 		}
-
-		public override PackageSymbol ContainingPackage => this;
 	}
 }

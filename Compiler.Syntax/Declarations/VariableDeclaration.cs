@@ -9,12 +9,12 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 		public Expression InitExpression;
 
 		public VariableDeclaration(
-			AccessModifier access,
+			Accessibility accessibility,
 			bool isMutableBinding,
 			Token name,
 			ReferenceType type,
 			Expression initExpression)
-			: base(access, name)
+			: base(accessibility, name)
 		{
 			IsMutableBinding = isMutableBinding;
 			Type = type;

@@ -11,12 +11,12 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 		public readonly IReadOnlyList<Statement> Body;
 
 		public FunctionDeclaration(
-			AccessModifier access,
+			Accessibility accessibility,
 			Token name,
 			IEnumerable<Parameter> parameters,
 			ReferenceType returnType,
 			IEnumerable<Statement> body)
-			: base(access, name)
+			: base(accessibility, name)
 		{
 			Parameters = parameters.ToList();
 			ReturnType = returnType;

@@ -7,12 +7,12 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 {
 	public class Constructor : Member
 	{
-		public readonly AccessModifier Access;
+		public readonly Accessibility Access;
 		public readonly Token Name;
 		public readonly IReadOnlyList<Parameter> Parameters;
 		public readonly IReadOnlyList<Statement> Body;
 
-		public Constructor(AccessModifier access, Token name, IEnumerable<Parameter> parameters, IEnumerable<Statement> body)
+		public Constructor(Accessibility access, Token name, IEnumerable<Parameter> parameters, IEnumerable<Statement> body)
 		{
 			Requires.EnumDefined(access, nameof(access));
 			SyntaxRequires.TypeIs(name, TokenType.Identifier, nameof(name));
