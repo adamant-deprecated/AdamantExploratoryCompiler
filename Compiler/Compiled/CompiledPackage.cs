@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Adamant.Exploratory.Common;
+﻿using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
 
@@ -9,17 +8,15 @@ namespace Adamant.Exploratory.Compiler.Compiled
 	{
 		public string Name;
 		public readonly Package Package;
-		public readonly PackageSymbol Symbol;
-		public readonly IReadOnlyDictionary<SyntaxNode, Symbol> Symbols;
+		public readonly PackageSymbols Symbols;
 
-		public CompiledPackage(Package package, PackageSymbol symbol, IReadOnlyDictionary<SyntaxNode, Symbol> symbols)
+		public CompiledPackage(Package package, PackageSymbols symbols)
 		{
 			Requires.NotNull(package, nameof(package));
-			Requires.NotNull(symbol, nameof(symbol));
+			Requires.NotNull(symbols, nameof(symbols));
 
 			Name = package.Name;
 			Package = package;
-			Symbol = symbol;
 			Symbols = symbols;
 		}
 

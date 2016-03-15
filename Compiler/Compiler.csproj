@@ -33,6 +33,8 @@
     <Compile Include="Antlr\Builders\NameBuilder.cs" />
     <Compile Include="Antlr\Builders\ReferenceTypeBuilder.cs" />
     <Compile Include="Antlr\Builders\SimpleNameBuilder.cs" />
+    <Compile Include="Binders\ImportedSymbol.cs" />
+    <Compile Include="Compiled\CompiledDependency.cs" />
     <Compile Include="Symbols\ClassSymbol.cs" />
     <Compile Include="Symbols\DeclarationSymbol.cs" />
     <Compile Include="Symbols\FunctionSymbol.cs" />
@@ -40,8 +42,8 @@
     <Compile Include="Symbols\NamespaceSymbol.cs" />
     <Compile Include="Symbols\PackageSymbol.cs" />
     <Compile Include="Symbols\Symbol.cs" />
-    <Compile Include="Symbols\SymbolTable.cs" />
-    <Compile Include="Symbols\SymbolTableBuilder.cs" />
+    <Compile Include="Symbols\PackageSymbols.cs" />
+    <Compile Include="Symbols\PackageSymbolsBuilder.cs" />
     <Reference Include="Antlr4.Runtime">
       <HintPath>..\lib\Antlr4.Runtime.dll</HintPath>
     </Reference>
@@ -128,7 +130,7 @@
     <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
     <Compile Include="Binders\Binder.cs" />
     <Compile Include="Binders\PackageBinder.cs" />
-    <Compile Include="Compiled\CompiledProject.cs" />
+    <Compile Include="Compiled\CompiledPackage.cs" />
     <Compile Include="Compiled\CompiledUnit.cs" />
     <Compile Include="SourceFile.cs" />
     <Compile Include="OldSymbols\CompilationUnitScope.cs" />

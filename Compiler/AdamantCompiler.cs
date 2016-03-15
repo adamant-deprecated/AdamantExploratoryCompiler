@@ -43,14 +43,21 @@ namespace Adamant.Exploratory.Compiler
 
 		public CompiledPackage Compile(Package package, IEnumerable<CompiledPackage> dependencies)
 		{
+			var compiledDependencies = GetCompiledDependencies(package, dependencies);
 			var diagnostics = new DiagnosticsBuilder(package.Diagnostics);
-			// TODO incorporate dependencies into package symbol
-			var symbolTable = new SymbolTableBuilder(package).Build(diagnostics);
+			var symbols = new PackageSymbolsBuilder(package).Build(diagnostics);
 
-			package.BindSymbols(symbolTable); // TODO bind names to symbols
-			// TODO type check
-			// TODO borrow check
-			return new CompiledPackage(package, symbolTable.Package, symbolTable.Symbols);
+			package.BindSymbols(symbols, compiledDependencies); // TODO bind names to symbols
+																// TODO type check
+																// TODO borrow check
+			return new CompiledPackage(package, symbols);
+		}
+
+		private static IList<CompiledDependency> GetCompiledDependencies(Package package, IEnumerable<CompiledPackage> dependencies)
+		{
+			var compiledPackages = dependencies.ToLookup(p => p.Name);
+			var compiledDependencies = package.Dependencies.Select(d => new CompiledDependency(compiledPackages[d.Name].Single(), d.Alias, d.Trusted));
+			return compiledDependencies.ToList();
 		}
 	}
 }

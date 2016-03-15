@@ -1,6 +1,6 @@
 ﻿namespace Adamant.Exploratory.Compiler.Compiled
 {
-	class CompiledUnit
+	public class CompiledUnit
 	{
 	}
 }

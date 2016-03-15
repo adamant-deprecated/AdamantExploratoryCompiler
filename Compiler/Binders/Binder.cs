@@ -5,5 +5,6 @@
 	/// </summary>
 	public abstract class Binder
 	{
+		public PackageBinder Package { get; }
 	}
 }

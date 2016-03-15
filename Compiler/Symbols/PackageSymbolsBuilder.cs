@@ -7,19 +7,19 @@ using Adamant.Exploratory.Compiler.Syntax.Declarations;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
-	public class SymbolTableBuilder
+	public class PackageSymbolsBuilder
 	{
 		private readonly Package package;
 		private DiagnosticsBuilder diagnostics;
 		private PackageSymbol packageSymbol;
 		private Dictionary<SyntaxNode, Symbol> symbols;
 
-		public SymbolTableBuilder(Package package)
+		public PackageSymbolsBuilder(Package package)
 		{
 			this.package = package;
 		}
 
-		public SymbolTable Build(DiagnosticsBuilder diagnostics)
+		public PackageSymbols Build(DiagnosticsBuilder diagnostics)
 		{
 			this.diagnostics = diagnostics;
 			symbols = new Dictionary<SyntaxNode, Symbol>();
@@ -27,7 +27,7 @@ namespace Adamant.Exploratory.Compiler.Symbols
 			foreach(var compilationUnit in package.CompilationUnits)
 				Build(compilationUnit);
 
-			var symbolTable = new SymbolTable(packageSymbol, symbols);
+			var symbolTable = new PackageSymbols(packageSymbol, symbols);
 			// To be safe in case someone calls Build() again for some inexplicable reason
 			packageSymbol = null;
 			symbols = null;

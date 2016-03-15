@@ -3,15 +3,15 @@ using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
-	public class SymbolTable
+	public class PackageSymbols
 	{
 		public readonly PackageSymbol Package;
-		public readonly IReadOnlyDictionary<SyntaxNode, Symbol> Symbols;
+		public readonly IReadOnlyDictionary<SyntaxNode, Symbol> ForNode;
 
-		internal SymbolTable(PackageSymbol package, IReadOnlyDictionary<SyntaxNode, Symbol> symbols)
+		internal PackageSymbols(PackageSymbol package, IReadOnlyDictionary<SyntaxNode, Symbol> forNode)
 		{
 			Package = package;
-			Symbols = symbols;
+			ForNode = forNode;
 		}
 	}
 }

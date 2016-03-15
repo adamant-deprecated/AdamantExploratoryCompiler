@@ -15,6 +15,13 @@ namespace Adamant.Exploratory.Common
 		}
 
 		[Conditional("DEBUG")]
+		public static void NotEmpty(string value, string paramName)
+		{
+			if(value != null && value.Length == 0)
+				throw new ArgumentException("Must not be emppty", paramName);
+		}
+
+		[Conditional("DEBUG")]
 		public static void NotNullOrEmpty(string value, string paramName)
 		{
 			if(value == null) throw new ArgumentNullException(paramName);
@@ -46,6 +53,7 @@ namespace Adamant.Exploratory.Common
 			if(!condition) throw new ArgumentException(message, paramName);
 		}
 
+		[Conditional("DEBUG")]
 		public static void EnumIn<T>(T value, string paramName, params T[] allowedValues)
 			where T : struct
 		{

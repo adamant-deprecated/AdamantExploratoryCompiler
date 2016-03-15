@@ -16,18 +16,19 @@ namespace Adamant.Exploratory.Compiler.Syntax
 	{
 		public readonly string Name;
 		public readonly IReadOnlyList<CompilationUnit> CompilationUnits;
-		public readonly IReadOnlyDictionary<string, PackageDependency> Dependencies;
+		public readonly IReadOnlyList<PackageDependency> Dependencies;
 		public readonly IReadOnlyList<Diagnostic> Diagnostics;
 		// TODO Language version
 
 		public Package(string name, IEnumerable<PackageDependency> dependencies)
-			: this(name, new List<CompilationUnit>(), dependencies.ToDictionary(p => p.Name, p => p))
+			: this(name, new List<CompilationUnit>(), dependencies.ToList())
 		{
 		}
 
-		private Package(string name, IReadOnlyList<CompilationUnit> compilationUnits, IReadOnlyDictionary<string, PackageDependency> dependencies)
+		private Package(string name, IReadOnlyList<CompilationUnit> compilationUnits, IReadOnlyList<PackageDependency> dependencies)
 		{
 			Requires.NotNullOrEmpty(name, nameof(name));
+			Requires.That(dependencies.Select(d => d.AliasName).Distinct().Count() == dependencies.Count, nameof(dependencies), "Dependency names/alias must be unique");
 
 			Name = name;
 			CompilationUnits = compilationUnits;

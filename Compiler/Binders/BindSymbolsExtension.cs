@@ -1,78 +1,95 @@
-﻿using Adamant.Exploratory.Compiler.Symbols;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Adamant.Exploratory.Compiler.Compiled;
+using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Directives;
 
 namespace Adamant.Exploratory.Compiler.Binders
 {
 	public static class BindSymbolsExtension
 	{
-		public static void BindSymbols(this Package package, SymbolTable symbolTable)
+		public static void BindSymbols(this Package package, PackageSymbols symbols, IEnumerable<CompiledDependency> compiledDependencies)
 		{
-			var packageBinder = new PackageBinder(symbolTable.Package);
+			var packageBinder = new PackageBinder(symbols.Package, compiledDependencies);
 			foreach(var compilationUnit in package.CompilationUnits)
 				compilationUnit.BindSymbols(packageBinder.GlobalNamespace);
 		}
 
 		public static void BindSymbols(this CompilationUnit compilationUnit, ContainerBinder containingScope)
 		{
-			//var usingDefinitions = compilationUnit.UsingDirectives.SelectMany(u => u.UsingDefinitions(globalScope));
-			//var scope = new ContainerBinder(compilationUnit, usingDefinitions);
+			var imports = compilationUnit.UsingDirectives.SelectMany(u => u.Imports(containingScope));
+			var scope = new ContainerBinder(containingScope, imports);
 
-			//foreach(var declaration in compilationUnit.Declarations)
-			//	declaration.BindSymbols(scope);
+			foreach(var declaration in compilationUnit.Declarations)
+				declaration.BindSymbols(scope);
 		}
 
-		//private static IEnumerable<Definition> UsingDefinitions(this UsingDirective usingDirective, GlobalScope globalScope)
-		//{
-		//	var definition = globalScope.Lookup(usingDirective.NamespaceOrType, DefinitionKind.NamespaceOrType).Resolve();
-
-		//	return definition.Match().Returning<IEnumerable<Definition>>()
-		//		.With<NamespaceDefinition>(@namespace => @namespace.Definitions)
-		//		.With<EntityDeclaration>(entity => new[] { entity })
-		//		.Null(() =>
-		//		{
-		//			throw new Exception($"Using statement referes to name that does not exist '{usingDirective.NamespaceOrType}'");
-		//		})
-		//		.Exhaustive();
-		//}
-
-		public static void BindNames(this Declaration declaration, ContainerBinder containingScope)
+		private static IEnumerable<ImportedSymbol> Imports(
+			this UsingDirective usingDirective,
+			ContainerBinder containingScope)
 		{
-		//	declaration.Match()
-		//		.With<NamespaceDeclaration>(@namespace =>
-		//		{
-		//			foreach(var name in @namespace.Name.Parts())
-		//			{
-		//				var definition = (NamespaceDefinition)scope.LookupInCurrentScopeOnly(name, DefinitionKind.NamespaceOrType);
-		//				var isFullNamespace = definition.FullyQualifiedName == @namespace.FullyQualifiedName;
-		//				var usingDefinitions = isFullNamespace ? @namespace.UsingDirectives.SelectMany(u => u.UsingDefinitions(globalScope))
-		//														: Enumerable.Empty<Definition>();
-		//				scope = new ContainerBinder(scope, definition, usingDefinitions);
-		//			}
+			var imports = containingScope.Package.Dependencies
+				.Select(d => d.Package.Symbols.Package.GlobalNamespace)
+				.Aggregate(Enumerable.Empty<ImportedSymbol>(), (i, ns) => i.Concat(usingDirective.Imports(containingScope, ns, false)));
 
-		//			foreach(var nestedDeclaration in @namespace.Declarations)
-		//				nestedDeclaration.BindNames(globalScope, scope);
-		//		})
-		//		.With<ClassDeclaration>(@class =>
-		//		{
-		//			// TODO class scope with members defined
-		//			foreach(var member in @class.NamedMembers)
-		//				member.BindNames(scope);
-		//		})
-		//		.With<FunctionDeclaration>(function =>
-		//		{
-		//			// TODO make a function scope
-		//			foreach(var statement in function.Body)
-		//				statement.BindNames(scope);
-		//		})
-		//		.With<VariableDeclaration>(global =>
-		//		{
-		//			global.Type.BindNames(scope);
-		//			global.InitExpression?.BindNames(scope);
-		//		})
-		//		.Exhaustive();
+			return imports.Concat(usingDirective.Imports(containingScope, containingScope.Package.Symbol.GlobalNamespace, true));
 		}
 
-		//public static void BindNames(this Statement statement, NameScope scope)
+
+		private static IEnumerable<ImportedSymbol> Imports(
+			this UsingDirective usingDirective,
+			ContainerBinder containingScope,
+			NamespaceSymbol @namespace,
+			bool isSamePackage)
+		{
+			var symbols = new List<Symbol>() { @namespace };
+			//foreach(var VARIABLE in usingDirective.NamespaceOrType)
+			//{
+
+			//}
+			throw new NotImplementedException();
+		}
+
+		public static void BindSymbols(this Declaration declaration, ContainerBinder containingScope)
+		{
+			//	declaration.Match()
+			//		.With<NamespaceDeclaration>(@namespace =>
+			//		{
+			//			foreach(var name in @namespace.Name.Parts())
+			//			{
+			//				var definition = (NamespaceDefinition)scope.LookupInCurrentScopeOnly(name, DefinitionKind.NamespaceOrType);
+			//				var isFullNamespace = definition.FullyQualifiedName == @namespace.FullyQualifiedName;
+			//				var usingDefinitions = isFullNamespace ? @namespace.UsingDirectives.SelectMany(u => u.UsingDefinitions(globalScope))
+			//														: Enumerable.Empty<Definition>();
+			//				scope = new ContainerBinder(scope, definition, usingDefinitions);
+			//			}
+
+			//			foreach(var nestedDeclaration in @namespace.Declarations)
+			//				nestedDeclaration.BindNames(globalScope, scope);
+			//		})
+			//		.With<ClassDeclaration>(@class =>
+			//		{
+			//			// TODO class scope with members defined
+			//			foreach(var member in @class.NamedMembers)
+			//				member.BindNames(scope);
+			//		})
+			//		.With<FunctionDeclaration>(function =>
+			//		{
+			//			// TODO make a function scope
+			//			foreach(var statement in function.Body)
+			//				statement.BindNames(scope);
+			//		})
+			//		.With<VariableDeclaration>(global =>
+			//		{
+			//			global.Type.BindNames(scope);
+			//			global.InitExpression?.BindNames(scope);
+			//		})
+			//		.Exhaustive();
+		}
+
+		//public static void BindSymbols(this Statement statement, NameScope scope)
 		//{
 		//	statement.Match()
 		//		.With<ExpressionStatement>(expressionStatement =>
@@ -82,7 +99,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 		//		.Exhaustive();
 		//}
 
-		//public static void BindNames(this Member member, NameScope scope)
+		//public static void BindSymbols(this Member member, NameScope scope)
 		//{
 		//	member.Match()
 		//		.With<Field>(field =>
@@ -93,7 +110,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 		//		.Exhaustive();
 		//}
 
-		//public static void BindNames(this Expression expression, NameScope scope)
+		//public static void BindSymbols(this Expression expression, NameScope scope)
 		//{
 		//	expression.Match()
 		//		.With<CallExpression>(call =>
@@ -113,7 +130,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 		//		.Exhaustive();
 		//}
 
-		//public static void BindNames(this Type type, NameScope scope)
+		//public static void BindSymbols(this Type type, NameScope scope)
 		//{
 		//	type.Match()
 		//		.With<TypeName>(typeName =>
