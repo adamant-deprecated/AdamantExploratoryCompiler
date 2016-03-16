@@ -15,5 +15,10 @@ namespace Adamant.Exploratory.Compiler.Syntax.ValueTypes
 
 			Identifier = identifier;
 		}
+
+		public override string ToString()
+		{
+			return Identifier.ToString();
+		}
 	}
 }

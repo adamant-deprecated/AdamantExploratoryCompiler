@@ -40,18 +40,6 @@
     <Compile Include="Binders\LookupResults\NotViableResult.cs" />
     <Compile Include="Binders\LookupResults\ViableResult.cs" />
     <Compile Include="Compiled\CompiledDependency.cs" />
-    <Compile Include="Symbols\ClassSymbol.cs" />
-    <Compile Include="Symbols\DeclarationSymbol.cs" />
-    <Compile Include="Symbols\FunctionSymbol.cs" />
-    <Compile Include="Symbols\Location.cs" />
-    <Compile Include="Symbols\Namespaces\MergedNamespaceSymbol.cs" />
-    <Compile Include="Symbols\Namespaces\NamespaceSymbol.cs" />
-    <Compile Include="Symbols\Namespaces\PackageNamespaceSymbol.cs" />
-    <Compile Include="Symbols\PackageSymbol.cs" />
-    <Compile Include="Symbols\Symbol.cs" />
-    <Compile Include="Symbols\PackageSymbols.cs" />
-    <Compile Include="Symbols\PackageSymbolsBuilder.cs" />
-    <Compile Include="Symbols\SymbolReference.cs" />
     <Reference Include="Antlr4.Runtime">
       <HintPath>..\lib\Antlr4.Runtime.dll</HintPath>
     </Reference>
@@ -155,6 +143,10 @@
     <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
       <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
       <Name>Compiler.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler.Symbols\Compiler.Symbols.csproj">
+      <Project>{5235f122-ad65-4577-bbc4-dba7d60da92d}</Project>
+      <Name>Compiler.Symbols</Name>
     </ProjectReference>
     <ProjectReference Include="..\Compiler.Syntax\Compiler.Syntax.csproj">
       <Project>{3dfa5c38-11a2-4b3d-918e-c22a5b5ccb2d}</Project>

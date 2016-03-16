@@ -18,5 +18,10 @@ namespace Adamant.Exploratory.Compiler.Syntax.ValueTypes
 			Right = right;
 			Left = left;
 		}
+
+		public override string ToString()
+		{
+			return $"{Left}.{Right}";
+		}
 	}
 }

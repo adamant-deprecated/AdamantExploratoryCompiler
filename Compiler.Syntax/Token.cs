@@ -20,5 +20,10 @@ namespace Adamant.Exploratory.Compiler.Syntax
 			Text = text;
 			ValueText = valueText;
 		}
+
+		public override string ToString()
+		{
+			return Text;
+		}
 	}
 }
