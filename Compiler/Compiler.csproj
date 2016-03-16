@@ -34,7 +34,11 @@
     <Compile Include="Antlr\Builders\ReferenceTypeBuilder.cs" />
     <Compile Include="Antlr\Builders\SimpleNameBuilder.cs" />
     <Compile Include="Binders\ImportedSymbol.cs" />
-    <Compile Include="Binders\LookupResult.cs" />
+    <Compile Include="Binders\LookupResults\EmptyResult.cs" />
+    <Compile Include="Binders\LookupResults\LookupResult.cs" />
+    <Compile Include="Binders\LookupResults\NotAccessibleResult.cs" />
+    <Compile Include="Binders\LookupResults\NotViableResult.cs" />
+    <Compile Include="Binders\LookupResults\ViableResult.cs" />
     <Compile Include="Compiled\CompiledDependency.cs" />
     <Compile Include="Symbols\ClassSymbol.cs" />
     <Compile Include="Symbols\DeclarationSymbol.cs" />
@@ -137,9 +141,7 @@
     <Compile Include="Compiled\CompiledPackage.cs" />
     <Compile Include="Compiled\CompiledUnit.cs" />
     <Compile Include="SourceFile.cs" />
-    <Compile Include="OldSymbols\CompilationUnitScope.cs" />
     <Compile Include="Binders\ContainerBinder.cs" />
-    <Compile Include="OldSymbols\GlobalScope.cs" />
     <Compile Include="Preprocessor\Conditional.cs" />
     <Compile Include="Preprocessor\PreprocessorState.cs" />
     <Compile Include="Preprocessor\PreprocessorVisitor.cs" />

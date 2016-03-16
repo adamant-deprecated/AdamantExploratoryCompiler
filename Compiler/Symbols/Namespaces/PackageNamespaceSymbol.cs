@@ -8,9 +8,7 @@ namespace Adamant.Exploratory.Compiler.Symbols.Namespaces
 	/// </summary>
 	public class PackageNamespaceSymbol : NamespaceSymbol
 	{
-		private readonly MultiDictionary<string, DeclarationSymbol> members = new MultiDictionary<string, DeclarationSymbol>();
-
-		public bool IsGlobalNamespace => Name.Length == 0;
+		private readonly MultiDictionary<string, SymbolReference> members = new MultiDictionary<string, SymbolReference>();
 
 		/// <summary>
 		/// Makes a new global namespace
@@ -25,7 +23,7 @@ namespace Adamant.Exploratory.Compiler.Symbols.Namespaces
 		{
 		}
 
-		public override IReadOnlyList<DeclarationSymbol> GetMembers(string name)
+		public override IReadOnlyList<SymbolReference> GetMembers(string name)
 		{
 			return members[name];
 		}
@@ -34,7 +32,7 @@ namespace Adamant.Exploratory.Compiler.Symbols.Namespaces
 		{
 			Requires.NotNull(declarationSymbol, nameof(declarationSymbol));
 			Requires.That(declarationSymbol.ContainingNamespace == this, nameof(declarationSymbol), "Must be contained in this namespace");
-			members.Add(declarationSymbol.Name, declarationSymbol);
+			members.Add(declarationSymbol.Name, new SymbolReference(declarationSymbol, true));
 		}
 	}
 }

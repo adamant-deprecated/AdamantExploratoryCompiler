@@ -18,29 +18,31 @@ namespace Adamant.Exploratory.Compiler.Binders
 		{
 			var packageBinder = new PackageBinder(symbols.Package, compiledDependencies);
 			foreach(var compilationUnit in package.CompilationUnits)
-				compilationUnit.BindSymbols(packageBinder.GlobalNamespace);
+				compilationUnit.BindSymbols(diagnostics, packageBinder.GlobalNamespace);
 		}
 
-		public static void BindSymbols(this CompilationUnit compilationUnit, ContainerBinder containingScope)
+		public static void BindSymbols(this CompilationUnit compilationUnit, DiagnosticsBuilder diagnostics, ContainerBinder containingScope)
 		{
-			var imports = compilationUnit.UsingDirectives.SelectMany(u => u.Imports(containingScope));
+			var imports = compilationUnit.UsingDirectives.Select(u => u.Imports(diagnostics, compilationUnit, containingScope));
 			var scope = new ContainerBinder(containingScope, imports);
 
 			foreach(var declaration in compilationUnit.Declarations)
 				declaration.BindSymbols(scope);
 		}
 
-		private static IEnumerable<ImportedSymbol> Imports(
+		private static ImportedSymbol Imports(
 			this UsingDirective usingDirective,
+			DiagnosticsBuilder diagnostics,
+			CompilationUnit compilationUnit,
 			ContainerBinder containingScope)
 		{
-			containingScope.LookupInGlobalNamespace(usingDirective.Name);
-			//var imports = containingScope.Package.Dependencies
-			//	.Select(d => d.Package.Symbols.Package.PackageGlobalNamespace)
-			//	.Aggregate(Enumerable.Empty<ImportedSymbol>(), (i, ns) => i.Concat(usingDirective.Imports(containingScope, ns, false)));
+			var lookup = containingScope.LookupInGlobalNamespace(usingDirective.Name);
 
-			//return imports.Concat(usingDirective.Imports(containingScope, containingScope.Package.Symbol.PackageGlobalNamespace, true));
-			throw new NotImplementedException();
+			if(!lookup.IsViable)
+				diagnostics.AddBindingError(compilationUnit.SourceFile, usingDirective.Name.Position, $"Could not bind using statement for {usingDirective.Name}");
+
+			var symbolReference = lookup.Symbols.Single();
+			return new ImportedSymbol(symbolReference, null);
 		}
 
 		private static IEnumerable<ImportedSymbol> Imports(

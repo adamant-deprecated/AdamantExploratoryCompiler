@@ -9,6 +9,8 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	/// </summary>
 	public abstract class Symbol
 	{
+		private static readonly IReadOnlyList<SymbolReference> NoMembers = new List<SymbolReference>(0);
+
 		private readonly List<Location> locations = new List<Location>();
 
 		public readonly PackageSymbol ContainingPackage;
@@ -23,6 +25,11 @@ namespace Adamant.Exploratory.Compiler.Symbols
 			Name = name;
 			ContainingPackage = containingPackage;
 			DeclaredAccessibility = declaredAccessibility;
+		}
+
+		public virtual IReadOnlyList<SymbolReference> GetMembers(string name)
+		{
+			return NoMembers;
 		}
 	}
 }

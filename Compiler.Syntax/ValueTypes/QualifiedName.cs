@@ -1,4 +1,5 @@
 ﻿using Adamant.Exploratory.Common;
+using Adamant.Exploratory.Compiler.Core;
 
 namespace Adamant.Exploratory.Compiler.Syntax.ValueTypes
 {
@@ -6,6 +7,8 @@ namespace Adamant.Exploratory.Compiler.Syntax.ValueTypes
 	{
 		public readonly Name Left;
 		public readonly SimpleName Right;
+
+		public override TextPosition Position => Left.Position;
 
 		public QualifiedName(Name left, SimpleName right)
 		{

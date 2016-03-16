@@ -1,6 +1,5 @@
 ﻿using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Syntax.Modifiers;
-using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
@@ -18,10 +17,5 @@ namespace Adamant.Exploratory.Compiler.Symbols
 		}
 
 		public bool IsVisible => Symbol.DeclaredAccessibility == Accessibility.Public || (InSamePackage && Symbol.DeclaredAccessibility == Accessibility.Package);
-
-		public SymbolReference Resolve(SimpleName name)
-		{
-			throw new System.NotImplementedException();
-		}
 	}
 }

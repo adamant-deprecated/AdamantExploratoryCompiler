@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Adamant.Exploratory.Common;
+using Adamant.Exploratory.Compiler.Binders.LookupResults;
+using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Symbols.Namespaces;
-using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Binders
 {
 	/// <summary>
-	/// A container binder binds <see cref="NamespaceDeclaration"/>s and <see cref="CompilationUnit"/>s. 
+	/// A container binder binds namespace declarations and compilation units. 
 	/// </summary>
 	public class ContainerBinder : Binder
 	{
-		private readonly IReadOnlyList<ImportedSymbol> imports;
+		private readonly MultiDictionary<string, ImportedSymbol> imports = new MultiDictionary<string, ImportedSymbol>();
 		private readonly MergedNamespaceSymbol @namespace;
 
 		public ContainerBinder(Binder containingScope, MergedNamespaceSymbol @namespace)
@@ -24,49 +26,61 @@ namespace Adamant.Exploratory.Compiler.Binders
 		public ContainerBinder(Binder containingScope, IEnumerable<ImportedSymbol> imports)
 			: base(containingScope)
 		{
-			this.imports = imports.ToList();
+			foreach(var import in imports)
+				this.imports.Add(import.AliasName, import);
 		}
 
 		public override LookupResult Lookup(Name name)
 		{
-			throw new System.NotImplementedException();
+			return name.Match().Returning<LookupResult>()
+				.With<QualifiedName>(qualifiedName =>
+				{
+					var context = Lookup(qualifiedName.Left);
+					return context.Lookup(qualifiedName.Right);
+				})
+				.With<IdentifierName>(identifierName =>
+				{
+					var identifier = identifierName.Identifier.ValueText;
+					LookupResult result;
+
+					// First look in the current namespace
+					if(@namespace != null)
+					{
+						result = Resolve(@namespace.GetMembers(identifier));
+						if(!result.IsEmpty)
+							return result;
+					}
+
+					// Then look in the imported names
+					var importedSymbols = imports[identifier].Select(x => x.Reference).ToList();
+					result = Resolve(importedSymbols);
+					if(!result.IsEmpty)
+						return result;
+
+					// Then look in containing scopes
+					return ContainingScope.Lookup(identifierName);
+				})
+				.Exhaustive();
 		}
 
-		//private readonly ScopeWithUsingStatements containingScope;
-		//private readonly NamespaceDefinition @namespace;
+		private static LookupResult Resolve(IReadOnlyList<SymbolReference> references)
+		{
+			var visible = references.Where(r => r.IsVisible).ToList();
+			if(visible.Count == 1)
+				return LookupResult.Good(visible.Single());
 
-		//public ContainerBinder(ScopeWithUsingStatements containingScope, NamespaceDefinition @namespace, IEnumerable<Definition> usingDefinitions)
-		//	: base(usingDefinitions)
-		//{
-		//	if(@namespace == null) throw new ArgumentNullException(nameof(@namespace));
-		//	if(containingScope == null) throw new ArgumentNullException(nameof(containingScope));
+			var visibleInPackage = visible.Where(r => r.InSamePackage).ToList();
+			if(visibleInPackage.Count == 1)
+				return LookupResult.Good(visibleInPackage.Single()); // TODO issue warning that we have chosen the one in the current package
 
-		//	this.containingScope = containingScope;
-		//	this.@namespace = @namespace;
-		//}
+			if(visibleInPackage.Count > 1 || visible.Count > 1)
+				return LookupResult.Ambiguous(visible);
 
-		//public override GlobalScope Globals => containingScope.Globals;
+			// Nothing visible in package
+			if(references.Count > 0)
+				return LookupResult.NotAccessible(references);
 
-		//public override SymbolDefinitions Lookup(Symbol name, DefinitionKind kind = DefinitionKind.Any)
-		//{
-		//	Definition definition;
-		//	if(@namespace.Definitions.TryGetValue(name, out definition))
-		//		return new SymbolDefinitions(name, new SymbolDefinition(definition, true));
-
-		//	var usingDefinitions = LookupInUsingStatements(name, kind);
-		//	if(usingDefinitions.HasAccessibleDefinitions())
-		//		return usingDefinitions;
-
-		//	var containingDefinitions = containingScope.Lookup(name, kind);
-		//	return containingDefinitions.HasAccessibleDefinitions() || usingDefinitions.Count == 0
-		//		? containingDefinitions
-		//		: usingDefinitions;
-		//}
-
-		//public override Definition LookupInCurrentScopeOnly(Symbol name, DefinitionKind kind = DefinitionKind.Any)
-		//{
-		//	// TODO watch out for kind
-		//	return @namespace.Definitions.TryGetValue(name);
-		//}
+			return LookupResult.NotDefined();
+		}
 	}
 }

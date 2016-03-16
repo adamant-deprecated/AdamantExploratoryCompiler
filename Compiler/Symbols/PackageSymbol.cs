@@ -11,8 +11,7 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	public class PackageSymbol : Symbol
 	{
 		public readonly Package Package;
-		public readonly PackageNamespaceSymbol PackageGlobalNamespace;
-		public readonly MergedNamespaceSymbol GlobalNamespace;
+		public readonly PackageNamespaceSymbol GlobalNamespace;
 
 		public PackageSymbol(Package package)
 			: base(null, Accessibility.NotApplicable, package?.Name)
@@ -20,8 +19,7 @@ namespace Adamant.Exploratory.Compiler.Symbols
 			Requires.NotNull(package, nameof(package));
 
 			Package = package;
-			PackageGlobalNamespace = new PackageNamespaceSymbol(this);
-			GlobalNamespace = new MergedNamespaceSymbol(); // TODO merge in dependencies
+			GlobalNamespace = new PackageNamespaceSymbol(this);
 		}
 	}
 }

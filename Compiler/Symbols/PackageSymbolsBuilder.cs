@@ -39,7 +39,7 @@ namespace Adamant.Exploratory.Compiler.Symbols
 		private void Build(CompilationUnit compilationUnit)
 		{
 			foreach(var declaration in compilationUnit.Declarations)
-				Build(declaration, packageSymbol.PackageGlobalNamespace);
+				Build(declaration, packageSymbol.GlobalNamespace);
 		}
 
 		private void Build(Declaration declaration, PackageNamespaceSymbol containingNamespace)

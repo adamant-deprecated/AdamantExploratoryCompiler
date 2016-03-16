@@ -1,4 +1,5 @@
-﻿using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
+﻿using Adamant.Exploratory.Compiler.Binders.LookupResults;
+using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Binders
 {
