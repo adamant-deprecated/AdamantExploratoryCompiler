@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
+using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
 using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Binders.LookupResults
@@ -20,23 +22,23 @@ namespace Adamant.Exploratory.Compiler.Binders.LookupResults
 			symbols = new List<SymbolReference>() { symbol };
 		}
 
-		public override LookupResult Lookup(SimpleName name)
+		public override LookupResult Lookup(SimpleName name, Package fromPackage)
 		{
 			return name.Match().Returning<LookupResult>()
 				.With<IdentifierName>(identifierName =>
 				{
 					var identifier = identifierName.Identifier.ValueText;
-					var members = symbols.SelectMany(r => r.Symbol.GetMembers(identifier).Select(m => CorrectReference(m, r.InSamePackage))).ToList();
+					var members = symbols.SelectMany(r => r.GetMembers(identifier)).ToList();
 
 					// TODO this looks like a duplicate of the Resolve method on ContainerBinder
 					if(members.Count == 0)
 						return Empty;
 
-					var visible = members.Where(m => m.IsVisible).ToList();
+					var visible = members.Where(m => m.IsVisibleFrom(fromPackage)).ToList();
 					if(visible.Count == 1)
 						return Good(visible.Single());
 
-					var visibleInPackage = visible.Where(r => r.InSamePackage).ToList();
+					var visibleInPackage = visible.Where(r => r.IsIn(fromPackage)).ToList();
 					if(visibleInPackage.Count == 1)
 						return Good(visibleInPackage.Single()); // TODO issue warning that we have chosen the one in the current package
 
@@ -50,14 +52,6 @@ namespace Adamant.Exploratory.Compiler.Binders.LookupResults
 					return NotDefined();
 				})
 				.Exhaustive();
-		}
-
-		private SymbolReference CorrectReference(SymbolReference referenece, bool inSamePackage)
-		{
-			if(referenece.InSamePackage == inSamePackage)
-				return referenece;
-
-			return new SymbolReference(referenece.Symbol, inSamePackage);
 		}
 	}
 }

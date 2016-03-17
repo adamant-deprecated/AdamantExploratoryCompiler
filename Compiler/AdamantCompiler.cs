@@ -45,12 +45,12 @@ namespace Adamant.Exploratory.Compiler
 		{
 			var compiledDependencies = GetCompiledDependencies(package, dependencies);
 			var diagnostics = new DiagnosticsBuilder(package.Diagnostics);
-			var symbols = new PackageSymbolsBuilder(package).Build(diagnostics);
+			var symbol = new PackageSymbolBuilder(package).Build(diagnostics);
+			var binders = new BinderBuilder(package, symbol, compiledDependencies).Build(diagnostics);
 
-			package.BindSymbols(diagnostics, symbols, compiledDependencies); // TODO bind names to symbols
-																			 // TODO type check
-																			 // TODO borrow check
-			return new CompiledPackage(package, symbols);
+			// TODO type check
+			// TODO borrow check
+			return new CompiledPackage(package, symbol);
 		}
 
 		private static IList<CompiledDependency> GetCompiledDependencies(Package package, IEnumerable<CompiledPackage> dependencies)

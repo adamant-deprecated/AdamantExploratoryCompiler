@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
+using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
 using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Binders.LookupResults
@@ -21,7 +23,7 @@ namespace Adamant.Exploratory.Compiler.Binders.LookupResults
 		public abstract bool IsViable { get; }
 		public abstract IEnumerable<SymbolReference> Symbols { get; }
 
-		public abstract LookupResult Lookup(SimpleName name);
+		public abstract LookupResult Lookup(SimpleName name, Package fromPackage);
 
 		public static LookupResult Good(SymbolReference symbol)
 		{

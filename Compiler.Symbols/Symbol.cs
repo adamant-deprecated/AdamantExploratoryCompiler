@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Adamant.Exploratory.Common;
+using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
 namespace Adamant.Exploratory.Compiler.Symbols
@@ -9,16 +10,16 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	/// </summary>
 	public abstract class Symbol
 	{
-		private static readonly IReadOnlyList<SymbolReference> NoMembers = new List<SymbolReference>(0);
+		private static readonly IReadOnlyList<Symbol> NoMembers = new List<Symbol>(0);
 
 		private readonly List<Location> locations = new List<Location>();
 
-		public readonly PackageSymbol ContainingPackage;
+		public Package ContainingPackage { get; }
 		public readonly Accessibility DeclaredAccessibility;
 		public readonly string Name;
 		public IReadOnlyList<Location> Locations => locations;
 
-		protected Symbol(PackageSymbol containingPackage, Accessibility declaredAccessibility, string name)
+		protected Symbol(Package containingPackage, Accessibility declaredAccessibility, string name)
 		{
 			Requires.NotNull(name, nameof(name));
 
@@ -27,9 +28,15 @@ namespace Adamant.Exploratory.Compiler.Symbols
 			DeclaredAccessibility = declaredAccessibility;
 		}
 
-		public virtual IReadOnlyList<SymbolReference> GetMembers(string name)
+		// This pattern allows us to simulate covarient return types
+		protected virtual IReadOnlyList<Symbol> GetMembersInternal(string name)
 		{
 			return NoMembers;
+		}
+
+		public IReadOnlyList<Symbol> GetMembers(string name)
+		{
+			return GetMembersInternal(name);
 		}
 	}
 }

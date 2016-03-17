@@ -1,5 +1,5 @@
 ﻿using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
 
 namespace Adamant.Exploratory.Compiler.Binders
 {
@@ -7,7 +7,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 	{
 		public readonly SymbolReference Reference;
 		public readonly string Alias;
-		public string AliasName => Alias ?? Reference.Symbol.Name;
+		public string AliasName => Alias ?? Reference.Name;
 		public readonly bool IsAlias;
 
 		public ImportedSymbol(SymbolReference reference, string alias)

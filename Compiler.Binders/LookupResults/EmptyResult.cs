@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
+using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Binders.LookupResults
@@ -17,7 +18,7 @@ namespace Adamant.Exploratory.Compiler.Binders.LookupResults
 		{
 		}
 
-		public override LookupResult Lookup(SimpleName name)
+		public override LookupResult Lookup(SimpleName name, Package fromPackage)
 		{
 			return NotDefined();
 		}

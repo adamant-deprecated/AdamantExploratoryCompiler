@@ -5,24 +5,17 @@ using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
-	/// <summary>
-	/// A package as a whole, forms the root of symbols.  It is also inherently, the global namespace.
-	/// </summary>
-	public class PackageSymbol : Symbol, ContainerSymbol
+	public class NamespaceSymbol : DeclarationSymbol, ContainerSymbol
 	{
 		private readonly MultiDictionary<string, DeclarationSymbol> members = new MultiDictionary<string, DeclarationSymbol>();
 
-		public readonly Package PackageSyntax;
-		NamespaceSymbol ContainerSymbol.AsNamespace => null;
+		NamespaceSymbol ContainerSymbol.AsNamespace => this;
 
-		public PackageSymbol(Package packageSyntax, IEnumerable<DeclarationSymbol> globalDeclarations)
-			: base(null, Accessibility.NotApplicable, packageSyntax?.Name)
+		public NamespaceSymbol(Package containingPackage, string name, IEnumerable<DeclarationSymbol> declarations)
+			: base(containingPackage, Accessibility.Public, name) // namespaces are implicitly public
 		{
-			Requires.NotNull(packageSyntax, nameof(packageSyntax));
-
-			PackageSyntax = packageSyntax;
-			foreach(var globalDeclaration in globalDeclarations)
-				members.Add(globalDeclaration.Name, globalDeclaration);
+			foreach(var declaration in declarations)
+				members.Add(declaration.Name, declaration);
 		}
 
 		protected override IReadOnlyList<Symbol> GetMembersInternal(string name)
@@ -33,7 +26,7 @@ namespace Adamant.Exploratory.Compiler.Symbols
 		public IEnumerable<DeclarationSymbol> GetMembers()
 		{
 			return members.Values;
-		} 
+		}
 
 		public new IReadOnlyList<DeclarationSymbol> GetMembers(string name)
 		{

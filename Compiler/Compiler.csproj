@@ -33,12 +33,6 @@
     <Compile Include="Antlr\Builders\NameBuilder.cs" />
     <Compile Include="Antlr\Builders\ReferenceTypeBuilder.cs" />
     <Compile Include="Antlr\Builders\SimpleNameBuilder.cs" />
-    <Compile Include="Binders\ImportedSymbol.cs" />
-    <Compile Include="Binders\LookupResults\EmptyResult.cs" />
-    <Compile Include="Binders\LookupResults\LookupResult.cs" />
-    <Compile Include="Binders\LookupResults\NotAccessibleResult.cs" />
-    <Compile Include="Binders\LookupResults\NotViableResult.cs" />
-    <Compile Include="Binders\LookupResults\ViableResult.cs" />
     <Compile Include="Compiled\CompiledDependency.cs" />
     <Reference Include="Antlr4.Runtime">
       <HintPath>..\lib\Antlr4.Runtime.dll</HintPath>
@@ -52,7 +46,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Compile Include="AdamantCompiler.cs" />
-    <Compile Include="Binders\BindSymbolsExtension.cs" />
     <Compile Include="Analysis\CheckLifetimes.cs" />
     <Compile Include="Antlr\AdamantLexer.cs">
       <DependentUpon>AdamantLexer.g4</DependentUpon>
@@ -124,12 +117,9 @@
   <ItemGroup>
     <Compile Include="Antlr\RestrictedVisitor.cs" />
     <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
-    <Compile Include="Binders\Binder.cs" />
-    <Compile Include="Binders\PackageBinder.cs" />
     <Compile Include="Compiled\CompiledPackage.cs" />
     <Compile Include="Compiled\CompiledUnit.cs" />
     <Compile Include="SourceFile.cs" />
-    <Compile Include="Binders\ContainerBinder.cs" />
     <Compile Include="Preprocessor\Conditional.cs" />
     <Compile Include="Preprocessor\PreprocessorState.cs" />
     <Compile Include="Preprocessor\PreprocessorVisitor.cs" />
@@ -139,6 +129,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{041ee85b-e098-4454-9dd9-d7b6723ddf83}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler.Binders\Compiler.Binders.csproj">
+      <Project>{C66A416E-5FBD-450A-B55F-AF63DA99265C}</Project>
+      <Name>Compiler.Binders</Name>
     </ProjectReference>
     <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
       <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>

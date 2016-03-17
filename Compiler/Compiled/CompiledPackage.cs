@@ -7,17 +7,17 @@ namespace Adamant.Exploratory.Compiler.Compiled
 	public class CompiledPackage
 	{
 		public string Name;
-		public readonly Package Package;
-		public readonly PackageSymbols Symbols;
+		public readonly Package Syntax;
+		public readonly PackageSymbol Symbol;
 
-		public CompiledPackage(Package package, PackageSymbols symbols)
+		public CompiledPackage(Package syntax, PackageSymbol symbol)
 		{
-			Requires.NotNull(package, nameof(package));
-			Requires.NotNull(symbols, nameof(symbols));
+			Requires.NotNull(syntax, nameof(syntax));
+			Requires.NotNull(symbol, nameof(symbol));
 
-			Name = package.Name;
-			Package = package;
-			Symbols = symbols;
+			Name = syntax.Name;
+			Syntax = syntax;
+			Symbol = symbol;
 		}
 
 		// TODO dependencies

@@ -3,9 +3,9 @@ using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
-	public class ClassSymbol : EntitySymbol
+	public abstract class EntitySymbol : DeclarationSymbol
 	{
-		public ClassSymbol(Package containingPackage,  Accessibility declaredAccessibility, string name)
+		protected EntitySymbol(Package containingPackage, Accessibility declaredAccessibility, string name)
 			: base(containingPackage, declaredAccessibility, name)
 		{
 		}
