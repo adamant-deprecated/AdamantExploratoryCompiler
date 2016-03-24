@@ -1,0 +1,222 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Adamant.Exploratory.Common;
+using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
+using Adamant.Exploratory.Compiler.Core.Diagnostics;
+using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Declarations;
+using Adamant.Exploratory.Compiler.Syntax.Directives;
+using Adamant.Exploratory.Compiler.Syntax.Expressions;
+using Adamant.Exploratory.Compiler.Syntax.Members;
+using Adamant.Exploratory.Compiler.Syntax.Statements;
+using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
+using ValueType = Adamant.Exploratory.Compiler.Syntax.ValueType;
+
+namespace Adamant.Exploratory.Compiler.Binders
+{
+	internal class CompilationUnitBindersBuilder
+	{
+		private readonly Dictionary<SyntaxNode, Binder> binders;
+		private readonly Package packageSyntax;
+		private readonly CompilationUnit compilationUnit;
+		private readonly DiagnosticsBuilder diagnostics;
+
+		public CompilationUnitBindersBuilder(
+			Dictionary<SyntaxNode, Binder> binders,
+			Package packageSyntax,
+			CompilationUnit compilationUnit,
+			DiagnosticsBuilder diagnostics)
+		{
+			Requires.NotNull(binders, nameof(binders));
+			Requires.NotNull(packageSyntax, nameof(packageSyntax));
+			Requires.NotNull(compilationUnit, nameof(compilationUnit));
+			Requires.NotNull(diagnostics, nameof(diagnostics));
+
+			this.binders = binders;
+			this.packageSyntax = packageSyntax;
+			this.compilationUnit = compilationUnit;
+			this.diagnostics = diagnostics;
+		}
+
+		public void Build(PackageBinder packageBinder)
+		{
+			var imports = compilationUnit.UsingDirectives.SelectMany(u => GatherImportedSymbols(u, packageBinder));
+			var scope = new CompilationUnitBinder(packageBinder, compilationUnit, imports);
+
+			foreach(var declaration in compilationUnit.Declarations)
+				Build(declaration, scope);
+		}
+
+		private IEnumerable<ImportedSymbol> GatherImportedSymbols(UsingDirective usingDirective, Binder scope)
+		{
+			var lookup = scope.LookupInGlobalNamespace(usingDirective.Name, packageSyntax);
+
+			if(!lookup.IsViable)
+				diagnostics.AddBindingError(compilationUnit.SourceFile, usingDirective.Name.Position, $"Could not bind using statement for {usingDirective.Name}");
+
+			var symbol = lookup.Symbols.Single();
+			var @namespace = symbol as NamespaceReference;
+			if(@namespace != null)
+				return @namespace.GetMembers().Select(m => new ImportedSymbol(m, null));
+
+			return new[] { new ImportedSymbol(symbol, null) };
+		}
+
+		public void Build(Declaration declaration, ContainerBinder containingScope)
+		{
+			declaration.Match()
+				.With<NamespaceDeclaration>(@namespace =>
+				{
+					var imports = @namespace.UsingDirectives.SelectMany(u => GatherImportedSymbols(u, containingScope));
+					var namesCount = @namespace.Names.Count;
+					for(var i = 0; i < namesCount; i++)
+					{
+						var name = @namespace.Names[i];
+						var last = i == namesCount - 1;
+						var reference = containingScope.GetMembers(name.ValueText).OfType<NamespaceReference>().Single();
+						containingScope = new NamespaceBinder(containingScope, reference, last ? imports : Enumerable.Empty<ImportedSymbol>());
+						// The innermost binder is the one that has the imports and should be associated with the syntax node
+						if(last)
+							binders.Add(@namespace, containingScope);
+					}
+
+					foreach(var member in @namespace.Members)
+						Build(member, containingScope);
+				})
+				.With<ClassDeclaration>(@class =>
+				{
+					var scope = new ClassBinder(containingScope, @class);
+					binders.Add(@class, scope);
+					foreach(var member in @class.Members)
+						Build(member, scope);
+				})
+				.With<FunctionDeclaration>(function =>
+				{
+					foreach(var parameter in function.Parameters)
+						Build(parameter.Type.Type, containingScope);
+					// TODO deal with return type
+					Binder scope = new FunctionBinder(containingScope);
+					binders.Add(function, scope);
+					foreach(var statement in function.Body)
+						scope = Build(statement, scope);
+				})
+				//		.With<VariableDeclaration>(global =>
+				//		{
+				//			global.Type.BindNames(scope);
+				//			global.InitExpression?.BindNames(scope);
+				//		})
+				.Exhaustive();
+		}
+
+		private void Build(Member member, ClassBinder containingScope)
+		{
+			member.Match()
+				.With<Field>(field =>
+				{
+					Build(field.Type.Type, containingScope);
+					if(field.InitExpression != null)
+						Build(field.InitExpression, containingScope);
+				})
+				.With<Constructor>(constructor =>
+				{
+					foreach(var parameter in constructor.Parameters)
+						Build(parameter.Type.Type, containingScope);
+					Binder scope = new FunctionBinder(containingScope);
+					binders.Add(constructor, scope);
+					foreach(var statement in constructor.Body)
+						scope = Build(statement, scope);
+				})
+				.With<Destructor>(destructor =>
+				{
+					foreach(var parameter in destructor.Parameters)
+						if(parameter.Type != null)
+							Build(parameter.Type.Type, containingScope);
+					Binder scope = new FunctionBinder(containingScope);
+					binders.Add(destructor, scope);
+					foreach(var statement in destructor.Body)
+						scope = Build(statement, scope);
+				})
+				.With<IndexerMethod>(indexer =>
+				{
+					foreach(var parameter in indexer.Parameters)
+						if(parameter.Type != null)
+							Build(parameter.Type.Type, containingScope);
+					// TODO deal with return type
+					Binder scope = new FunctionBinder(containingScope);
+					binders.Add(indexer, scope);
+					foreach(var statement in indexer.Body)
+						scope = Build(statement, scope);
+				})
+				.With<Method>(method =>
+				{
+					foreach(var parameter in method.Parameters)
+						if(parameter.Type != null)
+							Build(parameter.Type.Type, containingScope);
+					// TODO deal with return type
+					Binder scope = new FunctionBinder(containingScope);
+					binders.Add(method, scope);
+					foreach(var statement in method.Body)
+						scope = Build(statement, scope);
+				})
+				.Exhaustive();
+		}
+
+		private void Build(ValueType type, Binder containingScope)
+		{
+			type.Match()
+				.With<NumericType>(numericType =>
+				{
+					// Not really sure this makes sense since a numeric type is a keyword
+					binders.Add(numericType, containingScope);
+				})
+				.With<GenericName>(genericName =>
+				{
+					binders.Add(genericName, containingScope);
+					// TODO associate the type parameters
+				})
+				.With<IdentifierName>(identifierName =>
+				{
+					binders.Add(identifierName, containingScope);
+				})
+				.Exhaustive();
+		}
+
+		private Binder Build(Statement statement, Binder containingScope)
+		{
+			return statement.Match().Returning<Binder>()
+				.With<ExpressionStatement>(expressionStatement =>
+				{
+					Build(expressionStatement.Expression, containingScope);
+					return containingScope;
+				})
+				.Exhaustive();
+		}
+
+		private void Build(Expression expression, Binder containingScope)
+		{
+			expression.Match()
+				.With<AssignmentExpression>(assignment =>
+				{
+					Build(assignment.LValue, containingScope);
+					Build(assignment.RValue, containingScope);
+				})
+				.With<MemberExpression>(memberExpression =>
+				{
+					Build(memberExpression.Expression, containingScope);
+				})
+				.With<SelfExpression, VariableExpression>(variableExpression =>
+				{
+					binders.Add(variableExpression, containingScope);
+				})
+				.With<CallExpression>(call =>
+				{
+					Build(call.Expression, containingScope);
+					foreach(var argument in call.Arguments)
+						Build(argument, containingScope);
+				})
+				.Ignore<LiteralExpression>()
+				.Exhaustive();
+		}
+	}
+}

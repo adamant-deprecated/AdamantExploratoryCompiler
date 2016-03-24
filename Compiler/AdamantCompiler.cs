@@ -46,7 +46,7 @@ namespace Adamant.Exploratory.Compiler
 			var compiledDependencies = GetCompiledDependencies(package, dependencies);
 			var diagnostics = new DiagnosticsBuilder(package.Diagnostics);
 			var symbol = new PackageSymbolBuilder(package).Build(diagnostics);
-			var binders = new BinderBuilder(package, symbol, compiledDependencies).Build(diagnostics);
+			var binders = new BindersBuilder(package, symbol, compiledDependencies).Build(diagnostics);
 
 			// TODO type check
 			// TODO borrow check

@@ -29,6 +29,21 @@ namespace Adamant.Exploratory.Common
 			return this;
 		}
 
+		public MatcherWithoutReturn<TValue> With<T1, T2>(Action<TValue> action)
+				where T1 : class, TValue
+				where T2 : class, TValue
+		{
+			if(matched || value == null) return this;
+
+			if(value is T1 || value is T2)
+			{
+				action(value);
+				return new MatcherWithoutReturn<TValue>(value, true);
+			}
+
+			return this;
+		}
+
 		public MatcherWithoutReturn<TValue> Ignore<T>()
 			where T : class, TValue
 		{

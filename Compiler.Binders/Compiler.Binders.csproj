@@ -41,9 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binder.cs" />
-    <Compile Include="BinderBuilder.cs" />
+    <Compile Include="BindersBuilder.cs" />
+    <Compile Include="ClassBinder.cs" />
     <Compile Include="CompilationUnitBinder.cs" />
+    <Compile Include="CompilationUnitBindersBuilder.cs" />
     <Compile Include="ContainerBinder.cs" />
+    <Compile Include="FunctionBinder.cs" />
     <Compile Include="ImportedSymbol.cs" />
     <Compile Include="SymbolReferences\PackageReference.cs" />
     <Compile Include="LookupResults\EmptyResult.cs" />
