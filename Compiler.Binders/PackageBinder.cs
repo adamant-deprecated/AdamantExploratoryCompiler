@@ -3,7 +3,6 @@ using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Binders.LookupResults;
 using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
-using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;

@@ -1,5 +1,7 @@
-﻿using Adamant.Exploratory.Common;
+﻿using System.Collections.Generic;
+using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Binders.LookupResults;
+using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
@@ -17,6 +19,8 @@ namespace Adamant.Exploratory.Compiler.Binders
 			ContainingScope = containingScope;
 		}
 
+		public abstract IEnumerable<SymbolReference> GetMembers(string name);
+
 		public LookupResult Lookup(Name name, Package fromPackage)
 		{
 			return name.Match().Returning<LookupResult>()
@@ -25,7 +29,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 					var context = Lookup(qualifiedName.Left, fromPackage);
 					return context.Lookup(qualifiedName.Right, fromPackage);
 				})
-				.With<IdentifierName>(i=>Lookup(i, fromPackage))
+				.With<IdentifierName>(i => Lookup(i, fromPackage))
 				.Exhaustive();
 		}
 

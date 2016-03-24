@@ -66,7 +66,6 @@ namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
 			var lookup = symbols
 				.ToLookup(s => s is NamespaceSymbol);
 
-			// TODO don't think this cast is going to work
 			var childSymbols = lookup[false].Select(s => (SymbolReference)s).ToList();
 			var childNamespaces = lookup[true].ToList();
 			if(childNamespaces.Any())

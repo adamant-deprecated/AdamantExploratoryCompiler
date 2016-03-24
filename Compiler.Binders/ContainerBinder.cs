@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Binders.LookupResults;
@@ -23,6 +22,11 @@ namespace Adamant.Exploratory.Compiler.Binders
 			this.mergedContainer = mergedContainer;
 			foreach(var import in imports)
 				this.imports.Add(import.AliasName, import);
+		}
+
+		public override IEnumerable<SymbolReference> GetMembers(string name)
+		{
+			return mergedContainer.GetMembers(name);
 		}
 
 		protected override LookupResult Lookup(IdentifierName name, Package fromPackage)
