@@ -1,0 +1,4 @@
+﻿public Main() -> int
+{
+	return 42;
+}
