@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace Adamant.Exploratory.Tests.Framework.System
+namespace Adamant.Exploratory.UnitTests.Framework.System
 {
 	[TestFixture]
 	public class DecimalTests

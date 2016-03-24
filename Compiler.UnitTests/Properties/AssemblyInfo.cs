@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Adamant.Exploratory.Tests.Framework")]
+[assembly: AssemblyTitle("Adamant.Exploratory.Compiler.UnitTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("da5fa437-11f5-4e12-8f6f-5c4137e8c979")]
+[assembly: Guid("0cd2ec11-b990-4eee-8046-fb4b7eba6bc2")]
 
 // Version information for an assembly consists of the following four values:
 //
