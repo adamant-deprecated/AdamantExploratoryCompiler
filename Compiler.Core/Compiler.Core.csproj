@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Diagnostics\CompilerPhase.cs" />
     <Compile Include="Diagnostics\Diagnostic.cs" />
+    <Compile Include="Diagnostics\DiagnosticLevel.cs" />
     <Compile Include="Diagnostics\DiagnosticsBuilder.cs" />
     <Compile Include="Diagnostics\ParseDiagnosticsBuilder.cs" />
     <Compile Include="ISourceText.cs" />

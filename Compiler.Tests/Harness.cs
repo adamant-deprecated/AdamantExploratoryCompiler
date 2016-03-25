@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using Adamant.Exploratory.Compiler.Compiled;
 using Adamant.Exploratory.Compiler.Core;
+using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.PackageConfig;
 using Newtonsoft.Json;
@@ -28,26 +29,27 @@ namespace Adamant.Exploratory.Compiler.Tests
 			var unit = compiler.Parse(package, new SourceReader(config.FileName, reader));
 			package = package.With(new[] { unit });
 			if(package.Diagnostics.Count > 0)
-				Assert.Fail(ToStringDiagnostics(package));
+				Assert.Fail(ToString(package.Diagnostics));
 			var compiledPackage = compiler.Compile(package, Enumerable.Empty<CompiledPackage>());
-			// TODO fail on any compilation errors at this stage
+			if(compiledPackage.Diagnostics.Count > 0)
+				Assert.Fail(ToString(compiledPackage.Diagnostics));
 			Assert.Fail("C++ code generation not implemented");
 			Assert.Fail("C++ compilation not implemented");
 			Assert.Fail("App execution not implemented");
 		}
 
-		private static string ToStringDiagnostics(Package package)
+		private static string ToString(IReadOnlyList<Diagnostic> diagnostics)
 		{
 			var builder = new StringBuilder();
 			ISourceText file = null;
-			foreach(var diagnostic in package.Diagnostics)
+			foreach(var diagnostic in diagnostics)
 			{
 				if(file != diagnostic.File)
 				{
 					file = diagnostic.File;
 					builder.AppendLine($"In {file.Name}");
 				}
-				var level = diagnostic.IsError ? "Error" : "Warning";
+				var level = diagnostic.Level.ToString();
 				var line = diagnostic.Position.Line + 1;
 				var column = diagnostic.Position.Column + 1;
 				builder.AppendLine($"{level} on line {line} at character {column}: ");

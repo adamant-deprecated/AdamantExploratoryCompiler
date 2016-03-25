@@ -22,7 +22,7 @@ namespace Adamant.Exploratory.Compiler.Core.Diagnostics
 
 		public Diagnostic ParseError(TextPosition position, string message)
 		{
-			var diagnostic = new Diagnostic(true, CompilerPhase.Parsing, SourceFile, position, message);
+			var diagnostic = new Diagnostic(DiagnosticLevel.CompilationError, CompilerPhase.Parsing, SourceFile, position, message);
 			diagnostics.Add(diagnostic);
 			return diagnostic;
 		}

@@ -158,7 +158,7 @@ namespace Adamant.Exploratory.Forge.Commands
 					file = diagnostic.File;
 					Console.WriteLine($"In {file.Name}");
 				}
-				var level = diagnostic.IsError ? "Error" : "Warning";
+				var level = diagnostic.Level.ToString();
 				var line = diagnostic.Position.Line + 1;
 				var column = diagnostic.Position.Column + 1;
 				Console.WriteLine($"{level} on line {line} at character {column}: ");

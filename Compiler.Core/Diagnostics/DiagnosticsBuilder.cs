@@ -30,7 +30,7 @@ namespace Adamant.Exploratory.Compiler.Core.Diagnostics
 
 		public void AddBindingError(ISourceText file, TextPosition position, string message)
 		{
-			diagnostics.Add(new Diagnostic(true, CompilerPhase.Binding, file, position, message));
+			diagnostics.Add(new Diagnostic(DiagnosticLevel.CompilationError, CompilerPhase.Binding, file, position, message));
 		}
 	}
 }

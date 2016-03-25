@@ -50,7 +50,7 @@ namespace Adamant.Exploratory.Compiler
 
 			// TODO type check
 			// TODO borrow check
-			return new CompiledPackage(package, symbol);
+			return new CompiledPackage(package, symbol, diagnostics.Complete());
 		}
 
 		private static IList<CompiledDependency> GetCompiledDependencies(Package package, IEnumerable<CompiledPackage> dependencies)
