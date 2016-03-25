@@ -2,7 +2,7 @@
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
-	public class ParameterBuilder : Builder<Parameter>
+	public class ParameterBuilder : Builder<ParameterSyntax>
 	{
 		private readonly IBuildContext build;
 
@@ -11,21 +11,21 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			this.build = build;
 		}
 
-		public override Parameter VisitNamedParameter(AdamantParser.NamedParameterContext context)
+		public override ParameterSyntax VisitNamedParameter(AdamantParser.NamedParameterContext context)
 		{
 			// TODO modifiers
 			// TODO this parameter
 			var name = Identifier(context.identifier());
 			var type = context.referenceType().Accept(build.ReferenceType);
-			return new Parameter(name, type);
+			return new ParameterSyntax(name, type);
 		}
 
-		public override Parameter VisitSelfParameter(AdamantParser.SelfParameterContext context)
+		public override ParameterSyntax VisitSelfParameter(AdamantParser.SelfParameterContext context)
 		{
 			// TODO modifiers
 			// TODO this parameter
 			var name = Identifier(context.token);
-			return new Parameter(name, null);
+			return new ParameterSyntax(name, null);
 		}
 	}
 }

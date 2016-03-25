@@ -12,11 +12,11 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public abstract class Builder<T> : RestrictedVisitor<T>
 	{
-		protected static IEnumerable<UsingDirective> UsingDirective(AdamantParser.UsingDirectiveContext[] contexts)
+		protected static IEnumerable<UsingSyntax> UsingDirective(AdamantParser.UsingDirectiveContext[] contexts)
 		{
-			return contexts.Select(s => new UsingDirective(s.namespaceName()
+			return contexts.Select(s => new UsingSyntax(s.namespaceName()
 				._identifiers.Select(Identifier)
-				.Aggregate(default(Name), (left, identifier) => left == null ? (Name)new IdentifierName(identifier) : new QualifiedName(left, new IdentifierName(identifier)))));
+				.Aggregate(default(NameSyntax), (left, identifier) => left == null ? (NameSyntax)new IdentifierNameSyntax(identifier) : new QualifiedNameSyntax(left, new IdentifierNameSyntax(identifier)))));
 		}
 
 		protected static Accessibility GetAccessModifier(AdamantParser.ModifierContext[] modifiers)

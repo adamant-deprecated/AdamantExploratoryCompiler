@@ -2,7 +2,7 @@
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
-	public class NameBuilder : Builder<Name>
+	public class NameBuilder : Builder<NameSyntax>
 	{
 		private readonly IBuildContext build;
 
@@ -11,16 +11,16 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			this.build = build;
 		}
 
-		public override Name VisitSimpleNameName(AdamantParser.SimpleNameNameContext context)
+		public override NameSyntax VisitSimpleNameName(AdamantParser.SimpleNameNameContext context)
 		{
 			return context.simpleName().Accept(build.SimpleName);
 		}
 
-		public override Name VisitQualifiedName(AdamantParser.QualifiedNameContext context)
+		public override NameSyntax VisitQualifiedName(AdamantParser.QualifiedNameContext context)
 		{
 			var left = context.leftName.Accept(this);
 			var right = context.rightName.Accept(build.SimpleName);
-			return new QualifiedName(left, right);
+			return new QualifiedNameSyntax(left, right);
 		}
 	}
 }

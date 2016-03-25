@@ -24,7 +24,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 			PackageSymbol = packageSymbol;
 		}
 
-		public override LookupResult LookupInGlobalNamespace(Name name, Package fromPackage)
+		public override LookupResult LookupInGlobalNamespace(NameSyntax name, Package fromPackage)
 		{
 			return Lookup(name, fromPackage);
 		}

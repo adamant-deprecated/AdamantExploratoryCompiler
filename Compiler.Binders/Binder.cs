@@ -21,21 +21,21 @@ namespace Adamant.Exploratory.Compiler.Binders
 
 		public abstract IEnumerable<SymbolReference> GetMembers(string name);
 
-		public LookupResult Lookup(Name name, Package fromPackage)
+		public LookupResult Lookup(NameSyntax name, Package fromPackage)
 		{
 			return name.Match().Returning<LookupResult>()
-				.With<QualifiedName>(qualifiedName =>
+				.With<QualifiedNameSyntax>(qualifiedName =>
 				{
 					var context = Lookup(qualifiedName.Left, fromPackage);
 					return context.Lookup(qualifiedName.Right, fromPackage);
 				})
-				.With<IdentifierName>(i => Lookup(i, fromPackage))
+				.With<IdentifierNameSyntax>(i => Lookup(i, fromPackage))
 				.Exhaustive();
 		}
 
-		protected abstract LookupResult Lookup(IdentifierName identifierName, Package fromPackage);
+		protected abstract LookupResult Lookup(IdentifierNameSyntax identifierName, Package fromPackage);
 
-		public virtual LookupResult LookupInGlobalNamespace(Name name, Package fromPackage)
+		public virtual LookupResult LookupInGlobalNamespace(NameSyntax name, Package fromPackage)
 		{
 			return ContainingScope.LookupInGlobalNamespace(name, fromPackage);
 		}

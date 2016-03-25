@@ -18,7 +18,7 @@ namespace Adamant.Exploratory.Compiler.Binders.LookupResults
 		{
 		}
 
-		public override LookupResult Lookup(SimpleName name, Package fromPackage)
+		public override LookupResult Lookup(SimpleNameSyntax name, Package fromPackage)
 		{
 			return NotDefined();
 		}

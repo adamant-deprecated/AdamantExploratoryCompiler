@@ -2,16 +2,16 @@
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
-	public class SimpleNameBuilder : Builder<SimpleName>
+	public class SimpleNameBuilder : Builder<SimpleNameSyntax>
 	{
-		public override SimpleName VisitIdentifierName(AdamantParser.IdentifierNameContext context)
+		public override SimpleNameSyntax VisitIdentifierName(AdamantParser.IdentifierNameContext context)
 		{
-			return new IdentifierName(Identifier(context.identifier()));
+			return new IdentifierNameSyntax(Identifier(context.identifier()));
 		}
 
-		public override SimpleName VisitGenericName(AdamantParser.GenericNameContext context)
+		public override SimpleNameSyntax VisitGenericName(AdamantParser.GenericNameContext context)
 		{
-			return new GenericName(Identifier(context.identifier()));
+			return new GenericNameSyntax(Identifier(context.identifier()));
 		}
 	}
 }

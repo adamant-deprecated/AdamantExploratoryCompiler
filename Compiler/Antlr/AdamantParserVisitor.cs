@@ -472,6 +472,13 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitXorExpression([NotNull] AdamantParser.XorExpressionContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>NameExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNameExpression([NotNull] AdamantParser.NameExpressionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>UnaryExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
 	/// </summary>
@@ -590,13 +597,6 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitUninitializedExpression([NotNull] AdamantParser.UninitializedExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>VariableExpression</c>
-	/// labeled alternative in <see cref="AdamantParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitVariableExpression([NotNull] AdamantParser.VariableExpressionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>MemberExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.

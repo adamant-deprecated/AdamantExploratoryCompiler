@@ -211,7 +211,7 @@ expression
 	| expression '??' expression							#CoalesceExpression
 	| <assoc=right> condition=expression '?' then=expression ':' else=expression #IfExpression
 	| <assoc=right> lvalue=expression op=('='|'*='|'/='|'+='|'-='|'and='|'xor='|'or=') rvalue=expression #AssignmentExpression
-	| identifier											#VariableExpression
+	| identifier											#NameExpression
 	// Since new Class.Constructor() is indistiguishable from new Namespace.Class() we can't parse for named constructor calls here
 	| 'new' name '(' argumentList ')'						#NewExpression
 	| 'new' baseTypes? '(' argumentList ')' '{' member* '}'	#NewObjectExpression

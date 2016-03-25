@@ -15,17 +15,17 @@ namespace Adamant.Exploratory.Compiler.Syntax
 	public class Package
 	{
 		public readonly string Name;
-		public readonly IReadOnlyList<CompilationUnit> CompilationUnits;
+		public readonly IReadOnlyList<CompilationUnitSyntax> CompilationUnits;
 		public readonly IReadOnlyList<PackageDependency> Dependencies;
 		public readonly IReadOnlyList<Diagnostic> Diagnostics;
 		// TODO Language version
 
 		public Package(string name, IEnumerable<PackageDependency> dependencies)
-			: this(name, new List<CompilationUnit>(), dependencies.ToList())
+			: this(name, new List<CompilationUnitSyntax>(), dependencies.ToList())
 		{
 		}
 
-		private Package(string name, IReadOnlyList<CompilationUnit> compilationUnits, IReadOnlyList<PackageDependency> dependencies)
+		private Package(string name, IReadOnlyList<CompilationUnitSyntax> compilationUnits, IReadOnlyList<PackageDependency> dependencies)
 		{
 			Requires.NotNullOrEmpty(name, nameof(name));
 			Requires.That(dependencies.Select(d => d.AliasName).Distinct().Count() == dependencies.Count, nameof(dependencies), "Dependency names/alias must be unique");
@@ -41,7 +41,7 @@ namespace Adamant.Exploratory.Compiler.Syntax
 		}
 
 		[Pure]
-		public Package With(IEnumerable<CompilationUnit> compilationUnits)
+		public Package With(IEnumerable<CompilationUnitSyntax> compilationUnits)
 		{
 			return new Package(Name, compilationUnits.ToList(), Dependencies);
 		}

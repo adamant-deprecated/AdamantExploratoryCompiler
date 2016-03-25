@@ -29,7 +29,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 			return mergedContainer.GetMembers(name);
 		}
 
-		protected override LookupResult Lookup(IdentifierName name, Package fromPackage)
+		protected override LookupResult Lookup(IdentifierNameSyntax name, Package fromPackage)
 		{
 			var identifier = name.Identifier.ValueText;
 

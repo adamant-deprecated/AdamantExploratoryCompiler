@@ -6,9 +6,9 @@ namespace Adamant.Exploratory.Compiler.Binders
 {
 	public class CompilationUnitBinder : ContainerBinder
 	{
-		private readonly CompilationUnit compilationUnit;
+		private readonly CompilationUnitSyntax compilationUnit;
 
-		public CompilationUnitBinder(PackageBinder containingScope, CompilationUnit compilationUnit, IEnumerable<ImportedSymbol> imports)
+		public CompilationUnitBinder(PackageBinder containingScope, CompilationUnitSyntax compilationUnit, IEnumerable<ImportedSymbol> imports)
 			: base(containingScope, null, imports)
 		{
 			this.compilationUnit = compilationUnit;

@@ -3,7 +3,7 @@ using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
-	public class ValueTypeBuilder : Builder<ValueType>
+	public class ValueTypeBuilder : Builder<ValueTypeSyntax>
 	{
 		private readonly IBuildContext build;
 
@@ -12,22 +12,22 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			this.build = build;
 		}
 
-		public override ValueType VisitNamedType(AdamantParser.NamedTypeContext context)
+		public override ValueTypeSyntax VisitNamedType(AdamantParser.NamedTypeContext context)
 		{
 			return context.name().Accept(build.Name);
 		}
 
-		public override ValueType VisitStringType(AdamantParser.StringTypeContext context)
+		public override ValueTypeSyntax VisitStringType(AdamantParser.StringTypeContext context)
 		{
-			return new StringType(Identifier(context.token));
+			return new StringTypeSyntax(Identifier(context.token));
 		}
 
-		public override ValueType VisitPrimitiveNumericType(AdamantParser.PrimitiveNumericTypeContext context)
+		public override ValueTypeSyntax VisitPrimitiveNumericType(AdamantParser.PrimitiveNumericTypeContext context)
 		{
-			return new NumericType(Identifier(context.token));
+			return new NumericTypeSyntax(Identifier(context.token));
 		}
 
-		public override ValueType VisitMaybeType(AdamantParser.MaybeTypeContext context)
+		public override ValueTypeSyntax VisitMaybeType(AdamantParser.MaybeTypeContext context)
 		{
 			// TODO return a generic type Maybe<T>
 			return context.valueType().Accept(this);

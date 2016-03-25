@@ -4,7 +4,7 @@ using Adamant.Exploratory.Compiler.Syntax.Members;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
-	public class MemberBuilder : Builder<Member>
+	public class MemberBuilder : Builder<ClassMemberSyntax>
 	{
 		private readonly IBuildContext build;
 
@@ -13,59 +13,59 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			this.build = build;
 		}
 
-		public override Member VisitConstructor(AdamantParser.ConstructorContext context)
+		public override ClassMemberSyntax VisitConstructor(AdamantParser.ConstructorContext context)
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var name = Identifier(context.identifier());
 			var parameters = build.Parameters(context.parameterList());
 			var body = context.methodBody().statement().Select(s => s.Accept(build.Statement));
-			return new Constructor(accessModifier, name, parameters, body);
+			return new ConstructorSyntax(accessModifier, name, parameters, body);
 		}
 
-		public override Member VisitDestructor(AdamantParser.DestructorContext context)
+		public override ClassMemberSyntax VisitDestructor(AdamantParser.DestructorContext context)
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var parameters = build.Parameters(context.parameterList());
 			var body = context.methodBody().statement().Select(s => s.Accept(build.Statement));
-			return new Destructor(accessModifier, parameters, body);
+			return new DestructorSyntax(accessModifier, parameters, body);
 		}
 
-		public override Member VisitField(AdamantParser.FieldContext context)
+		public override ClassMemberSyntax VisitField(AdamantParser.FieldContext context)
 		{
 			var access = GetAccessModifier(context.modifier());
 			var isMutableReference = context.kind.Type == AdamantLexer.Var;
 			var name = Identifier(context.identifier());
 			var type = context.referenceType()?.Accept(build.ReferenceType);
 			var initExpression = context.expression()?.Accept(build.Expression);
-			return new Field(access, isMutableReference, name, type, initExpression);
+			return new FieldSyntax(access, isMutableReference, name, type, initExpression);
 		}
 
-		public override Member VisitAccessor(AdamantParser.AccessorContext context)
+		public override ClassMemberSyntax VisitAccessor(AdamantParser.AccessorContext context)
 		{
 			var access = GetAccessModifier(context.modifier());
-			var accessorType = context.kind.Type == AdamantParser.Get ? AccessorType.Get : AccessorType.Set;
+			var accessorType = context.kind.Type == AdamantParser.Get ? AccessorMethodType.Get : AccessorMethodType.Set;
 			var name = Identifier(context.identifier());
 			var parameters = build.Parameters(context.parameterList());
 			var body = context.methodBody().statement().Select(s => s.Accept(build.Statement));
-			return new AccessorMethod(access, accessorType, name, parameters, body);
+			return new AccessorMethodSyntax(access, accessorType, name, parameters, body);
 		}
 
-		public override Member VisitIndexer(AdamantParser.IndexerContext context)
+		public override ClassMemberSyntax VisitIndexer(AdamantParser.IndexerContext context)
 		{
 			var access = GetAccessModifier(context.modifier());
-			var accessorType = context.kind.Type == AdamantParser.Get ? AccessorType.Get : AccessorType.Set;
+			var accessorType = context.kind.Type == AdamantParser.Get ? AccessorMethodType.Get : AccessorMethodType.Set;
 			var parameters = build.Parameters(context.parameterList());
 			var body = context.methodBody().statement().Select(s => s.Accept(build.Statement));
-			return new IndexerMethod(access, accessorType, parameters, body);
+			return new IndexerMethodSyntax(access, accessorType, parameters, body);
 		}
 
-		public override Member VisitMethod(AdamantParser.MethodContext context)
+		public override ClassMemberSyntax VisitMethod(AdamantParser.MethodContext context)
 		{
 			var access = GetAccessModifier(context.modifier());
 			var name = Identifier(context.identifier());
 			var parameters = build.Parameters(context.parameterList());
 			var body = context.methodBody().statement().Select(s => s.Accept(build.Statement));
-			return new Method(access, name, parameters, body);
+			return new MethodSyntax(access, name, parameters, body);
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
-	public class ReferenceTypeBuilder : Builder<ReferenceType>
+	public class ReferenceTypeBuilder : Builder<ReferenceTypeSyntax>
 	{
 		private readonly IBuildContext build;
 
@@ -11,28 +11,28 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			this.build = build;
 		}
 
-		public override ReferenceType VisitImmutableReferenceType(AdamantParser.ImmutableReferenceTypeContext context)
+		public override ReferenceTypeSyntax VisitImmutableReferenceType(AdamantParser.ImmutableReferenceTypeContext context)
 		{
 			var valueType = context.valueType().Accept(build.ValueType);
-			return new ReferenceType(null, false, valueType);
+			return new ReferenceTypeSyntax(null, false, valueType);
 		}
 
-		public override ReferenceType VisitMutableReferenceType(AdamantParser.MutableReferenceTypeContext context)
+		public override ReferenceTypeSyntax VisitMutableReferenceType(AdamantParser.MutableReferenceTypeContext context)
 		{
 			var valueType = context.valueType().Accept(build.ValueType);
-			return new ReferenceType(null, true, valueType);
+			return new ReferenceTypeSyntax(null, true, valueType);
 		}
 
-		public override ReferenceType VisitOwnedImmutableReferenceType(AdamantParser.OwnedImmutableReferenceTypeContext context)
+		public override ReferenceTypeSyntax VisitOwnedImmutableReferenceType(AdamantParser.OwnedImmutableReferenceTypeContext context)
 		{
 			var valueType = context.valueType().Accept(build.ValueType);
-			return new ReferenceType(true, false, valueType);
+			return new ReferenceTypeSyntax(true, false, valueType);
 		}
 
-		public override ReferenceType VisitOwnedMutableReferenceType(AdamantParser.OwnedMutableReferenceTypeContext context)
+		public override ReferenceTypeSyntax VisitOwnedMutableReferenceType(AdamantParser.OwnedMutableReferenceTypeContext context)
 		{
 			var valueType = context.valueType().Accept(build.ValueType);
-			return new ReferenceType(true, true, valueType);
+			return new ReferenceTypeSyntax(true, true, valueType);
 		}
 	}
 }

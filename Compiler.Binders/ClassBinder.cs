@@ -10,7 +10,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 {
 	public class ClassBinder : Binder
 	{
-		public ClassBinder(Binder containingScope, ClassDeclaration @class)
+		public ClassBinder(Binder containingScope, ClassSyntax @class)
 			: base(containingScope)
 		{
 		}
@@ -20,7 +20,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 			throw new NotImplementedException();
 		}
 
-		protected override LookupResult Lookup(IdentifierName identifierName, Package fromPackage)
+		protected override LookupResult Lookup(IdentifierNameSyntax identifierName, Package fromPackage)
 		{
 			throw new NotImplementedException();
 		}

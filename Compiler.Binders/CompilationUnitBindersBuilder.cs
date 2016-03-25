@@ -11,7 +11,7 @@ using Adamant.Exploratory.Compiler.Syntax.Expressions;
 using Adamant.Exploratory.Compiler.Syntax.Members;
 using Adamant.Exploratory.Compiler.Syntax.Statements;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
-using ValueType = Adamant.Exploratory.Compiler.Syntax.ValueType;
+using ValueTypeSyntax = Adamant.Exploratory.Compiler.Syntax.ValueTypeSyntax;
 
 namespace Adamant.Exploratory.Compiler.Binders
 {
@@ -19,13 +19,13 @@ namespace Adamant.Exploratory.Compiler.Binders
 	{
 		private readonly Dictionary<SyntaxNode, Binder> binders;
 		private readonly Package packageSyntax;
-		private readonly CompilationUnit compilationUnit;
+		private readonly CompilationUnitSyntax compilationUnit;
 		private readonly DiagnosticsBuilder diagnostics;
 
 		public CompilationUnitBindersBuilder(
 			Dictionary<SyntaxNode, Binder> binders,
 			Package packageSyntax,
-			CompilationUnit compilationUnit,
+			CompilationUnitSyntax compilationUnit,
 			DiagnosticsBuilder diagnostics)
 		{
 			Requires.NotNull(binders, nameof(binders));
@@ -48,7 +48,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 				Build(declaration, scope);
 		}
 
-		private IEnumerable<ImportedSymbol> GatherImportedSymbols(UsingDirective usingDirective, Binder scope)
+		private IEnumerable<ImportedSymbol> GatherImportedSymbols(UsingSyntax usingDirective, Binder scope)
 		{
 			var lookup = scope.LookupInGlobalNamespace(usingDirective.Name, packageSyntax);
 
@@ -63,10 +63,10 @@ namespace Adamant.Exploratory.Compiler.Binders
 			return new[] { new ImportedSymbol(symbol, null) };
 		}
 
-		public void Build(Declaration declaration, ContainerBinder containingScope)
+		public void Build(DeclarationSyntax declaration, ContainerBinder containingScope)
 		{
 			declaration.Match()
-				.With<NamespaceDeclaration>(@namespace =>
+				.With<NamespaceSyntax>(@namespace =>
 				{
 					var imports = @namespace.UsingDirectives.SelectMany(u => GatherImportedSymbols(u, containingScope));
 					var namesCount = @namespace.Names.Count;
@@ -84,14 +84,14 @@ namespace Adamant.Exploratory.Compiler.Binders
 					foreach(var member in @namespace.Members)
 						Build(member, containingScope);
 				})
-				.With<ClassDeclaration>(@class =>
+				.With<ClassSyntax>(@class =>
 				{
 					var scope = new ClassBinder(containingScope, @class);
 					binders.Add(@class, scope);
 					foreach(var member in @class.Members)
 						Build(member, scope);
 				})
-				.With<FunctionDeclaration>(function =>
+				.With<FunctionSyntax>(function =>
 				{
 					foreach(var parameter in function.Parameters)
 						Build(parameter.Type.Type, containingScope);
@@ -109,16 +109,16 @@ namespace Adamant.Exploratory.Compiler.Binders
 				.Exhaustive();
 		}
 
-		private void Build(Member member, ClassBinder containingScope)
+		private void Build(ClassMemberSyntax member, ClassBinder containingScope)
 		{
 			member.Match()
-				.With<Field>(field =>
+				.With<FieldSyntax>(field =>
 				{
 					Build(field.Type.Type, containingScope);
 					if(field.InitExpression != null)
 						Build(field.InitExpression, containingScope);
 				})
-				.With<Constructor>(constructor =>
+				.With<ConstructorSyntax>(constructor =>
 				{
 					foreach(var parameter in constructor.Parameters)
 						Build(parameter.Type.Type, containingScope);
@@ -127,7 +127,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 					foreach(var statement in constructor.Body)
 						scope = Build(statement, scope);
 				})
-				.With<Destructor>(destructor =>
+				.With<DestructorSyntax>(destructor =>
 				{
 					foreach(var parameter in destructor.Parameters)
 						if(parameter.Type != null)
@@ -137,7 +137,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 					foreach(var statement in destructor.Body)
 						scope = Build(statement, scope);
 				})
-				.With<IndexerMethod>(indexer =>
+				.With<IndexerMethodSyntax>(indexer =>
 				{
 					foreach(var parameter in indexer.Parameters)
 						if(parameter.Type != null)
@@ -148,7 +148,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 					foreach(var statement in indexer.Body)
 						scope = Build(statement, scope);
 				})
-				.With<Method>(method =>
+				.With<MethodSyntax>(method =>
 				{
 					foreach(var parameter in method.Parameters)
 						if(parameter.Type != null)
@@ -162,30 +162,30 @@ namespace Adamant.Exploratory.Compiler.Binders
 				.Exhaustive();
 		}
 
-		private void Build(ValueType type, Binder containingScope)
+		private void Build(ValueTypeSyntax type, Binder containingScope)
 		{
 			type.Match()
-				.With<NumericType>(numericType =>
+				.With<NumericTypeSyntax>(numericType =>
 				{
 					// Not really sure this makes sense since a numeric type is a keyword
 					binders.Add(numericType, containingScope);
 				})
-				.With<GenericName>(genericName =>
+				.With<GenericNameSyntax>(genericName =>
 				{
 					binders.Add(genericName, containingScope);
 					// TODO associate the type parameters
 				})
-				.With<IdentifierName>(identifierName =>
+				.With<IdentifierNameSyntax>(identifierName =>
 				{
 					binders.Add(identifierName, containingScope);
 				})
 				.Exhaustive();
 		}
 
-		private Binder Build(Statement statement, Binder containingScope)
+		private Binder Build(StatementSyntax statement, Binder containingScope)
 		{
 			return statement.Match().Returning<Binder>()
-				.With<ExpressionStatement>(expressionStatement =>
+				.With<ExpressionStatementSyntax>(expressionStatement =>
 				{
 					Build(expressionStatement.Expression, containingScope);
 					return containingScope;
@@ -193,29 +193,29 @@ namespace Adamant.Exploratory.Compiler.Binders
 				.Exhaustive();
 		}
 
-		private void Build(Expression expression, Binder containingScope)
+		private void Build(ExpressionSyntax expression, Binder containingScope)
 		{
 			expression.Match()
-				.With<AssignmentExpression>(assignment =>
+				.With<AssignmentSyntax>(assignment =>
 				{
 					Build(assignment.LValue, containingScope);
 					Build(assignment.RValue, containingScope);
 				})
-				.With<MemberExpression>(memberExpression =>
+				.With<MemberAccessSyntax>(memberExpression =>
 				{
 					Build(memberExpression.Expression, containingScope);
 				})
-				.With<SelfExpression, VariableExpression>(variableExpression =>
+				.With<SelfSyntax, IdentifierNameSyntax>(variableExpression =>
 				{
 					binders.Add(variableExpression, containingScope);
 				})
-				.With<CallExpression>(call =>
+				.With<CallSyntax>(call =>
 				{
 					Build(call.Expression, containingScope);
 					foreach(var argument in call.Arguments)
 						Build(argument, containingScope);
 				})
-				.Ignore<LiteralExpression>()
+				.Ignore<LiteralSyntax>()
 				.Exhaustive();
 		}
 	}

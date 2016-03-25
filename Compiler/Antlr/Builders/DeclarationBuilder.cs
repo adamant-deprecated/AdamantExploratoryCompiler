@@ -7,7 +7,7 @@ using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
-	public class DeclarationBuilder : Builder<Declaration>, IBuildContext
+	public class DeclarationBuilder : Builder<DeclarationSyntax>, IBuildContext
 	{
 		public static readonly DeclarationBuilder Instance = new DeclarationBuilder();
 
@@ -33,20 +33,20 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public ReferenceTypeBuilder ReferenceType { get; }
 		public SimpleNameBuilder SimpleName { get; }
 
-		public IList<Parameter> Parameters(AdamantParser.ParameterListContext context)
+		public IList<ParameterSyntax> Parameters(AdamantParser.ParameterListContext context)
 		{
 			return context._parameters.Select(p => p.Accept(parameterBuilder)).ToList();
 		}
 
-		public override Declaration VisitNamespaceDeclaration(AdamantParser.NamespaceDeclarationContext context)
+		public override DeclarationSyntax VisitNamespaceDeclaration(AdamantParser.NamespaceDeclarationContext context)
 		{
 			var name = context.namespaceName()._identifiers.Select(Identifier).ToList();
 			var usingDirectives = UsingDirective(context.usingDirective());
 			var declarations = context.declaration().Select(d => d.Accept(this));
-			return new NamespaceDeclaration(name, usingDirectives, declarations);
+			return new NamespaceSyntax(name, usingDirectives, declarations);
 		}
 
-		public override Declaration VisitClassDeclaration(AdamantParser.ClassDeclarationContext context)
+		public override DeclarationSyntax VisitClassDeclaration(AdamantParser.ClassDeclarationContext context)
 		{
 			// TODO Attributes
 			// TODO what about immutable for classes?
@@ -59,27 +59,27 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			// TODO base types
 			// TODO type parameter constraints
 			var members = context.member().Select(m => m.Accept(Member));
-			return new ClassDeclaration(accessModifier, isPartial, safety, isSealed, isAbstract, name, members);
+			return new ClassSyntax(accessModifier, isPartial, safety, isSealed, isAbstract, name, members);
 		}
 
-		public override Declaration VisitVariableDeclaration(AdamantParser.VariableDeclarationContext context)
+		public override DeclarationSyntax VisitVariableDeclaration(AdamantParser.VariableDeclarationContext context)
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var isMutableBinding = context.kind.Type == AdamantLexer.Var;
 			var name = Identifier(context.identifier());
 			var type = context.referenceType()?.Accept(ReferenceType);
 			var initExpression = context.expression()?.Accept(Expression);
-			return new VariableDeclaration(accessModifier, isMutableBinding, name, type, initExpression);
+			return new GlobalVariableSyntax(accessModifier, isMutableBinding, name, type, initExpression);
 		}
 
-		public override Declaration VisitFunctionDeclaration(AdamantParser.FunctionDeclarationContext context)
+		public override DeclarationSyntax VisitFunctionDeclaration(AdamantParser.FunctionDeclarationContext context)
 		{
 			var accessModifier = GetAccessModifier(context.modifier());
 			var parameters = Parameters(context.parameterList());
 			var name = Identifier(context.identifier());
 			var returnType = context.returnType.Accept(ReferenceType);
 			var body = context.methodBody().statement().Select(s => s.Accept(Statement));
-			return new FunctionDeclaration(accessModifier, name, parameters, returnType, body);
+			return new FunctionSyntax(accessModifier, name, parameters, returnType, body);
 		}
 
 		private static bool Has(AdamantParser.ModifierContext[] modifiers, int desiredModifier)

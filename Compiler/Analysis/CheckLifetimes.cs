@@ -9,19 +9,19 @@ namespace Adamant.Exploratory.Compiler.Analysis
 {
 	public static class CheckLifetimesExtensions
 	{
-		public static void CheckLifetimes(this CompilationUnit compilationUnit)
+		public static void CheckLifetimes(this CompilationUnitSyntax compilationUnit)
 		{
 			throw new NotImplementedException();
 		}
 
-		public static void CheckLifetimes(this EntityDeclaration declaration)
+		public static void CheckLifetimes(this EntitySyntax declaration)
 		{
 			declaration.Match()
-				.With<ClassDeclaration>(@class =>
+				.With<ClassSyntax>(@class =>
 				{
 					throw new NotImplementedException();
 				})
-				.With<FunctionDeclaration>(function =>
+				.With<FunctionSyntax>(function =>
 				{
 					foreach(var parameter in function.Parameters)
 					{
@@ -33,17 +33,17 @@ namespace Adamant.Exploratory.Compiler.Analysis
 						// TODO
 					}
 				})
-				.With<VariableDeclaration>(global =>
+				.With<GlobalVariableSyntax>(global =>
 				{
 					throw new NotImplementedException();
 				})
 				.Exhaustive();
 		}
 
-		public static void CheckLifetimes(this Member member)
+		public static void CheckLifetimes(this ClassMemberSyntax member)
 		{
 			member.Match()
-				.With<Constructor>(constructor =>
+				.With<ConstructorSyntax>(constructor =>
 				{
 					foreach(var parameter in constructor.Parameters)
 					{
@@ -52,7 +52,7 @@ namespace Adamant.Exploratory.Compiler.Analysis
 
 					throw new NotImplementedException();
 				})
-				.With<Field>(field =>
+				.With<FieldSyntax>(field =>
 				{
 					throw new NotImplementedException();
 				})

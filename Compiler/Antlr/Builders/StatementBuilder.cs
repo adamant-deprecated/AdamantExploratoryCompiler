@@ -3,7 +3,7 @@ using Adamant.Exploratory.Compiler.Syntax.Statements;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
-	public class StatementBuilder : Builder<Statement>
+	public class StatementBuilder : Builder<StatementSyntax>
 	{
 		private readonly DeclarationBuilder build;
 
@@ -12,42 +12,42 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			this.build = build;
 		}
 
-		public override Statement VisitVariableDeclarationStatement(AdamantParser.VariableDeclarationStatementContext context)
+		public override StatementSyntax VisitVariableDeclarationStatement(AdamantParser.VariableDeclarationStatementContext context)
 		{
 			return context.localVariableDeclaration().Accept(this);
 		}
 
-		public override Statement VisitLocalVariableDeclaration(AdamantParser.LocalVariableDeclarationContext context)
+		public override StatementSyntax VisitLocalVariableDeclaration(AdamantParser.LocalVariableDeclarationContext context)
 		{
-			return new VariableDeclarationStatement();
+			return new LocalVariableSyntax();
 		}
 
-		public override Statement VisitExpressionStatement(AdamantParser.ExpressionStatementContext context)
+		public override StatementSyntax VisitExpressionStatement(AdamantParser.ExpressionStatementContext context)
 		{
 			var expression = context.expression().Accept(build.Expression);
-			return new ExpressionStatement(expression);
+			return new ExpressionStatementSyntax(expression);
 		}
 
-		public override Statement VisitReturnStatement(AdamantParser.ReturnStatementContext context)
+		public override StatementSyntax VisitReturnStatement(AdamantParser.ReturnStatementContext context)
 		{
-			return new ReturnStatement(context.expression().Accept(build.Expression));
+			return new ReturnSyntax(context.expression().Accept(build.Expression));
 		}
 
-		public override Statement VisitThrowStatement(AdamantParser.ThrowStatementContext context)
+		public override StatementSyntax VisitThrowStatement(AdamantParser.ThrowStatementContext context)
 		{
-			return new ThrowStatement(context.expression().Accept(build.Expression));
+			return new ThrowSyntax(context.expression().Accept(build.Expression));
 		}
 
-		public override Statement VisitIfStatement(AdamantParser.IfStatementContext context)
-		{
-			// TODO implement
-			return new IfStatement();
-		}
-
-		public override Statement VisitForeachStatement(AdamantParser.ForeachStatementContext context)
+		public override StatementSyntax VisitIfStatement(AdamantParser.IfStatementContext context)
 		{
 			// TODO implement
-			return new ForeachStatement();
+			return new IfSyntax();
+		}
+
+		public override StatementSyntax VisitForeachStatement(AdamantParser.ForeachStatementContext context)
+		{
+			// TODO implement
+			return new ForeachSyntax();
 		}
 	}
 }

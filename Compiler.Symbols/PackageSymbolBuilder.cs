@@ -26,15 +26,15 @@ namespace Adamant.Exploratory.Compiler.Symbols
 			return new PackageSymbol(package, globalDeclarations);
 		}
 
-		private IEnumerable<NamespaceMember> BuildNamespaceMembers(CompilationUnit compilationUnit, DiagnosticsBuilder diagnostics)
+		private IEnumerable<NamespaceMember> BuildNamespaceMembers(CompilationUnitSyntax compilationUnit, DiagnosticsBuilder diagnostics)
 		{
 			return compilationUnit.Declarations.Select(d => BuildNamespaceMember(d, diagnostics));
 		}
 
-		private NamespaceMember BuildNamespaceMember(Declaration declaration, DiagnosticsBuilder diagnostics)
+		private NamespaceMember BuildNamespaceMember(DeclarationSyntax declaration, DiagnosticsBuilder diagnostics)
 		{
 			return declaration.Match().Returning<NamespaceMember>()
-				.With<NamespaceDeclaration>(@namespace =>
+				.With<NamespaceSyntax>(@namespace =>
 				{
 					var members = @namespace.Members.Select(m => BuildNamespaceMember(m, diagnostics));
 
@@ -45,13 +45,13 @@ namespace Adamant.Exploratory.Compiler.Symbols
 					}
 					return members.Single(); // pull out the top level namespace
 				})
-				.With<ClassDeclaration>(@class =>
+				.With<ClassSyntax>(@class =>
 				{
 					// TODO check for and report duplicate members
 					var symbol = new ClassSymbol(package, @class.Accessibility, @class.Name.ValueText);
 					return new Entity(symbol);
 				})
-				.With<FunctionDeclaration>(function =>
+				.With<FunctionSyntax>(function =>
 				{
 					var symbol = new FunctionSymbol(package, function.Accessibility, function.Name.ValueText);
 					return new Entity(symbol);

@@ -780,6 +780,18 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitXorExpression([NotNull] AdamantParser.XorExpressionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>NameExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNameExpression([NotNull] AdamantParser.NameExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>NameExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNameExpression([NotNull] AdamantParser.NameExpressionContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>UnaryExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
 	/// </summary>
@@ -983,18 +995,6 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitUninitializedExpression([NotNull] AdamantParser.UninitializedExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by the <c>VariableExpression</c>
-	/// labeled alternative in <see cref="AdamantParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterVariableExpression([NotNull] AdamantParser.VariableExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by the <c>VariableExpression</c>
-	/// labeled alternative in <see cref="AdamantParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitVariableExpression([NotNull] AdamantParser.VariableExpressionContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>MemberExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.

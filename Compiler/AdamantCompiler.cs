@@ -14,7 +14,7 @@ namespace Adamant.Exploratory.Compiler
 {
 	public class AdamantCompiler
 	{
-		public CompilationUnit Parse(Package pacakge, SourceFile sourceFile)
+		public CompilationUnitSyntax Parse(Package pacakge, SourceFile sourceFile)
 		{
 			// TODO make use of the package.  We don't currently use the package, but we
 			// are taking it as an argument becuase we should be for things like:
@@ -35,7 +35,7 @@ namespace Adamant.Exploratory.Compiler
 
 			var diagnostics = builder.Complete();
 			if(diagnostics.Any())
-				return new CompilationUnit(sourceFile, Enumerable.Empty<UsingDirective>(), Enumerable.Empty<Declaration>(), diagnostics);
+				return new CompilationUnitSyntax(sourceFile, Enumerable.Empty<UsingSyntax>(), Enumerable.Empty<DeclarationSyntax>(), diagnostics);
 
 			var compilationUnitBuilder = new CompilationUnitBuilder(sourceFile, diagnostics);
 			return tree.Accept(compilationUnitBuilder);

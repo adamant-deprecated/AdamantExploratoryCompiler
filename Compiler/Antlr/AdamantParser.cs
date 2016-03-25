@@ -4326,6 +4326,25 @@ public partial class AdamantParser : Parser {
 			else return visitor.VisitChildren(this);
 		}
 	}
+	public partial class NameExpressionContext : ExpressionContext {
+		public IdentifierContext identifier() {
+			return GetRuleContext<IdentifierContext>(0);
+		}
+		public NameExpressionContext(ExpressionContext context) { CopyFrom(context); }
+		public override void EnterRule(IParseTreeListener listener) {
+			IAdamantParserListener typedListener = listener as IAdamantParserListener;
+			if (typedListener != null) typedListener.EnterNameExpression(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IAdamantParserListener typedListener = listener as IAdamantParserListener;
+			if (typedListener != null) typedListener.ExitNameExpression(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IAdamantParserVisitor<TResult> typedVisitor = visitor as IAdamantParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitNameExpression(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
 	public partial class UnaryExpressionContext : ExpressionContext {
 		public IToken op;
 		public ExpressionContext expression() {
@@ -4687,25 +4706,6 @@ public partial class AdamantParser : Parser {
 			else return visitor.VisitChildren(this);
 		}
 	}
-	public partial class VariableExpressionContext : ExpressionContext {
-		public IdentifierContext identifier() {
-			return GetRuleContext<IdentifierContext>(0);
-		}
-		public VariableExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		public override void EnterRule(IParseTreeListener listener) {
-			IAdamantParserListener typedListener = listener as IAdamantParserListener;
-			if (typedListener != null) typedListener.EnterVariableExpression(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IAdamantParserListener typedListener = listener as IAdamantParserListener;
-			if (typedListener != null) typedListener.ExitVariableExpression(this);
-		}
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IAdamantParserVisitor<TResult> typedVisitor = visitor as IAdamantParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitVariableExpression(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
 	public partial class MemberExpressionContext : ExpressionContext {
 		public ExpressionContext expression() {
 			return GetRuleContext<ExpressionContext>(0);
@@ -4835,7 +4835,7 @@ public partial class AdamantParser : Parser {
 				break;
 			case 2:
 				{
-				_localctx = new VariableExpressionContext(_localctx);
+				_localctx = new NameExpressionContext(_localctx);
 				Context = _localctx;
 				_prevctx = _localctx;
 				State = 730; identifier();

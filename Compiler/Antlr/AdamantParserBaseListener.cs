@@ -826,6 +826,18 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitXorExpression([NotNull] AdamantParser.XorExpressionContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.NameExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNameExpression([NotNull] AdamantParser.NameExpressionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.NameExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNameExpression([NotNull] AdamantParser.NameExpressionContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.UnaryExpression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -1029,18 +1041,6 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitUninitializedExpression([NotNull] AdamantParser.UninitializedExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.VariableExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterVariableExpression([NotNull] AdamantParser.VariableExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.VariableExpression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitVariableExpression([NotNull] AdamantParser.VariableExpressionContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.MemberExpression"/>.
 	/// <para>The default implementation does nothing.</para>

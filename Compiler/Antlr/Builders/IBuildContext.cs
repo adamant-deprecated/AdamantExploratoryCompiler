@@ -13,6 +13,6 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		ReferenceTypeBuilder ReferenceType { get; }
 		SimpleNameBuilder SimpleName { get; }
 
-		IList<Parameter> Parameters(AdamantParser.ParameterListContext context);
+		IList<ParameterSyntax> Parameters(AdamantParser.ParameterListContext context);
 	}
 }
