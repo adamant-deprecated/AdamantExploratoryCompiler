@@ -1,0 +1,12 @@
+﻿/*---
+{
+	"result": 12
+}
+*/
+namespace Adamant.Compiler.Tests.Initial
+{
+	public Main() -> int
+	{
+		return "Hello World!".ByteLength;
+	}
+}

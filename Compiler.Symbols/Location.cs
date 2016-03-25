@@ -5,10 +5,10 @@ namespace Adamant.Exploratory.Compiler.Symbols
 {
 	public class Location
 	{
-		public readonly ISourceFile File;
+		public readonly ISourceText File;
 		public readonly TextPosition Position;
 
-		public Location(ISourceFile file, TextPosition position)
+		public Location(ISourceText file, TextPosition position)
 		{
 			Requires.NotNull(file, nameof(file));
 

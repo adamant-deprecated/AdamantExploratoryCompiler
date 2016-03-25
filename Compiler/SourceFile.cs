@@ -1,10 +1,9 @@
-﻿using System;
-using System.IO;
-using Adamant.Exploratory.Compiler.Core;
+﻿using System.IO;
+using Adamant.Exploratory.Compiler.Antlr;
 
 namespace Adamant.Exploratory.Compiler
 {
-	public class SourceFile : ISourceFile
+	public class SourceFile : SourceText
 	{
 		private readonly FileInfo fileInfo;
 
@@ -13,13 +12,13 @@ namespace Adamant.Exploratory.Compiler
 			this.fileInfo = fileInfo;
 		}
 
-		public string Name => fileInfo.FullName;
+		public override string Name => fileInfo.FullName;
 
 		public string Path => fileInfo.FullName;
 
-		public int CompareTo(ISourceFile other)
+		internal override AdamantParser NewParser()
 		{
-			return string.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase);
+			return new AdamantParser(Path);
 		}
 	}
 }

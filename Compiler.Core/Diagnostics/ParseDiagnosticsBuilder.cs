@@ -4,10 +4,10 @@ namespace Adamant.Exploratory.Compiler.Core.Diagnostics
 {
 	public class ParseDiagnosticsBuilder
 	{
-		public readonly ISourceFile SourceFile;
+		public readonly ISourceText SourceFile;
 		private List<Diagnostic> diagnostics = new List<Diagnostic>();
 
-		public ParseDiagnosticsBuilder(ISourceFile sourceFile)
+		public ParseDiagnosticsBuilder(ISourceText sourceFile)
 		{
 			SourceFile = sourceFile;
 		}

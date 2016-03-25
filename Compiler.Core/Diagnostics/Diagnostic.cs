@@ -7,11 +7,11 @@ namespace Adamant.Exploratory.Compiler.Core.Diagnostics
 	{
 		public readonly bool IsError;
 		public readonly CompilerPhase Phase;
-		public readonly ISourceFile File;
+		public readonly ISourceText File;
 		public readonly TextPosition Position;
 		public readonly string Message;
 
-		internal Diagnostic(bool isError, CompilerPhase phase, ISourceFile file, TextPosition position, string message)
+		internal Diagnostic(bool isError, CompilerPhase phase, ISourceText file, TextPosition position, string message)
 		{
 			Requires.EnumDefined(phase, nameof(phase));
 			Requires.NotNull(file, nameof(file));

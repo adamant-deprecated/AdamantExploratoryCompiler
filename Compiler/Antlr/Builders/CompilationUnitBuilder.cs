@@ -8,10 +8,10 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 {
 	public class CompilationUnitBuilder : Builder<CompilationUnitSyntax>
 	{
-		private readonly ISourceFile sourceFile;
+		private readonly ISourceText sourceFile;
 		private readonly IEnumerable<Diagnostic> errors;
 
-		public CompilationUnitBuilder(ISourceFile sourceFile, IEnumerable<Diagnostic> errors)
+		public CompilationUnitBuilder(ISourceText sourceFile, IEnumerable<Diagnostic> errors)
 		{
 			this.sourceFile = sourceFile;
 			this.errors = errors;

@@ -11,12 +11,12 @@ namespace Adamant.Exploratory.Compiler.Syntax
 	/// </summary>
 	public class CompilationUnitSyntax : SyntaxNode
 	{
-		public readonly ISourceFile SourceFile;
+		public readonly ISourceText SourceFile;
 		public readonly IReadOnlyList<UsingSyntax> UsingDirectives;
 		public readonly IReadOnlyList<DeclarationSyntax> Declarations;
 		public readonly IReadOnlyList<Diagnostic> Diagnostics;
 
-		public CompilationUnitSyntax(ISourceFile sourceFile, IEnumerable<UsingSyntax> usingDirectives, IEnumerable<DeclarationSyntax> declarations, IEnumerable<Diagnostic> diagnostics)
+		public CompilationUnitSyntax(ISourceText sourceFile, IEnumerable<UsingSyntax> usingDirectives, IEnumerable<DeclarationSyntax> declarations, IEnumerable<Diagnostic> diagnostics)
 		{
 			SourceFile = sourceFile;
 			UsingDirectives = usingDirectives.ToList();

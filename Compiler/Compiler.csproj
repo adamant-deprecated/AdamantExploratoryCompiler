@@ -34,6 +34,8 @@
     <Compile Include="Antlr\Builders\ReferenceTypeBuilder.cs" />
     <Compile Include="Antlr\Builders\SimpleNameBuilder.cs" />
     <Compile Include="Compiled\CompiledDependency.cs" />
+    <Compile Include="SourceReader.cs" />
+    <Compile Include="SourceText.cs" />
     <Reference Include="Antlr4.Runtime">
       <HintPath>..\lib\Antlr4.Runtime.dll</HintPath>
     </Reference>

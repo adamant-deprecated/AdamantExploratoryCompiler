@@ -1,0 +1,9 @@
+﻿/*---
+{
+	"description": "An empty program main function",
+	"result": 0
+}
+*/
+public Main() -> void
+{
+}

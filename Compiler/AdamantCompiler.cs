@@ -14,15 +14,15 @@ namespace Adamant.Exploratory.Compiler
 {
 	public class AdamantCompiler
 	{
-		public CompilationUnitSyntax Parse(Package pacakge, SourceFile sourceFile)
+		public CompilationUnitSyntax Parse(Package package, SourceText sourceText)
 		{
 			// TODO make use of the package.  We don't currently use the package, but we
 			// are taking it as an argument becuase we should be for things like:
 			//   * Language Version
 			//   * Dependency Names
 			//   * Defined Preprocessor Symbols
-			var builder = new ParseDiagnosticsBuilder(sourceFile);
-			var parser = new AdamantParser(sourceFile.Path);
+			var builder = new ParseDiagnosticsBuilder(sourceText);
+			var parser = sourceText.NewParser();
 			// Stupid ANTLR makes it difficult to do this in the constructor
 			parser.RemoveErrorListeners();
 			var errorsListener = new GatherErrorsListener(builder);
@@ -35,9 +35,9 @@ namespace Adamant.Exploratory.Compiler
 
 			var diagnostics = builder.Complete();
 			if(diagnostics.Any())
-				return new CompilationUnitSyntax(sourceFile, Enumerable.Empty<UsingSyntax>(), Enumerable.Empty<DeclarationSyntax>(), diagnostics);
+				return new CompilationUnitSyntax(sourceText, Enumerable.Empty<UsingSyntax>(), Enumerable.Empty<DeclarationSyntax>(), diagnostics);
 
-			var compilationUnitBuilder = new CompilationUnitBuilder(sourceFile, diagnostics);
+			var compilationUnitBuilder = new CompilationUnitBuilder(sourceText, diagnostics);
 			return tree.Accept(compilationUnitBuilder);
 		}
 

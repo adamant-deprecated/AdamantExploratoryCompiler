@@ -150,7 +150,7 @@ namespace Adamant.Exploratory.Forge.Commands
 
 		private static void PrintDiagnostics(Package package)
 		{
-			ISourceFile file = null;
+			ISourceText file = null;
 			foreach(var diagnostic in package.Diagnostics)
 			{
 				if(file != diagnostic.File)
