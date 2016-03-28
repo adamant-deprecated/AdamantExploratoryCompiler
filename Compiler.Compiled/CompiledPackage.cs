@@ -12,9 +12,10 @@ namespace Adamant.Exploratory.Compiler.Compiled
 		public string Name;
 		public readonly Package Syntax;
 		public readonly PackageSymbol Symbol;
+		public readonly IReadOnlyList<CompiledDependency> Dependencies;
 		public readonly IReadOnlyList<Diagnostic> Diagnostics;
 
-		public CompiledPackage(Package syntax, PackageSymbol symbol, IEnumerable<Diagnostic> diagnostics)
+		public CompiledPackage(Package syntax, PackageSymbol symbol, IEnumerable<Diagnostic> diagnostics, IEnumerable<CompiledDependency> dependencies)
 		{
 			Requires.NotNull(syntax, nameof(syntax));
 			Requires.NotNull(symbol, nameof(symbol));
@@ -22,9 +23,8 @@ namespace Adamant.Exploratory.Compiler.Compiled
 			Name = syntax.Name;
 			Syntax = syntax;
 			Symbol = symbol;
+			Dependencies = dependencies.ToList();
 			Diagnostics = diagnostics.ToList();
 		}
-
-		// TODO dependencies
 	}
 }

@@ -9,6 +9,7 @@ using Adamant.Exploratory.Compiler.Symbols;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Directives;
 using Antlr4.Runtime.Atn;
+using Compiler.Emit.Cpp;
 
 namespace Adamant.Exploratory.Compiler
 {
@@ -50,7 +51,7 @@ namespace Adamant.Exploratory.Compiler
 
 			// TODO type check
 			// TODO borrow check
-			return new CompiledPackage(package, symbol, diagnostics.Complete());
+			return new CompiledPackage(package, symbol, diagnostics.Complete(), compiledDependencies);
 		}
 
 		private static IList<CompiledDependency> GetCompiledDependencies(Package package, IEnumerable<CompiledPackage> dependencies)
@@ -58,6 +59,12 @@ namespace Adamant.Exploratory.Compiler
 			var compiledPackages = dependencies.ToLookup(p => p.Name);
 			var compiledDependencies = package.Dependencies.Select(d => new CompiledDependency(compiledPackages[d.Name].Single(), d.Alias, d.Trusted));
 			return compiledDependencies.ToList();
+		}
+
+		public string EmitCpp(CompiledPackage package)
+		{
+			var emitter = new PackageEmitter(package);
+			return emitter.Emit();
 		}
 	}
 }

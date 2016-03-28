@@ -45,13 +45,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Compiler.Binders\Compiler.Binders.csproj">
+      <Project>{C66A416E-5FBD-450A-B55F-AF63DA99265C}</Project>
+      <Name>Compiler.Binders</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Compiler.Compiled\Compiler.Compiled.csproj">
       <Project>{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}</Project>
       <Name>Compiler.Compiled</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Compiler\Compiler.csproj">
-      <Project>{884126DA-5100-4924-8068-B60E5DD01D59}</Project>
-      <Name>Compiler</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

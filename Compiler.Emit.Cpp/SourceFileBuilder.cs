@@ -70,5 +70,10 @@ namespace Compiler.Emit.Cpp
 			code.AppendLine(indent + "}");
 			firstElement = false;
 		}
+
+		public override string ToString()
+		{
+			return code.ToString();
+		}
 	}
 }

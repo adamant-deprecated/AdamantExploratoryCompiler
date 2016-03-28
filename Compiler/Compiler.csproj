@@ -72,6 +72,10 @@
       <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
       <Name>Compiler.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Compiler.Emit.Cpp\Compiler.Emit.Cpp.csproj">
+      <Project>{F659BAFA-A6B7-4253-BA43-80DF0A5455DE}</Project>
+      <Name>Compiler.Emit.Cpp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Compiler.Symbols\Compiler.Symbols.csproj">
       <Project>{5235f122-ad65-4577-bbc4-dba7d60da92d}</Project>
       <Name>Compiler.Symbols</Name>

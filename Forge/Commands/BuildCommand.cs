@@ -100,11 +100,14 @@ namespace Adamant.Exploratory.Forge.Commands
 
 			DeleteDirectoryIfExists(targetDirPath);
 
-			if(isApp)
+			Directory.CreateDirectory(compileDirPath);
+			var cppSource = compiler.EmitCpp(compiledPackage);
+			using(var file = File.CreateText(Path.Combine(compileDirPath, compiledPackage.Name + ".cpp")))
 			{
-				Directory.CreateDirectory(compileDirPath);
-				// TODO emit cpp and compile it
+				file.Write(cppSource);
 			}
+			// TODO Copy forward cpp files from dependencies
+
 			packages.Add(compiledPackage.Name, compiledPackage);
 			return targetDirPath;
 		}
