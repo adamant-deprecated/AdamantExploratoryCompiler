@@ -30,13 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Antlr\Builders\NameBuilder.cs" />
-    <Compile Include="Antlr\Builders\ReferenceTypeBuilder.cs" />
-    <Compile Include="Antlr\Builders\SimpleNameBuilder.cs" />
     <Compile Include="Compiled\CompiledDependency.cs" />
     <Compile Include="SourceReader.cs" />
     <Compile Include="SourceText.cs" />
-    <Reference Include="Antlr4.Runtime">
+    <Reference Include="Antlr4.Runtime, Version=4.5.1.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Antlr4.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -49,88 +47,21 @@
     <Reference Include="System.Xml" />
     <Compile Include="AdamantCompiler.cs" />
     <Compile Include="Analysis\CheckLifetimes.cs" />
-    <Compile Include="Antlr\AdamantLexer.cs">
-      <DependentUpon>AdamantLexer.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\AdamantParser.cs">
-      <DependentUpon>AdamantParser.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\AdamantParser.partial.cs" />
-    <Compile Include="Antlr\AdamantParserBaseListener.cs">
-      <DependentUpon>AdamantParser.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\AdamantParserBaseVisitor.cs">
-      <DependentUpon>AdamantParser.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\AdamantParserListener.cs">
-      <DependentUpon>AdamantParser.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\AdamantParserVisitor.cs">
-      <DependentUpon>AdamantParser.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\AdamantLexer.partial.cs" />
-    <Compile Include="Antlr\Builders\Builder.cs" />
-    <Compile Include="Antlr\Builders\CompilationUnitBuilder.cs" />
-    <Compile Include="Antlr\Builders\DeclarationBuilder.cs" />
-    <Compile Include="Antlr\Builders\ExpressionBuilder.cs" />
-    <Compile Include="Antlr\Builders\IBuildContext.cs" />
-    <Compile Include="Antlr\Builders\MemberBuilder.cs" />
-    <Compile Include="Antlr\Builders\ParameterBuilder.cs" />
-    <Compile Include="Antlr\Builders\StatementBuilder.cs" />
-    <Compile Include="Antlr\Builders\ValueTypeBuilder.cs" />
-    <Compile Include="Antlr\GatherErrorsListener.cs" />
-    <Compile Include="Antlr\PreprocessorLineLexer.cs">
-      <DependentUpon>PreprocessorLineLexer.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\PreprocessorLineParser.cs">
-      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\PreprocessorLineParserBaseListener.cs">
-      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\PreprocessorLineParserBaseVisitor.cs">
-      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\PreprocessorLineParserListener.cs">
-      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Antlr\PreprocessorLineParserVisitor.cs">
-      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
-    </Compile>
-    <None Include="Antlr\AdamantCommon.g4" />
-    <None Include="Antlr\AdamantParser.g4" />
-    <None Include="Antlr\AdamantLexer.g4" />
-    <None Include="Antlr\AdamantLexer.tokens">
-      <DependentUpon>AdamantLexer.g4</DependentUpon>
-    </None>
-    <None Include="Antlr\AdamantParser.tokens">
-      <DependentUpon>AdamantParser.g4</DependentUpon>
-    </None>
-    <None Include="Antlr\PreprocessorLineLexer.g4" />
-    <None Include="Antlr\PreprocessorLineLexer.tokens">
-      <DependentUpon>PreprocessorLineLexer.g4</DependentUpon>
-    </None>
-    <None Include="Antlr\PreprocessorLineParser.g4" />
-    <None Include="Antlr\PreprocessorLineParser.tokens">
-      <DependentUpon>PreprocessorLineParser.g4</DependentUpon>
-    </None>
-    <None Include="Antlr\Unicode.g4" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Antlr\RestrictedVisitor.cs" />
-    <Compile Include="Antlr\SyntaxCheckVisitor.cs" />
     <Compile Include="Compiled\CompiledPackage.cs" />
     <Compile Include="Compiled\CompiledUnit.cs" />
     <Compile Include="SourceFile.cs" />
-    <Compile Include="Preprocessor\Conditional.cs" />
-    <Compile Include="Preprocessor\PreprocessorState.cs" />
-    <Compile Include="Preprocessor\PreprocessorVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{041ee85b-e098-4454-9dd9-d7b6723ddf83}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler.Antlr\Compiler.Antlr.csproj">
+      <Project>{f0a0e5bc-e590-469b-9ef3-8d92fe43fe44}</Project>
+      <Name>Compiler.Antlr</Name>
     </ProjectReference>
     <ProjectReference Include="..\Compiler.Binders\Compiler.Binders.csproj">
       <Project>{C66A416E-5FBD-450A-B55F-AF63DA99265C}</Project>

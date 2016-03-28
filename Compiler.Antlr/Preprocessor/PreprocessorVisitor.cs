@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using Adamant.Exploratory.Compiler.Antlr;
 using Antlr4.Runtime.Tree;
 using Void = Adamant.Exploratory.Common.Void;
 
-namespace Adamant.Exploratory.Compiler.Preprocessor
+namespace Adamant.Exploratory.Compiler.Antlr.Preprocessor
 {
 	// TODO emit errors for space between # and command
 	public class PreprocessorVisitor : PreprocessorLineParserBaseVisitor<Void>

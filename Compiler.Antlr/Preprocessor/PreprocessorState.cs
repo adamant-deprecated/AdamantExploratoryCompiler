@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Adamant.Exploratory.Compiler.Preprocessor
+namespace Adamant.Exploratory.Compiler.Antlr.Preprocessor
 {
 	public class PreprocessorState
 	{

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Adamant.Exploratory.Compiler.Preprocessor
+namespace Adamant.Exploratory.Compiler.Antlr.Preprocessor
 {
 	internal class Conditional
 	{

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using Adamant.Exploratory.Compiler.Preprocessor;
+using Adamant.Exploratory.Compiler.Antlr.Preprocessor;
 using Antlr4.Runtime;
 
 namespace Adamant.Exploratory.Compiler.Antlr
