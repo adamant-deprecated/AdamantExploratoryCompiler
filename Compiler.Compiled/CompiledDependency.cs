@@ -1,5 +1,4 @@
-﻿using Adamant.Exploratory.Compiler.Binders;
-using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
+﻿using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
 using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Adamant.Exploratory.Compiler.Compiled

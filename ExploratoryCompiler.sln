@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compiler.Antlr", "Compiler.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compiler.Emit.Cpp", "Compiler.Emit.Cpp\Compiler.Emit.Cpp.csproj", "{F659BAFA-A6B7-4253-BA43-80DF0A5455DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compiler.Compiled", "Compiler.Compiled\Compiler.Compiled.csproj", "{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{F659BAFA-A6B7-4253-BA43-80DF0A5455DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F659BAFA-A6B7-4253-BA43-80DF0A5455DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F659BAFA-A6B7-4253-BA43-80DF0A5455DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
