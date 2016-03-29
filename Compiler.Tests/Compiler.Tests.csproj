@@ -55,6 +55,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Initial\2_ReturnConstantWithNamespace.adam" />
     <EmbeddedResource Include="Initial\3_ReturnStringLength.adam" />
+    <None Include="App.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Initial\1_ReturnConstant.adam" />
     <EmbeddedResource Include="Initial\0_Empty.adam" />
@@ -67,6 +68,10 @@
     <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
       <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
       <Name>Compiler.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler.Emit.Cpp\Compiler.Emit.Cpp.csproj">
+      <Project>{F659BAFA-A6B7-4253-BA43-80DF0A5455DE}</Project>
+      <Name>Compiler.Emit.Cpp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Compiler.Syntax\Compiler.Syntax.csproj">
       <Project>{3DFA5C38-11A2-4B3D-918E-C22A5B5CCB2D}</Project>

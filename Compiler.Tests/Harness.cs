@@ -9,6 +9,7 @@ using Adamant.Exploratory.Compiler.Core;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.PackageConfig;
+using Compiler.Emit.Cpp;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -20,6 +21,21 @@ namespace Adamant.Exploratory.Compiler.Tests
 		private const string Extension = ".adam";
 		private readonly AdamantCompiler compiler = new AdamantCompiler();
 		private readonly PackageDependency runtimeDependency = new PackageDependency("System.Runtime", null, true);
+
+		private string WorkPath;
+
+		[TestFixtureSetUp]
+		public void SetUp()
+		{
+			WorkPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+			Directory.CreateDirectory(WorkPath);
+		}
+
+		[TestFixtureTearDown]
+		public void TearDown()
+		{
+			Directory.Delete(WorkPath, true);
+		}
 
 		[Test, TestCaseSource(nameof(TestCases))]
 		public void Test(TestCaseConfig config, TextReader reader)
@@ -33,9 +49,23 @@ namespace Adamant.Exploratory.Compiler.Tests
 			var compiledPackage = compiler.Compile(package, Enumerable.Empty<CompiledPackage>());
 			if(compiledPackage.Diagnostics.Count > 0)
 				Assert.Fail(ToString(compiledPackage.Diagnostics));
-			Assert.Fail("C++ code generation not implemented");
-			Assert.Fail("C++ compilation not implemented");
+
+			var cppSource = compiler.EmitCpp(compiledPackage);
+			var cppSourceName = compiledPackage.Name + ".cpp";
+			CreateFile(cppSourceName, cppSource);
+			CreateFile(CppRuntime.FileName, CppRuntime.Source);
+			var exitCode = CppCompiler.Invoke(Path.Combine(WorkPath, cppSourceName), Path.Combine(WorkPath, compiledPackage.Name + ".exe"));
+			if(exitCode != 0)
+				Assert.Fail("C++ compiler error");
 			Assert.Fail("App execution not implemented");
+		}
+
+		private void CreateFile(string fileName, string content)
+		{
+			using(var file = File.CreateText(Path.Combine(WorkPath, fileName)))
+			{
+				file.Write(content);
+			}
 		}
 
 		private static string ToString(IReadOnlyList<Diagnostic> diagnostics)
