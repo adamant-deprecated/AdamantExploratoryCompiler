@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompilerResult.cs" />
     <Compile Include="CppCompiler.cs" />
     <Compile Include="CppRuntime.cs" />
     <Compile Include="PackageEmitter.cs" />

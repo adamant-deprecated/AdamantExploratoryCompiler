@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Antlr;
 using Adamant.Exploratory.Compiler.Antlr.Builders;
 using Adamant.Exploratory.Compiler.Binders;
@@ -51,7 +52,31 @@ namespace Adamant.Exploratory.Compiler
 
 			// TODO type check
 			// TODO borrow check
-			return new CompiledPackage(package, symbol, diagnostics.Complete(), compiledDependencies);
+			return new CompiledPackage(package, symbol, FindEntryPoints(symbol), diagnostics.Complete(), compiledDependencies);
+		}
+
+		private static IEnumerable<Symbol> FindEntryPoints(ContainerSymbol root)
+		{
+			var containers = new Stack<ContainerSymbol>();
+			containers.Push(root);
+			while(containers.Count > 0)
+			{
+				var container = containers.Pop();
+				foreach(var symbol in container.GetMembers())
+				{
+					var entryPoint = symbol.Match().Returning<FunctionSymbol>()
+						.With<NamespaceSymbol>(@namespace =>
+						{
+							containers.Push(@namespace);
+							return null;
+						})
+						.With<FunctionSymbol>(function => function.Name == "Main" ? function : null)
+						.Ignore<ClassSymbol>(null)
+						.Exhaustive();
+					if(entryPoint != null)
+						yield return entryPoint;
+				}
+			}
 		}
 
 		private static IList<CompiledDependency> GetCompiledDependencies(Package package, IEnumerable<CompiledPackage> dependencies)

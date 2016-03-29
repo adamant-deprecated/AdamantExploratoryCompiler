@@ -54,9 +54,13 @@ namespace Adamant.Exploratory.Compiler.Tests
 			var cppSourceName = compiledPackage.Name + ".cpp";
 			CreateFile(cppSourceName, cppSource);
 			CreateFile(CppRuntime.FileName, CppRuntime.Source);
-			var exitCode = CppCompiler.Invoke(Path.Combine(WorkPath, cppSourceName), Path.Combine(WorkPath, compiledPackage.Name + ".exe"));
-			if(exitCode != 0)
+			var result = CppCompiler.Invoke(Path.Combine(WorkPath, cppSourceName), Path.Combine(WorkPath, compiledPackage.Name + ".exe"));
+			if(result.ExitCode != 0)
+			{
+				result.WriteOutputToConsole();
 				Assert.Fail("C++ compiler error");
+			}
+
 			Assert.Fail("App execution not implemented");
 		}
 

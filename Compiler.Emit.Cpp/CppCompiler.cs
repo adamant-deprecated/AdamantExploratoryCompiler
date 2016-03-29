@@ -1,16 +1,16 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace Compiler.Emit.Cpp
 {
 	public static class CppCompiler
 	{
-		public static int Invoke(string sourcePath, string targetPath)
+		public static CompilerResult Invoke(string sourcePath, string targetPath)
 		{
 			var compilerPath = ConfigurationManager.AppSettings["CppCompiler"];
-			var libPath = ConfigurationManager.AppSettings["CppLibPath"];
+			var libPath = ConfigurationManager.AppSettings["CppLibPaths"];
 			using(var process = new Process())
 			{
 				process.StartInfo.FileName = compilerPath;
@@ -20,20 +20,15 @@ namespace Compiler.Emit.Cpp
 				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.RedirectStandardOutput = true;
 				process.StartInfo.RedirectStandardError = true;
-				process.OutputDataReceived += ProcessOutputHandler;
-				process.ErrorDataReceived += ProcessOutputHandler;
+				var output = new StringBuilder();
+				process.OutputDataReceived += (s, e) => output.AppendLine(e.Data);
+				process.ErrorDataReceived += (s, e) => output.AppendLine(e.Data);
 				process.Start();
 				process.BeginOutputReadLine();
 				process.BeginErrorReadLine();
 				process.WaitForExit();
-				return process.ExitCode;
+				return new CompilerResult(process.ExitCode, output.ToString());
 			}
-		}
-
-		private static void ProcessOutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
-		{
-			//* Do your stuff with the output (write to console/log/StringBuilder)
-			Console.WriteLine(outLine.Data);
 		}
 	}
 }

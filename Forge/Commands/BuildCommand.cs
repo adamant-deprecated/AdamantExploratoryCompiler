@@ -119,7 +119,9 @@ namespace Adamant.Exploratory.Forge.Commands
 					File.Copy(dependencyCppFilePath, Path.Combine(compileDirPath, dependencyCppFileName));
 				}
 				Directory.CreateDirectory(targetDirPath);
-				CppCompiler.Invoke(Path.Combine(compileDirPath, cppSourceName), Path.Combine(targetDirPath, compiledPackage.Name + ".exe"));
+				var result = CppCompiler.Invoke(Path.Combine(compileDirPath, cppSourceName), Path.Combine(targetDirPath, compiledPackage.Name + ".exe"));
+				if(result.ExitCode != 0)
+					result.WriteOutputToConsole();
 			}
 
 			packages.Add(new BuiltPackage(projectDirPath, compiledPackage));

@@ -1,4 +1,5 @@
-﻿using Adamant.Exploratory.Compiler.Compiled;
+﻿using System.Linq;
+using Adamant.Exploratory.Compiler.Compiled;
 using Adamant.Exploratory.Compiler.Symbols;
 
 namespace Compiler.Emit.Cpp
@@ -27,15 +28,29 @@ namespace Compiler.Emit.Cpp
 
 			source.WriteLine("namespace");
 			source.BeginBlock();
-			Emit(package.Symbol);
+			Emit(source, package.Symbol);
 			source.EndBlock();
+
+			EmitEntryPoint(source);
 
 			return source.ToString();
 		}
 
-		private void Emit(ContainerSymbol container)
+		private void Emit(SourceFileBuilder source, ContainerSymbol container)
 		{
 			//throw new System.NotImplementedException();
+		}
+
+		private void EmitEntryPoint(SourceFileBuilder source)
+		{
+			var entryPoint = package.EntryPoints.SingleOrDefault();
+			if(entryPoint == null) return;
+
+			source.WriteLine();
+			source.WriteLine("int main(int argc, char *argv[])");
+			source.BeginBlock();
+			source.WriteLine("return 0;");
+			source.EndBlock();
 		}
 	}
 }

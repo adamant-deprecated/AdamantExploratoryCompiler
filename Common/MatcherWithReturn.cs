@@ -34,6 +34,20 @@ namespace Adamant.Exploratory.Common
 			return this;
 		}
 
+		public MatcherWithReturn<TValue, TReturn> Ignore<T>(TReturn result)
+			where T : class, TValue
+		{
+			if(matched || value == null) return this;
+
+			var matchedValue = value as T;
+			if(matchedValue != null)
+			{
+				return new MatcherWithReturn<TValue, TReturn>(value, result);
+			}
+
+			return this;
+		}
+
 		public MatcherWithReturn<TValue, TReturn> Null(Func<TReturn> action)
 		{
 			if(matched) return this;
