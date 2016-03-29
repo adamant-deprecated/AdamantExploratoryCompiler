@@ -16,17 +16,17 @@ namespace Compiler.Emit.Cpp
 		public string Emit()
 		{
 			var source = new SourceFileBuilder();
-			source.WriteLine("#pragma once");
+			source.WriteIndentedLine("#pragma once");
 			source.WriteLine();
 
-			source.WriteLine("// Dependencies");
-			source.WriteLine($"#include \"{CppRuntime.FileName}\"");
+			source.WriteIndentedLine("// Dependencies");
+			source.WriteIndentedLine($"#include \"{CppRuntime.FileName}\"");
 			foreach(var dependency in package.Dependencies)
-				source.WriteLine($"#include \"{dependency.Package.Name}.cpp\"");
+				source.WriteIndentedLine($"#include \"{dependency.Package.Name}.cpp\"");
 
 			source.WriteLine();
 
-			source.WriteLine("namespace");
+			source.WriteIndentedLine("namespace");
 			source.BeginBlock();
 			Emit(source, package.Symbol);
 			source.EndBlock();
@@ -47,9 +47,9 @@ namespace Compiler.Emit.Cpp
 			if(entryPoint == null) return;
 
 			source.WriteLine();
-			source.WriteLine("int main(int argc, char *argv[])");
+			source.WriteIndentedLine("int main(int argc, char *argv[])");
 			source.BeginBlock();
-			source.WriteLine("return 0;");
+			source.WriteIndentedLine("return 0;");
 			source.EndBlock();
 		}
 	}

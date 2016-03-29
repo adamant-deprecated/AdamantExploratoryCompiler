@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -54,14 +55,36 @@ namespace Adamant.Exploratory.Compiler.Tests
 			var cppSourceName = compiledPackage.Name + ".cpp";
 			CreateFile(cppSourceName, cppSource);
 			CreateFile(CppRuntime.FileName, CppRuntime.Source);
-			var result = CppCompiler.Invoke(Path.Combine(WorkPath, cppSourceName), Path.Combine(WorkPath, compiledPackage.Name + ".exe"));
+			var targetPath = Path.Combine(WorkPath, compiledPackage.Name + ".exe");
+			var result = CppCompiler.Invoke(Path.Combine(WorkPath, cppSourceName), targetPath);
 			if(result.ExitCode != 0)
 			{
 				result.WriteOutputToConsole();
 				Assert.Fail("C++ compiler error");
 			}
 
-			Assert.Fail("App execution not implemented");
+			// Execute the app
+			using(var process = new Process())
+			{
+				process.StartInfo.FileName = targetPath;
+				process.StartInfo.WorkingDirectory = Path.GetDirectoryName(WorkPath);
+				process.StartInfo.UseShellExecute = false;
+				process.StartInfo.RedirectStandardOutput = true;
+				process.StartInfo.RedirectStandardError = true;
+				var outputBuffer = new StringBuilder();
+				var errorBuffer = new StringBuilder();
+				process.OutputDataReceived += (s, e) => outputBuffer.AppendLine(e.Data);
+				process.ErrorDataReceived += (s, e) => errorBuffer.AppendLine(e.Data);
+				process.Start();
+				process.BeginOutputReadLine();
+				process.BeginErrorReadLine();
+				process.WaitForExit();
+
+				if(config.Result != null)
+					Assert.AreEqual(config.Result, process.ExitCode, "Exit Code");
+				if(config.VerifyConsoleOutput)
+					Assert.AreEqual(config.ExpectedConsoleOutput, outputBuffer.ToString());
+			}
 		}
 
 		private void CreateFile(string fileName, string content)

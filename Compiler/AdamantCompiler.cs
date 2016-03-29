@@ -55,7 +55,7 @@ namespace Adamant.Exploratory.Compiler
 			return new CompiledPackage(package, symbol, FindEntryPoints(symbol), diagnostics.Complete(), compiledDependencies);
 		}
 
-		private static IEnumerable<Symbol> FindEntryPoints(ContainerSymbol root)
+		private static IEnumerable<FunctionSymbol> FindEntryPoints(ContainerSymbol root)
 		{
 			var containers = new Stack<ContainerSymbol>();
 			containers.Push(root);
