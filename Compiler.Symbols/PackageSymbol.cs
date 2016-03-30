@@ -12,6 +12,8 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	{
 		private readonly MultiDictionary<string, DeclarationSymbol> members = new MultiDictionary<string, DeclarationSymbol>();
 
+		// TODO Name
+		// TODO Diagnostics
 		public readonly PackageSyntax PackageSyntax;
 		NamespaceSymbol ContainerSymbol.AsNamespace => null;
 
