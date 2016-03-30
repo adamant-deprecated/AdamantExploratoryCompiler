@@ -9,12 +9,12 @@ namespace Adamant.Exploratory.Compiler.Binders
 {
 	public class BindersBuilder
 	{
-		private readonly Package packageSyntax;
+		private readonly PackageSyntax packageSyntax;
 		private readonly PackageSymbol packageSymbol;
 		private readonly List<IPackageSymbolReference> packageReferences;
 
 		public BindersBuilder(
-			Package packageSyntax,
+			PackageSyntax packageSyntax,
 			PackageSymbol packageSymbol,
 			IEnumerable<IPackageSymbolReference> packageReferences)
 		{

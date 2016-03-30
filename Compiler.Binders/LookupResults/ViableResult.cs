@@ -22,7 +22,7 @@ namespace Adamant.Exploratory.Compiler.Binders.LookupResults
 			symbols = new List<SymbolReference>() { symbol };
 		}
 
-		public override LookupResult Lookup(SimpleNameSyntax name, Package fromPackage)
+		public override LookupResult Lookup(SimpleNameSyntax name, PackageSyntax fromPackage)
 		{
 			return name.Match().Returning<LookupResult>()
 				.With<IdentifierNameSyntax>(identifierName =>

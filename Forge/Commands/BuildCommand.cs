@@ -9,7 +9,6 @@ using Adamant.Exploratory.Compiler;
 using Adamant.Exploratory.Compiler.Compiled;
 using Adamant.Exploratory.Compiler.Core;
 using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.PackageConfig;
 using Adamant.Exploratory.Forge.Config;
 using Compiler.Emit.Cpp;
 using Newtonsoft.Json;
@@ -92,7 +91,7 @@ namespace Adamant.Exploratory.Forge.Commands
 
 			var sourceFiles = new DirectoryInfo(Path.Combine(projectDirPath, "src")).GetFiles("*.adam", SearchOption.AllDirectories);
 			// TODO read trusted from config
-			var package = new Package(projectConfig.Name, projectConfig.Dependencies.Select(d => new PackageDependency(d.Key, null, true)));
+			var package = new PackageSyntax(projectConfig.Name, projectConfig.Dependencies.Select(d => new PackageDependencySyntax(d.Key, null, true)));
 			package = package.With(sourceFiles.Select(fileInfo => compiler.Parse(package, new SourceFile(fileInfo))));
 			if(package.Diagnostics.Count > 0)
 			{
@@ -175,7 +174,7 @@ namespace Adamant.Exploratory.Forge.Commands
 			}
 		}
 
-		private static void PrintDiagnostics(Package package)
+		private static void PrintDiagnostics(PackageSyntax package)
 		{
 			ISourceText file = null;
 			foreach(var diagnostic in package.Diagnostics)

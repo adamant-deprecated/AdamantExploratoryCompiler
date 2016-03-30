@@ -10,8 +10,8 @@ namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
 	public abstract class SymbolReference
 	{
 		public abstract string Name { get; }
-		public abstract bool IsIn(Package package);
-		public abstract bool IsVisibleFrom(Package package);
+		public abstract bool IsIn(PackageSyntax package);
+		public abstract bool IsVisibleFrom(PackageSyntax package);
 		public abstract IEnumerable<SymbolReference> GetMembers(string name);
 
 		public static implicit operator SymbolReference(EntitySymbol entity)

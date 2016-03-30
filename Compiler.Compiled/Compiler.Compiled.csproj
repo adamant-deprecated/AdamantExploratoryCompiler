@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="CompiledDependency.cs" />
     <Compile Include="CompiledPackage.cs" />
-    <Compile Include="CompiledUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

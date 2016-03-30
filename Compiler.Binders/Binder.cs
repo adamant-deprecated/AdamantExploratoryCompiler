@@ -21,7 +21,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 
 		public abstract IEnumerable<SymbolReference> GetMembers(string name);
 
-		public LookupResult Lookup(NameSyntax name, Package fromPackage)
+		public LookupResult Lookup(NameSyntax name, PackageSyntax fromPackage)
 		{
 			return name.Match().Returning<LookupResult>()
 				.With<QualifiedNameSyntax>(qualifiedName =>
@@ -33,9 +33,9 @@ namespace Adamant.Exploratory.Compiler.Binders
 				.Exhaustive();
 		}
 
-		protected abstract LookupResult Lookup(IdentifierNameSyntax identifierName, Package fromPackage);
+		protected abstract LookupResult Lookup(IdentifierNameSyntax identifierName, PackageSyntax fromPackage);
 
-		public virtual LookupResult LookupInGlobalNamespace(NameSyntax name, Package fromPackage)
+		public virtual LookupResult LookupInGlobalNamespace(NameSyntax name, PackageSyntax fromPackage)
 		{
 			return ContainingScope.LookupInGlobalNamespace(name, fromPackage);
 		}

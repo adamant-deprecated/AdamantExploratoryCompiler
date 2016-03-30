@@ -14,7 +14,7 @@ namespace Adamant.Exploratory.Compiler.Symbols
 		/// </summary>
 		NamespaceSymbol AsNamespace { get; }
 
-		Package ContainingPackage { get; }
+		PackageSyntax ContainingPackage { get; }
 
 		IEnumerable<DeclarationSymbol> GetMembers();
 		IReadOnlyList<DeclarationSymbol> GetMembers(string name);

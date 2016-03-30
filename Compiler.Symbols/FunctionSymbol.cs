@@ -5,7 +5,9 @@ namespace Adamant.Exploratory.Compiler.Symbols
 {
 	public class FunctionSymbol : EntitySymbol
 	{
-		public FunctionSymbol(Package containingPackage, Accessibility declaredAccessibility, string name)
+		// TODO return type
+
+		public FunctionSymbol(PackageSyntax containingPackage, Accessibility declaredAccessibility, string name)
 			: base(containingPackage, declaredAccessibility, name)
 		{
 		}

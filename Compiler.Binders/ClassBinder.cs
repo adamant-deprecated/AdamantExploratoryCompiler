@@ -20,7 +20,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 			throw new NotImplementedException();
 		}
 
-		protected override LookupResult Lookup(IdentifierNameSyntax identifierName, Package fromPackage)
+		protected override LookupResult Lookup(IdentifierNameSyntax identifierName, PackageSyntax fromPackage)
 		{
 			throw new NotImplementedException();
 		}

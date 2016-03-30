@@ -11,9 +11,9 @@ namespace Adamant.Exploratory.Compiler.Symbols
 {
 	public class PackageSymbolBuilder
 	{
-		private readonly Package package;
+		private readonly PackageSyntax package;
 
-		public PackageSymbolBuilder(Package package)
+		public PackageSymbolBuilder(PackageSyntax package)
 		{
 			this.package = package;
 		}

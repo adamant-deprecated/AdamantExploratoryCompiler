@@ -20,7 +20,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 			return Enumerable.Empty<SymbolReference>();
 		}
 
-		protected override LookupResult Lookup(IdentifierNameSyntax identifierName, Package fromPackage)
+		protected override LookupResult Lookup(IdentifierNameSyntax identifierName, PackageSyntax fromPackage)
 		{
 			throw new NotImplementedException();
 		}

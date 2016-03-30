@@ -12,10 +12,10 @@ namespace Adamant.Exploratory.Compiler.Symbols
 	{
 		private readonly MultiDictionary<string, DeclarationSymbol> members = new MultiDictionary<string, DeclarationSymbol>();
 
-		public readonly Package PackageSyntax;
+		public readonly PackageSyntax PackageSyntax;
 		NamespaceSymbol ContainerSymbol.AsNamespace => null;
 
-		public PackageSymbol(Package packageSyntax, IEnumerable<DeclarationSymbol> globalDeclarations)
+		public PackageSymbol(PackageSyntax packageSyntax, IEnumerable<DeclarationSymbol> globalDeclarations)
 			: base(null, Accessibility.NotApplicable, packageSyntax?.Name)
 		{
 			Requires.NotNull(packageSyntax, nameof(packageSyntax));

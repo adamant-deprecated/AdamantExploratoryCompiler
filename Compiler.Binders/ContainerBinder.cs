@@ -29,7 +29,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 			return mergedContainer.GetMembers(name);
 		}
 
-		protected override LookupResult Lookup(IdentifierNameSyntax name, Package fromPackage)
+		protected override LookupResult Lookup(IdentifierNameSyntax name, PackageSyntax fromPackage)
 		{
 			var identifier = name.Identifier.ValueText;
 
@@ -51,7 +51,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 			return LookupResult.Empty;
 		}
 
-		private static LookupResult Resolve(IEnumerable<SymbolReference> symbols, Package fromPackage)
+		private static LookupResult Resolve(IEnumerable<SymbolReference> symbols, PackageSyntax fromPackage)
 		{
 			var symbolsList = symbols.ToList();
 			var visible = symbolsList.Where(r => r.IsVisibleFrom(fromPackage)).ToList();

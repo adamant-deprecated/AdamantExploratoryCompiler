@@ -24,12 +24,12 @@ namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
 			Requires.That(this.containers.Count > 0, nameof(containers), "Must be at least one container to merge");
 		}
 
-		public override bool IsIn(Package package)
+		public override bool IsIn(PackageSyntax package)
 		{
 			return containers.Any(c => c.ContainingPackage == package);
 		}
 
-		public override bool IsVisibleFrom(Package package)
+		public override bool IsVisibleFrom(PackageSyntax package)
 		{
 			// Namespaces are always public
 			return true;

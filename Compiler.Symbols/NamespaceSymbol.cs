@@ -5,13 +5,16 @@ using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
 namespace Adamant.Exploratory.Compiler.Symbols
 {
+	/// <summary>
+	/// Represents a namespace as it is declared within a package
+	/// </summary>
 	public class NamespaceSymbol : DeclarationSymbol, ContainerSymbol
 	{
 		private readonly MultiDictionary<string, DeclarationSymbol> members = new MultiDictionary<string, DeclarationSymbol>();
 
 		NamespaceSymbol ContainerSymbol.AsNamespace => this;
 
-		public NamespaceSymbol(Package containingPackage, string name, IEnumerable<DeclarationSymbol> declarations)
+		public NamespaceSymbol(PackageSyntax containingPackage, string name, IEnumerable<DeclarationSymbol> declarations)
 			: base(containingPackage, Accessibility.Public, name) // namespaces are implicitly public
 		{
 			foreach(var declaration in declarations)

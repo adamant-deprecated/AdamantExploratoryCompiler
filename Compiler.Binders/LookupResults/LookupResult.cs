@@ -23,7 +23,7 @@ namespace Adamant.Exploratory.Compiler.Binders.LookupResults
 		public abstract bool IsViable { get; }
 		public abstract IEnumerable<SymbolReference> Symbols { get; }
 
-		public abstract LookupResult Lookup(SimpleNameSyntax name, Package fromPackage);
+		public abstract LookupResult Lookup(SimpleNameSyntax name, PackageSyntax fromPackage);
 
 		public static LookupResult Good(SymbolReference symbol)
 		{

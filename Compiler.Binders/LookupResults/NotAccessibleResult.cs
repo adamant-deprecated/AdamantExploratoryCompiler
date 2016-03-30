@@ -20,7 +20,7 @@ namespace Adamant.Exploratory.Compiler.Binders.LookupResults
 			this.symbols = symbols.ToList();
 		}
 
-		public override LookupResult Lookup(SimpleNameSyntax name, Package fromPackage)
+		public override LookupResult Lookup(SimpleNameSyntax name, PackageSyntax fromPackage)
 		{
 			throw new NotImplementedException();
 		}

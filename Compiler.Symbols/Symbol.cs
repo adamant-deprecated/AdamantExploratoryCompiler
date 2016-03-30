@@ -14,12 +14,12 @@ namespace Adamant.Exploratory.Compiler.Symbols
 
 		private readonly List<Location> locations = new List<Location>();
 
-		public Package ContainingPackage { get; }
+		public PackageSyntax ContainingPackage { get; }
 		public readonly Accessibility DeclaredAccessibility;
 		public readonly string Name;
 		public IReadOnlyList<Location> Locations => locations;
 
-		protected Symbol(Package containingPackage, Accessibility declaredAccessibility, string name)
+		protected Symbol(PackageSyntax containingPackage, Accessibility declaredAccessibility, string name)
 		{
 			Requires.NotNull(name, nameof(name));
 

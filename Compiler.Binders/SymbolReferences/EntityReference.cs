@@ -19,12 +19,12 @@ namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
 			Entity = entity;
 		}
 
-		public override bool IsIn(Package package)
+		public override bool IsIn(PackageSyntax package)
 		{
 			return Entity.ContainingPackage == package;
 		}
 
-		public override bool IsVisibleFrom(Package package)
+		public override bool IsVisibleFrom(PackageSyntax package)
 		{
 			return Entity.DeclaredAccessibility == Accessibility.Public
 				|| (IsIn(package) && Entity.DeclaredAccessibility == Accessibility.Package);

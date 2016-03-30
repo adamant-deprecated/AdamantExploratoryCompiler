@@ -18,13 +18,13 @@ namespace Adamant.Exploratory.Compiler.Binders
 	internal class CompilationUnitBindersBuilder
 	{
 		private readonly Dictionary<SyntaxNode, Binder> binders;
-		private readonly Package packageSyntax;
+		private readonly PackageSyntax packageSyntax;
 		private readonly CompilationUnitSyntax compilationUnit;
 		private readonly DiagnosticsBuilder diagnostics;
 
 		public CompilationUnitBindersBuilder(
 			Dictionary<SyntaxNode, Binder> binders,
-			Package packageSyntax,
+			PackageSyntax packageSyntax,
 			CompilationUnitSyntax compilationUnit,
 			DiagnosticsBuilder diagnostics)
 		{

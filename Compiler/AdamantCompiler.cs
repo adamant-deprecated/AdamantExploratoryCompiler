@@ -16,7 +16,7 @@ namespace Adamant.Exploratory.Compiler
 {
 	public class AdamantCompiler
 	{
-		public CompilationUnitSyntax Parse(Package package, SourceText sourceText)
+		public CompilationUnitSyntax Parse(PackageSyntax package, SourceText sourceText)
 		{
 			// TODO make use of the package.  We don't currently use the package, but we
 			// are taking it as an argument becuase we should be for things like:
@@ -43,7 +43,7 @@ namespace Adamant.Exploratory.Compiler
 			return tree.Accept(compilationUnitBuilder);
 		}
 
-		public CompiledPackage Compile(Package package, IEnumerable<CompiledPackage> dependencies)
+		public CompiledPackage Compile(PackageSyntax package, IEnumerable<CompiledPackage> dependencies)
 		{
 			var compiledDependencies = GetCompiledDependencies(package, dependencies);
 			var diagnostics = new DiagnosticsBuilder(package.Diagnostics);
@@ -55,6 +55,7 @@ namespace Adamant.Exploratory.Compiler
 			return new CompiledPackage(package, symbol, FindEntryPoints(symbol), diagnostics.Complete(), compiledDependencies);
 		}
 
+		// TODO move to PackageSymbol class
 		private static IEnumerable<FunctionSymbol> FindEntryPoints(ContainerSymbol root)
 		{
 			var containers = new Stack<ContainerSymbol>();
@@ -79,7 +80,7 @@ namespace Adamant.Exploratory.Compiler
 			}
 		}
 
-		private static IList<CompiledDependency> GetCompiledDependencies(Package package, IEnumerable<CompiledPackage> dependencies)
+		private static IList<CompiledDependency> GetCompiledDependencies(PackageSyntax package, IEnumerable<CompiledPackage> dependencies)
 		{
 			var compiledPackages = dependencies.ToLookup(p => p.Name);
 			var compiledDependencies = package.Dependencies.Select(d => new CompiledDependency(compiledPackages[d.Name].Single(), d.Alias, d.Trusted));

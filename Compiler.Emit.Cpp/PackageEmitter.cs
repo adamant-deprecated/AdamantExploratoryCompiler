@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adamant.Exploratory.Compiler.Compiled;
 using Adamant.Exploratory.Compiler.Symbols;
 
@@ -49,6 +50,7 @@ namespace Compiler.Emit.Cpp
 			source.WriteLine();
 			source.WriteIndentedLine("int main(int argc, char *argv[])");
 			source.BeginBlock();
+			//throw new NotImplementedException("Invoke the entry point");
 			source.WriteIndentedLine("return 0;");
 			source.EndBlock();
 		}

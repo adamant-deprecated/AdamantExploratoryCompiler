@@ -47,7 +47,7 @@
     <Compile Include="Declarations\EntitySyntax.cs" />
     <Compile Include="Declarations\ClassSyntax.cs" />
     <Compile Include="Declarations\FunctionSyntax.cs" />
-    <Compile Include="PackageConfig\PackageDependency.cs" />
+    <Compile Include="PackageDependencySyntax.cs" />
     <Compile Include="ParameterSyntax.cs" />
     <Compile Include="Declarations\GlobalVariableSyntax.cs" />
     <Compile Include="ExpressionSyntax.cs" />
@@ -74,7 +74,7 @@
     <Compile Include="ValueTypes\QualifiedNameSyntax.cs" />
     <Compile Include="ReferenceTypeSyntax.cs" />
     <Compile Include="ValueTypes\SimpleNameSyntax.cs" />
-    <Compile Include="Package.cs" />
+    <Compile Include="PackageSyntax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modifiers\Safety.cs" />
     <Compile Include="CompilationUnitSyntax.cs" />

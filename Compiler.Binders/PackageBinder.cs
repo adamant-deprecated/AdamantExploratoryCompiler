@@ -11,11 +11,11 @@ namespace Adamant.Exploratory.Compiler.Binders
 {
 	public class PackageBinder : ContainerBinder
 	{
-		public readonly Package PackageSyntax;
+		public readonly PackageSyntax PackageSyntax;
 		public readonly PackageSymbol PackageSymbol;
 
 		// TODO move PackageSymbolReferences into PackageSymbols
-		public PackageBinder(Package packageSyntax, PackageSymbol packageSymbol, IEnumerable<IPackageSymbolReference> packageReferences)
+		public PackageBinder(PackageSyntax packageSyntax, PackageSymbol packageSymbol, IEnumerable<IPackageSymbolReference> packageReferences)
 			: base(null, new NamespaceReference(packageReferences.Select(d => d.PackageSymbol).Append(packageSymbol)), Enumerable.Empty<ImportedSymbol>())
 		{
 			Requires.NotNull(packageSyntax, nameof(packageSyntax));
@@ -24,7 +24,7 @@ namespace Adamant.Exploratory.Compiler.Binders
 			PackageSymbol = packageSymbol;
 		}
 
-		public override LookupResult LookupInGlobalNamespace(NameSyntax name, Package fromPackage)
+		public override LookupResult LookupInGlobalNamespace(NameSyntax name, PackageSyntax fromPackage)
 		{
 			return Lookup(name, fromPackage);
 		}
