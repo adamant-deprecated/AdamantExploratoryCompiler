@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 
-namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
+namespace Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences
 {
 	/// <summary>
 	/// Due to the nature of namespaces, a namespace reference spans ContainerSymbols

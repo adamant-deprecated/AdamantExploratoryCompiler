@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 
-namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
+namespace Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences
 {
 	/// <summary>
 	/// A symbol reference referes to a symbol across a compilation

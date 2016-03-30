@@ -3,7 +3,6 @@ using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Antlr;
 using Adamant.Exploratory.Compiler.Antlr.Builders;
-using Adamant.Exploratory.Compiler.Binders;
 using Adamant.Exploratory.Compiler.Compiled;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Semantics;

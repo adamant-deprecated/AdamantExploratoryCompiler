@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
-using Adamant.Exploratory.Compiler.Semantics;
+using Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences;
 using Adamant.Exploratory.Compiler.Syntax;
 
-namespace Adamant.Exploratory.Compiler.Binders
+namespace Adamant.Exploratory.Compiler.Semantics.Binders
 {
 	public class BindersBuilder
 	{

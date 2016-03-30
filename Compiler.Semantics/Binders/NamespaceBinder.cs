@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
+using Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences;
 
-namespace Adamant.Exploratory.Compiler.Binders
+namespace Adamant.Exploratory.Compiler.Semantics.Binders
 {
 	public class NamespaceBinder : ContainerBinder
 	{

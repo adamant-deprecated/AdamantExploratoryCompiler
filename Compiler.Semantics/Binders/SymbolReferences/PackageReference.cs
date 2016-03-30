@@ -1,6 +1,4 @@
-﻿using Adamant.Exploratory.Compiler.Semantics;
-
-namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
+﻿namespace Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences
 {
 	public interface IPackageSymbolReference
 	{

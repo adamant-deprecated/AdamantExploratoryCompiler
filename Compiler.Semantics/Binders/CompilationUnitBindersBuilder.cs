@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
+using Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Adamant.Exploratory.Compiler.Syntax.Directives;
@@ -13,7 +12,7 @@ using Adamant.Exploratory.Compiler.Syntax.Statements;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 using ValueTypeSyntax = Adamant.Exploratory.Compiler.Syntax.ValueTypeSyntax;
 
-namespace Adamant.Exploratory.Compiler.Binders
+namespace Adamant.Exploratory.Compiler.Semantics.Binders
 {
 	internal class CompilationUnitBindersBuilder
 	{

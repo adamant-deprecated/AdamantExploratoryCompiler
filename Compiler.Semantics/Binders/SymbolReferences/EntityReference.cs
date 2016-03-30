@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
-namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
+namespace Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences
 {
 	internal class EntityReference : SymbolReference
 	{

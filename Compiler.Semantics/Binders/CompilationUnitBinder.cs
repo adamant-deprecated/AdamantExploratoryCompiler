@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
+using Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences;
 using Adamant.Exploratory.Compiler.Syntax;
 
-namespace Adamant.Exploratory.Compiler.Binders
+namespace Adamant.Exploratory.Compiler.Semantics.Binders
 {
 	public class CompilationUnitBinder : ContainerBinder
 	{
