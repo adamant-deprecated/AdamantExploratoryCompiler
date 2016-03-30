@@ -1,12 +1,9 @@
-﻿using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
-using Adamant.Exploratory.Compiler.Semantics;
-
-namespace Adamant.Exploratory.Compiler.Compiled
+﻿namespace Adamant.Exploratory.Compiler.Compiled
 {
-	public class CompiledDependency : IPackageSymbolReference
+	public class CompiledDependency// : IPackageSymbolReference
 	{
 		public readonly CompiledPackage Package;
-		Package IPackageSymbolReference.Package => Package.Symbol;
+		//Package IPackageSymbolReference.Package => Package.Symbol;
 		public string Alias { get; }
 		public bool Trusted { get; }
 

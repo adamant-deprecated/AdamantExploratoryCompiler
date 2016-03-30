@@ -11,19 +11,21 @@ namespace Adamant.Exploratory.Compiler.Semantics
 {
 	public class PackageSemanticsBuilder
 	{
-		private readonly PackageSyntax package;
+		private readonly PackageSyntax packageSyntax;
 
-		public PackageSemanticsBuilder(PackageSyntax package)
+		public PackageSemanticsBuilder(PackageSyntax packageSyntax)
 		{
-			this.package = package;
+			this.packageSyntax = packageSyntax;
 		}
 
 		public Package Build(DiagnosticsBuilder diagnostics)
 		{
-			var namespaceMembers = package.CompilationUnits.SelectMany(cu => BuildNamespaceMembers(cu, diagnostics));
+			var namespaceMembers = packageSyntax.CompilationUnits.SelectMany(cu => BuildNamespaceMembers(cu, diagnostics));
 			var globalDeclarations = BuildNamespaceSymbols(namespaceMembers, diagnostics);
 			// TODO check for duplicates
-			return new Package(package, globalDeclarations);
+			var package = new Package(packageSyntax, globalDeclarations);
+
+			return package;
 		}
 
 		private IEnumerable<NamespaceMember> BuildNamespaceMembers(CompilationUnitSyntax compilationUnit, DiagnosticsBuilder diagnostics)
@@ -48,13 +50,13 @@ namespace Adamant.Exploratory.Compiler.Semantics
 				.With<ClassSyntax>(@class =>
 				{
 					// TODO check for and report duplicate members
-					var symbol = new Class(package, @class.Accessibility, @class.Name.ValueText);
-					return new Entity(symbol);
+					var symbol = new Class(packageSyntax, @class.Accessibility, @class.Name.ValueText);
+					return new NamespaceMembers.Entity(symbol);
 				})
 				.With<FunctionSyntax>(function =>
 				{
-					var symbol = new Function(package, function.Accessibility, function.Name.ValueText);
-					return new Entity(symbol);
+					var symbol = new Function(packageSyntax, function.Accessibility, function.Name.ValueText);
+					return new NamespaceMembers.Entity(symbol);
 				})
 				.Exhaustive();
 		}
@@ -66,8 +68,8 @@ namespace Adamant.Exploratory.Compiler.Semantics
 				if(g.Key == typeof(NamespaceMembers.Namespace))
 					return BuildNamespaceSymbols(g.Cast<NamespaceMembers.Namespace>(), diagnostics);
 
-				if(g.Key == typeof(Entity))
-					return g.Cast<Entity>().Select(e => e.Symbol);
+				if(g.Key == typeof(NamespaceMembers.Entity))
+					return g.Cast<NamespaceMembers.Entity>().Select(e => e.Symbol);
 
 				throw new NotSupportedException("Only Entity and Namespace NamespaceMembers are supported");
 			});
@@ -77,7 +79,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 		{
 			return namespaces.GroupBy(ns => ns.Name).Select(g =>
 				// TODO check for and report duplicate symbols
-				new Namespace(package, g.Key, BuildNamespaceSymbols(g.SelectMany(ns => ns.Member), diagnostics)));
+				new Namespace(packageSyntax, g.Key, BuildNamespaceSymbols(g.SelectMany(ns => ns.Member), diagnostics)));
 		}
 	}
 }

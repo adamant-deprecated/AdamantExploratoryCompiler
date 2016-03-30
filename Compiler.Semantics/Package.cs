@@ -12,7 +12,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 	{
 		private readonly MultiDictionary<string, Declaration> members = new MultiDictionary<string, Declaration>();
 
-		// TODO Name
+		public readonly string Name;
 		// TODO Diagnostics
 		public readonly PackageSyntax Syntax;
 		Namespace Container.AsNamespace => null;
@@ -22,6 +22,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 		{
 			Requires.NotNull(syntax, nameof(syntax));
 
+			Name = syntax.Name;
 			Syntax = syntax;
 			foreach(var globalDeclaration in globalDeclarations)
 				members.Add(globalDeclaration.Name, globalDeclaration);

@@ -13,7 +13,7 @@ namespace Adamant.Exploratory.Compiler.Semantics.NamespaceMembers
 			Symbol = symbol;
 		}
 
-		public static implicit operator Entity(Entity entity)
+		public static implicit operator Semantics.Entity(Entity entity)
 		{
 			return entity.Symbol;
 		}

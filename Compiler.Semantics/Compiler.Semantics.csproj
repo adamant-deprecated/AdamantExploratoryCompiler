@@ -40,6 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binders\Binder.cs" />
+    <Compile Include="Binders\BindersBuilder.cs" />
+    <Compile Include="Binders\ClassBinder.cs" />
+    <Compile Include="Binders\CompilationUnitBinder.cs" />
+    <Compile Include="Binders\CompilationUnitBindersBuilder.cs" />
+    <Compile Include="Binders\ContainerBinder.cs" />
+    <Compile Include="Binders\FunctionBinder.cs" />
+    <Compile Include="Binders\ImportedSymbol.cs" />
+    <Compile Include="Binders\LookupResults\EmptyResult.cs" />
+    <Compile Include="Binders\LookupResults\LookupResult.cs" />
+    <Compile Include="Binders\LookupResults\NotAccessibleResult.cs" />
+    <Compile Include="Binders\LookupResults\NotViableResult.cs" />
+    <Compile Include="Binders\LookupResults\ViableResult.cs" />
+    <Compile Include="Binders\NamespaceBinder.cs" />
+    <Compile Include="Binders\PackageBinder.cs" />
+    <Compile Include="Binders\SymbolReferences\EntityReference.cs" />
+    <Compile Include="Binders\SymbolReferences\NamespaceReference.cs" />
+    <Compile Include="Binders\SymbolReferences\PackageReference.cs" />
+    <Compile Include="Binders\SymbolReferences\SymbolReference.cs" />
     <Compile Include="Class.cs" />
     <Compile Include="Declaration.cs" />
     <Compile Include="Entity.cs" />

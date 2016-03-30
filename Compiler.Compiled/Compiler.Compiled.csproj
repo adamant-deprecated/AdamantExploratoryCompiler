@@ -49,10 +49,6 @@
       <Project>{041EE85B-E098-4454-9DD9-D7B6723DDF83}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Compiler.Binders\Compiler.Binders.csproj">
-      <Project>{C66A416E-5FBD-450A-B55F-AF63DA99265C}</Project>
-      <Name>Compiler.Binders</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
       <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
       <Name>Compiler.Core</Name>
