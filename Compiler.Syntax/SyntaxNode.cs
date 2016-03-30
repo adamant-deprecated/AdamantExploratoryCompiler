@@ -5,11 +5,5 @@
 	/// </summary>
 	public abstract class SyntaxNode
 	{
-		public bool IsPoisoned { get; private set; }
-
-		public void Poison()
-		{
-			IsPoisoned = true;
-		}
 	}
 }

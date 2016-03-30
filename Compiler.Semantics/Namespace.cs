@@ -21,7 +21,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 				members.Add(declaration.Name, declaration);
 		}
 
-		protected override IReadOnlyList<Symbol> GetMembersInternal(string name)
+		protected override IReadOnlyList<SemanticModel> GetMembersInternal(string name)
 		{
 			return members[name];
 		}

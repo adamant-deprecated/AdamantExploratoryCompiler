@@ -2,7 +2,7 @@
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public class PackageDependencySyntax
+	public class PackageDependencySyntax : SyntaxNode
 	{
 		public readonly string Name;
 		public readonly string Alias;

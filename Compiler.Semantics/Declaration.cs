@@ -3,7 +3,7 @@ using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
 namespace Adamant.Exploratory.Compiler.Semantics
 {
-	public abstract class Declaration : Symbol
+	public abstract class Declaration : SemanticModel
 	{
 		protected Declaration(PackageSyntax containingPackage, Accessibility declaredAccessibility, string name)
 			: base(containingPackage, declaredAccessibility, name)

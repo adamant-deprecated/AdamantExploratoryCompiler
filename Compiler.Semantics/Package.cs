@@ -8,7 +8,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 	/// <summary>
 	/// A package as a whole, forms the root of symbols.  It is also inherently, the global namespace.
 	/// </summary>
-	public class Package : Symbol, Container
+	public class Package : SemanticModel, Container
 	{
 		private readonly MultiDictionary<string, Declaration> members = new MultiDictionary<string, Declaration>();
 
@@ -28,7 +28,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 				members.Add(globalDeclaration.Name, globalDeclaration);
 		}
 
-		protected override IReadOnlyList<Symbol> GetMembersInternal(string name)
+		protected override IReadOnlyList<SemanticModel> GetMembersInternal(string name)
 		{
 			return members[name];
 		}

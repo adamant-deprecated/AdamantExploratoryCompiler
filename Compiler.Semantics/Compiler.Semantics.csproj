@@ -72,7 +72,7 @@
     <Compile Include="Package.cs" />
     <Compile Include="PackageSemanticsBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Symbol.cs" />
+    <Compile Include="SemanticModel.cs" />
     <Compile Include="SymbolReference.cs" />
   </ItemGroup>
   <ItemGroup>

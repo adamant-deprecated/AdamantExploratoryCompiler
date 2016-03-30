@@ -11,7 +11,7 @@ namespace Adamant.Exploratory.Compiler.Syntax
 	/// information about different configurations and targets as well as the build pipeline. A
 	/// package is for a specific configuration, target etc.
 	/// </summary>
-	public class PackageSyntax
+	public class PackageSyntax : SyntaxNode
 	{
 		public readonly string Name;
 		public readonly IReadOnlyList<CompilationUnitSyntax> CompilationUnits;

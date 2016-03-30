@@ -6,11 +6,13 @@ using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 namespace Adamant.Exploratory.Compiler.Semantics
 {
 	/// <summary>
-	/// A Symbol represents some named entity in code
+	/// A SemanticModel describes the semantics of a program element.  Currently, all semantic models
+	/// correspond to some SyntaxNode(s).  However, in the future when IL is implemented, a semantic
+	/// model might correspond to the IL loaded for a dependency.
 	/// </summary>
-	public abstract class Symbol
+	public abstract class SemanticModel
 	{
-		private static readonly IReadOnlyList<Symbol> NoMembers = new List<Symbol>(0);
+		private static readonly IReadOnlyList<SemanticModel> NoMembers = new List<SemanticModel>(0);
 
 		private readonly List<Location> locations = new List<Location>();
 
@@ -19,7 +21,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 		public readonly string Name;
 		public IReadOnlyList<Location> Locations => locations;
 
-		protected Symbol(PackageSyntax containingPackage, Accessibility declaredAccessibility, string name)
+		protected SemanticModel(PackageSyntax containingPackage, Accessibility declaredAccessibility, string name)
 		{
 			Requires.NotNull(name, nameof(name));
 
@@ -28,13 +30,20 @@ namespace Adamant.Exploratory.Compiler.Semantics
 			DeclaredAccessibility = declaredAccessibility;
 		}
 
+		public bool IsPoisoned { get; private set; }
+
+		public void Poison()
+		{
+			IsPoisoned = true;
+		}
+
 		// This pattern allows us to simulate covarient return types
-		protected virtual IReadOnlyList<Symbol> GetMembersInternal(string name)
+		protected virtual IReadOnlyList<SemanticModel> GetMembersInternal(string name)
 		{
 			return NoMembers;
 		}
 
-		public IReadOnlyList<Symbol> GetMembers(string name)
+		public IReadOnlyList<SemanticModel> GetMembers(string name)
 		{
 			return GetMembersInternal(name);
 		}
