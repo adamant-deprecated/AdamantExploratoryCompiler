@@ -1,7 +1,7 @@
 ﻿using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core;
 
-namespace Adamant.Exploratory.Compiler.Symbols
+namespace Adamant.Exploratory.Compiler.Semantics
 {
 	public class Location
 	{

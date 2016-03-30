@@ -1,19 +1,19 @@
 using Adamant.Exploratory.Common;
 
-namespace Adamant.Exploratory.Compiler.Symbols.NamespaceMembers
+namespace Adamant.Exploratory.Compiler.Semantics.NamespaceMembers
 {
 	internal sealed class Entity : NamespaceMember
 	{
-		public readonly EntitySymbol Symbol;
+		public readonly Semantics.Entity Symbol;
 
-		public Entity(EntitySymbol symbol)
+		public Entity(Semantics.Entity symbol)
 		{
 			Requires.NotNull(symbol, nameof(symbol));
 
 			Symbol = symbol;
 		}
 
-		public static implicit operator EntitySymbol(Entity entity)
+		public static implicit operator Entity(Entity entity)
 		{
 			return entity.Symbol;
 		}

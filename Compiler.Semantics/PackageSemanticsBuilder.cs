@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
-using Adamant.Exploratory.Compiler.Symbols.NamespaceMembers;
+using Adamant.Exploratory.Compiler.Semantics.NamespaceMembers;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
 
-namespace Adamant.Exploratory.Compiler.Symbols
+namespace Adamant.Exploratory.Compiler.Semantics
 {
-	public class PackageSymbolBuilder
+	public class PackageSemanticsBuilder
 	{
 		private readonly PackageSyntax package;
 
-		public PackageSymbolBuilder(PackageSyntax package)
+		public PackageSemanticsBuilder(PackageSyntax package)
 		{
 			this.package = package;
 		}
 
-		public PackageSymbol Build(DiagnosticsBuilder diagnostics)
+		public Package Build(DiagnosticsBuilder diagnostics)
 		{
 			var namespaceMembers = package.CompilationUnits.SelectMany(cu => BuildNamespaceMembers(cu, diagnostics));
 			var globalDeclarations = BuildNamespaceSymbols(namespaceMembers, diagnostics);
 			// TODO check for duplicates
-			return new PackageSymbol(package, globalDeclarations);
+			return new Package(package, globalDeclarations);
 		}
 
 		private IEnumerable<NamespaceMember> BuildNamespaceMembers(CompilationUnitSyntax compilationUnit, DiagnosticsBuilder diagnostics)
@@ -40,7 +40,7 @@ namespace Adamant.Exploratory.Compiler.Symbols
 
 					foreach(var name in @namespace.Names.Reverse())
 					{
-						var childNamespace = new Namespace(name.ValueText, members);
+						var childNamespace = new NamespaceMembers.Namespace(name.ValueText, members);
 						members = new[] { childNamespace };
 					}
 					return members.Single(); // pull out the top level namespace
@@ -48,23 +48,23 @@ namespace Adamant.Exploratory.Compiler.Symbols
 				.With<ClassSyntax>(@class =>
 				{
 					// TODO check for and report duplicate members
-					var symbol = new ClassSymbol(package, @class.Accessibility, @class.Name.ValueText);
+					var symbol = new Class(package, @class.Accessibility, @class.Name.ValueText);
 					return new Entity(symbol);
 				})
 				.With<FunctionSyntax>(function =>
 				{
-					var symbol = new FunctionSymbol(package, function.Accessibility, function.Name.ValueText);
+					var symbol = new Function(package, function.Accessibility, function.Name.ValueText);
 					return new Entity(symbol);
 				})
 				.Exhaustive();
 		}
 
-		private IEnumerable<DeclarationSymbol> BuildNamespaceSymbols(IEnumerable<NamespaceMember> namespaceMembers, DiagnosticsBuilder diagnostics)
+		private IEnumerable<Declaration> BuildNamespaceSymbols(IEnumerable<NamespaceMember> namespaceMembers, DiagnosticsBuilder diagnostics)
 		{
 			return namespaceMembers.GroupBy(m => m.GetType()).SelectMany(g =>
 			{
-				if(g.Key == typeof(Namespace))
-					return BuildNamespaceSymbols(g.Cast<Namespace>(), diagnostics);
+				if(g.Key == typeof(NamespaceMembers.Namespace))
+					return BuildNamespaceSymbols(g.Cast<NamespaceMembers.Namespace>(), diagnostics);
 
 				if(g.Key == typeof(Entity))
 					return g.Cast<Entity>().Select(e => e.Symbol);
@@ -73,11 +73,11 @@ namespace Adamant.Exploratory.Compiler.Symbols
 			});
 		}
 
-		private IEnumerable<DeclarationSymbol> BuildNamespaceSymbols(IEnumerable<Namespace> namespaces, DiagnosticsBuilder diagnostics)
+		private IEnumerable<Declaration> BuildNamespaceSymbols(IEnumerable<NamespaceMembers.Namespace> namespaces, DiagnosticsBuilder diagnostics)
 		{
 			return namespaces.GroupBy(ns => ns.Name).Select(g =>
 				// TODO check for and report duplicate symbols
-				new NamespaceSymbol(package, g.Key, BuildNamespaceSymbols(g.SelectMany(ns => ns.Member), diagnostics)));
+				new Namespace(package, g.Key, BuildNamespaceSymbols(g.SelectMany(ns => ns.Member), diagnostics)));
 		}
 	}
 }

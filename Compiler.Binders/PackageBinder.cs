@@ -3,7 +3,7 @@ using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Binders.LookupResults;
 using Adamant.Exploratory.Compiler.Binders.SymbolReferences;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
@@ -12,16 +12,16 @@ namespace Adamant.Exploratory.Compiler.Binders
 	public class PackageBinder : ContainerBinder
 	{
 		public readonly PackageSyntax PackageSyntax;
-		public readonly PackageSymbol PackageSymbol;
+		public readonly Package Package;
 
 		// TODO move PackageSymbolReferences into PackageSymbols
-		public PackageBinder(PackageSyntax packageSyntax, PackageSymbol packageSymbol, IEnumerable<IPackageSymbolReference> packageReferences)
-			: base(null, new NamespaceReference(packageReferences.Select(d => d.PackageSymbol).Append(packageSymbol)), Enumerable.Empty<ImportedSymbol>())
+		public PackageBinder(PackageSyntax packageSyntax, Package package, IEnumerable<IPackageSymbolReference> packageReferences)
+			: base(null, new NamespaceReference(packageReferences.Select(d => d.Package).Append(package)), Enumerable.Empty<ImportedSymbol>())
 		{
 			Requires.NotNull(packageSyntax, nameof(packageSyntax));
 
 			PackageSyntax = packageSyntax;
-			PackageSymbol = packageSymbol;
+			Package = package;
 		}
 
 		public override LookupResult LookupInGlobalNamespace(NameSyntax name, PackageSyntax fromPackage)

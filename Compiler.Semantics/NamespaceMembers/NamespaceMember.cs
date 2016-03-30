@@ -1,4 +1,4 @@
-﻿namespace Adamant.Exploratory.Compiler.Symbols.NamespaceMembers
+﻿namespace Adamant.Exploratory.Compiler.Semantics.NamespaceMembers
 {
 	/// <summary>
 	/// A namespace member is either another namespace or an entity.

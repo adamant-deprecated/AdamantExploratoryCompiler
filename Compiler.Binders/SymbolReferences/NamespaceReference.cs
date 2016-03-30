@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
@@ -12,12 +12,12 @@ namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
 	/// </summary>
 	internal class NamespaceReference : SymbolReference
 	{
-		private readonly List<ContainerSymbol> containers;
+		private readonly List<Container> containers;
 		private readonly Dictionary<string, IReadOnlyList<SymbolReference>> cache = new Dictionary<string, IReadOnlyList<SymbolReference>>();
 
 		public override string Name => containers.First().AsNamespace?.Name ?? "";
 
-		public NamespaceReference(IEnumerable<ContainerSymbol> containers)
+		public NamespaceReference(IEnumerable<Container> containers)
 		{
 			this.containers = containers.ToList();
 
@@ -61,16 +61,16 @@ namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
 			return GetMembersSlow(containers.SelectMany(n => n.GetMembers(name)));
 		}
 
-		private static IReadOnlyList<SymbolReference> GetMembersSlow(IEnumerable<DeclarationSymbol> symbols)
+		private static IReadOnlyList<SymbolReference> GetMembersSlow(IEnumerable<Declaration> symbols)
 		{
 			var lookup = symbols
-				.ToLookup(s => s is NamespaceSymbol);
+				.ToLookup(s => s is Namespace);
 
 			var childSymbols = lookup[false].Select(s => (SymbolReference)s).ToList();
 			var childNamespaces = lookup[true].ToList();
 			if(childNamespaces.Any())
 			{
-				var childNamespace = new NamespaceReference(childNamespaces.Cast<NamespaceSymbol>());
+				var childNamespace = new NamespaceReference(childNamespaces.Cast<Namespace>());
 				childSymbols.Add(childNamespace);
 			}
 

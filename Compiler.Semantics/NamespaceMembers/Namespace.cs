@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Adamant.Exploratory.Compiler.Symbols.NamespaceMembers
+namespace Adamant.Exploratory.Compiler.Semantics.NamespaceMembers
 {
 	internal sealed class Namespace : NamespaceMember
 	{

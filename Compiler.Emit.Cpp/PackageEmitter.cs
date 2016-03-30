@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Adamant.Exploratory.Compiler.Compiled;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Semantics;
 
 namespace Compiler.Emit.Cpp
 {
@@ -37,7 +37,7 @@ namespace Compiler.Emit.Cpp
 			return source.ToString();
 		}
 
-		private void Emit(SourceFileBuilder source, ContainerSymbol container)
+		private void Emit(SourceFileBuilder source, Container container)
 		{
 			//throw new System.NotImplementedException();
 		}

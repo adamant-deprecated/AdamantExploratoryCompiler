@@ -2,7 +2,7 @@
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Compiled
@@ -11,12 +11,12 @@ namespace Adamant.Exploratory.Compiler.Compiled
 	{
 		public string Name;
 		public readonly PackageSyntax Syntax;
-		public readonly PackageSymbol Symbol;
-		public readonly IReadOnlyList<FunctionSymbol> EntryPoints;
+		public readonly Package Symbol;
+		public readonly IReadOnlyList<Function> EntryPoints;
 		public readonly IReadOnlyList<CompiledDependency> Dependencies;
 		public readonly IReadOnlyList<Diagnostic> Diagnostics;
 
-		public CompiledPackage(PackageSyntax syntax, PackageSymbol symbol, IEnumerable<FunctionSymbol> entryPoints, IEnumerable<Diagnostic> diagnostics, IEnumerable<CompiledDependency> dependencies)
+		public CompiledPackage(PackageSyntax syntax, Package symbol, IEnumerable<Function> entryPoints, IEnumerable<Diagnostic> diagnostics, IEnumerable<CompiledDependency> dependencies)
 		{
 			Requires.NotNull(syntax, nameof(syntax));
 			Requires.NotNull(symbol, nameof(symbol));

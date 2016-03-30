@@ -7,8 +7,8 @@
     <ProjectGuid>{5235F122-AD65-4577-BBC4-DBA7D60DA92D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Adamant.Exploratory.Compiler.Symbols</RootNamespace>
-    <AssemblyName>Adamant.Exploratory.Compiler.Symbols</AssemblyName>
+    <RootNamespace>Adamant.Exploratory.Compiler.Semantics</RootNamespace>
+    <AssemblyName>Adamant.Exploratory.Compiler.Semantics</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,18 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassSymbol.cs" />
-    <Compile Include="DeclarationSymbol.cs" />
-    <Compile Include="EntitySymbol.cs" />
-    <Compile Include="FunctionSymbol.cs" />
-    <Compile Include="ContainerSymbol.cs" />
+    <Compile Include="Class.cs" />
+    <Compile Include="Declaration.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="Function.cs" />
+    <Compile Include="Container.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="NamespaceMembers\Entity.cs" />
     <Compile Include="NamespaceMembers\Namespace.cs" />
     <Compile Include="NamespaceMembers\NamespaceMember.cs" />
-    <Compile Include="NamespaceSymbol.cs" />
-    <Compile Include="PackageSymbol.cs" />
-    <Compile Include="PackageSymbolBuilder.cs" />
+    <Compile Include="Namespace.cs" />
+    <Compile Include="Package.cs" />
+    <Compile Include="PackageSemanticsBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Symbol.cs" />
     <Compile Include="SymbolReference.cs" />

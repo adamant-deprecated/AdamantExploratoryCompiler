@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using Adamant.Exploratory.Compiler.Syntax;
 
-namespace Adamant.Exploratory.Compiler.Symbols
+namespace Adamant.Exploratory.Compiler.Semantics
 {
 	/// <summary>
 	/// A container symbol is one that holds other declarations.  That is, it is
 	/// either a namespace or a package.
 	/// </summary>
-	public interface ContainerSymbol
+	public interface Container
 	{
 		/// <summary>
 		/// This contaier as a namespace.  null for packages
 		/// </summary>
-		NamespaceSymbol AsNamespace { get; }
+		Namespace AsNamespace { get; }
 
 		PackageSyntax ContainingPackage { get; }
 
-		IEnumerable<DeclarationSymbol> GetMembers();
-		IReadOnlyList<DeclarationSymbol> GetMembers(string name);
+		IEnumerable<Declaration> GetMembers();
+		IReadOnlyList<Declaration> GetMembers(string name);
 	}
 }

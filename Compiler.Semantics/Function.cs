@@ -1,13 +1,13 @@
 ﻿using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
-namespace Adamant.Exploratory.Compiler.Symbols
+namespace Adamant.Exploratory.Compiler.Semantics
 {
-	public class FunctionSymbol : EntitySymbol
+	public class Function : Entity
 	{
 		// TODO return type
 
-		public FunctionSymbol(PackageSyntax containingPackage, Accessibility declaredAccessibility, string name)
+		public Function(PackageSyntax containingPackage, Accessibility declaredAccessibility, string name)
 			: base(containingPackage, declaredAccessibility, name)
 		{
 		}

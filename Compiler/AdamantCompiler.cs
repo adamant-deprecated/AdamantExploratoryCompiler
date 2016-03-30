@@ -6,7 +6,7 @@ using Adamant.Exploratory.Compiler.Antlr.Builders;
 using Adamant.Exploratory.Compiler.Binders;
 using Adamant.Exploratory.Compiler.Compiled;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Directives;
 using Antlr4.Runtime.Atn;
@@ -47,7 +47,7 @@ namespace Adamant.Exploratory.Compiler
 		{
 			var compiledDependencies = GetCompiledDependencies(package, dependencies);
 			var diagnostics = new DiagnosticsBuilder(package.Diagnostics);
-			var symbol = new PackageSymbolBuilder(package).Build(diagnostics);
+			var symbol = new PackageSemanticsBuilder(package).Build(diagnostics);
 			var binders = new BindersBuilder(package, symbol, compiledDependencies).Build(diagnostics);
 
 			// TODO type check
@@ -56,23 +56,23 @@ namespace Adamant.Exploratory.Compiler
 		}
 
 		// TODO move to PackageSymbol class
-		private static IEnumerable<FunctionSymbol> FindEntryPoints(ContainerSymbol root)
+		private static IEnumerable<Function> FindEntryPoints(Container root)
 		{
-			var containers = new Stack<ContainerSymbol>();
+			var containers = new Stack<Container>();
 			containers.Push(root);
 			while(containers.Count > 0)
 			{
 				var container = containers.Pop();
 				foreach(var symbol in container.GetMembers())
 				{
-					var entryPoint = symbol.Match().Returning<FunctionSymbol>()
-						.With<NamespaceSymbol>(@namespace =>
+					var entryPoint = symbol.Match().Returning<Function>()
+						.With<Namespace>(@namespace =>
 						{
 							containers.Push(@namespace);
 							return null;
 						})
-						.With<FunctionSymbol>(function => function.Name == "Main" ? function : null)
-						.Ignore<ClassSymbol>(null)
+						.With<Function>(function => function.Name == "Main" ? function : null)
+						.Ignore<Class>(null)
 						.Exhaustive();
 					if(entryPoint != null)
 						yield return entryPoint;

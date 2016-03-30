@@ -1,7 +1,4 @@
-﻿using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Syntax.Modifiers;
-
-namespace Adamant.Exploratory.Compiler.Symbols
+﻿namespace Adamant.Exploratory.Compiler.Semantics
 {
 	//public class SymbolReference
 	//{

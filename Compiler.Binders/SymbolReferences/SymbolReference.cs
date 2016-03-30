@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Adamant.Exploratory.Compiler.Symbols;
+using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
@@ -14,7 +14,7 @@ namespace Adamant.Exploratory.Compiler.Binders.SymbolReferences
 		public abstract bool IsVisibleFrom(PackageSyntax package);
 		public abstract IEnumerable<SymbolReference> GetMembers(string name);
 
-		public static implicit operator SymbolReference(EntitySymbol entity)
+		public static implicit operator SymbolReference(Entity entity)
 		{
 			return new EntityReference(entity);
 		}

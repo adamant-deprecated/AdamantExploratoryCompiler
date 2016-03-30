@@ -3,18 +3,18 @@ using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
-namespace Adamant.Exploratory.Compiler.Symbols
+namespace Adamant.Exploratory.Compiler.Semantics
 {
 	/// <summary>
 	/// Represents a namespace as it is declared within a package
 	/// </summary>
-	public class NamespaceSymbol : DeclarationSymbol, ContainerSymbol
+	public class Namespace : Declaration, Container
 	{
-		private readonly MultiDictionary<string, DeclarationSymbol> members = new MultiDictionary<string, DeclarationSymbol>();
+		private readonly MultiDictionary<string, Declaration> members = new MultiDictionary<string, Declaration>();
 
-		NamespaceSymbol ContainerSymbol.AsNamespace => this;
+		Namespace Container.AsNamespace => this;
 
-		public NamespaceSymbol(PackageSyntax containingPackage, string name, IEnumerable<DeclarationSymbol> declarations)
+		public Namespace(PackageSyntax containingPackage, string name, IEnumerable<Declaration> declarations)
 			: base(containingPackage, Accessibility.Public, name) // namespaces are implicitly public
 		{
 			foreach(var declaration in declarations)
@@ -26,12 +26,12 @@ namespace Adamant.Exploratory.Compiler.Symbols
 			return members[name];
 		}
 
-		public IEnumerable<DeclarationSymbol> GetMembers()
+		public IEnumerable<Declaration> GetMembers()
 		{
 			return members.Values;
 		}
 
-		public new IReadOnlyList<DeclarationSymbol> GetMembers(string name)
+		public new IReadOnlyList<Declaration> GetMembers(string name)
 		{
 			return members[name];
 		}

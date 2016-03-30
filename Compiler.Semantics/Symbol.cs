@@ -3,7 +3,7 @@ using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
-namespace Adamant.Exploratory.Compiler.Symbols
+namespace Adamant.Exploratory.Compiler.Semantics
 {
 	/// <summary>
 	/// A Symbol represents some named entity in code
