@@ -62,9 +62,9 @@
       <Project>{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}</Project>
       <Name>Compiler.Compiled</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Compiler.Symbols\Compiler.Symbols.csproj">
+    <ProjectReference Include="..\Compiler.Semantics\Compiler.Semantics.csproj">
       <Project>{5235F122-AD65-4577-BBC4-DBA7D60DA92D}</Project>
-      <Name>Compiler.Symbols</Name>
+      <Name>Compiler.Semantics</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

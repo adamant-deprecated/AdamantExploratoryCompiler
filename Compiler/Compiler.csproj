@@ -76,9 +76,9 @@
       <Project>{F659BAFA-A6B7-4253-BA43-80DF0A5455DE}</Project>
       <Name>Compiler.Emit.Cpp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Compiler.Symbols\Compiler.Symbols.csproj">
-      <Project>{5235f122-ad65-4577-bbc4-dba7d60da92d}</Project>
-      <Name>Compiler.Symbols</Name>
+    <ProjectReference Include="..\Compiler.Semantics\Compiler.Semantics.csproj">
+      <Project>{5235F122-AD65-4577-BBC4-DBA7D60DA92D}</Project>
+      <Name>Compiler.Semantics</Name>
     </ProjectReference>
     <ProjectReference Include="..\Compiler.Syntax\Compiler.Syntax.csproj">
       <Project>{3dfa5c38-11a2-4b3d-918e-c22a5b5ccb2d}</Project>
