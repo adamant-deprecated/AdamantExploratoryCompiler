@@ -1,15 +1,8 @@
-﻿using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.Modifiers;
+﻿using Adamant.Exploratory.Compiler.Syntax.Declarations;
 
 namespace Adamant.Exploratory.Compiler.Semantics
 {
-	public class Function : Entity
+	public interface Function : Entity<FunctionSyntax>
 	{
-		// TODO return type
-
-		public Function(PackageSyntax containingPackage, Accessibility declaredAccessibility, string name)
-			: base(containingPackage, declaredAccessibility, name)
-		{
-		}
 	}
 }

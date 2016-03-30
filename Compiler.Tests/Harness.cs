@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Adamant.Exploratory.Compiler.Compiled;
 using Adamant.Exploratory.Compiler.Core;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
+using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 using Compiler.Emit.Cpp;
 using Newtonsoft.Json;
@@ -20,7 +20,7 @@ namespace Adamant.Exploratory.Compiler.Tests
 	{
 		private const string Extension = ".adam";
 		private readonly AdamantCompiler compiler = new AdamantCompiler();
-		private readonly PackageDependencySyntax runtimeDependency = new PackageDependencySyntax("System.Runtime", null, true);
+		private readonly PackageReferenceSyntax runtimeDependency = new PackageReferenceSyntax("System.Runtime", null, true);
 
 		private string WorkPath;
 
@@ -40,13 +40,13 @@ namespace Adamant.Exploratory.Compiler.Tests
 		[Test, TestCaseSource(nameof(TestCases))]
 		public void Test(TestCaseConfig config, TextReader reader)
 		{
-			var dependencies = config.Runtime ? new[] { runtimeDependency } : Enumerable.Empty<PackageDependencySyntax>();
+			var dependencies = config.Runtime ? new[] { runtimeDependency } : Enumerable.Empty<PackageReferenceSyntax>();
 			var package = new PackageSyntax($"Adamant.Exploratory.Compiler.Tests.{config.TestName}", dependencies);
 			var unit = compiler.Parse(package, new SourceReader(config.FileName, reader));
 			package = package.With(new[] { unit });
 			if(package.Diagnostics.Count > 0)
 				Assert.Fail(ToString(package.Diagnostics));
-			var compiledPackage = compiler.Compile(package, Enumerable.Empty<CompiledPackage>());
+			var compiledPackage = compiler.Compile(package, Enumerable.Empty<Package>());
 			if(compiledPackage.Diagnostics.Count > 0)
 				Assert.Fail(ToString(compiledPackage.Diagnostics));
 

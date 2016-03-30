@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences;
+using Adamant.Exploratory.Compiler.Semantics.References;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
@@ -14,33 +14,33 @@ namespace Adamant.Exploratory.Compiler.Semantics.Binders.LookupResults
 	///		not accessible
 	///		non-viable
 	/// </summary>
-	public abstract class LookupResult
+	internal abstract class LookupResult
 	{
 		public static readonly LookupResult Empty = EmptyResult.Instance;
 
 		public abstract bool IsEmpty { get; }
 		public abstract bool IsViable { get; }
-		public abstract IEnumerable<SymbolReference> Symbols { get; }
+		public abstract IEnumerable<DeclarationReference> Symbols { get; }
 
-		public abstract LookupResult Lookup(SimpleNameSyntax name, PackageSyntax fromPackage);
+		public abstract LookupResult Lookup(SimpleNameSyntax name, Package fromPackage);
 
-		public static LookupResult Good(SymbolReference symbol)
+		public static LookupResult Good(DeclarationReference declaration)
 		{
-			Requires.NotNull(symbol, nameof(symbol));
-			return new ViableResult(symbol);
+			Requires.NotNull(declaration, nameof(declaration));
+			return new ViableResult(declaration);
 		}
 
-		public static LookupResult NotAccessible(IEnumerable<SymbolReference> symbols)
+		public static LookupResult NotAccessible(IEnumerable<DeclarationReference> symbols)
 		{
 			return new NotAccessibleResult(symbols);
 		}
 
 		public static LookupResult NotDefined()
 		{
-			return new NotViableResult(Enumerable.Empty<SymbolReference>()); // TODO include actual error
+			return new NotViableResult(Enumerable.Empty<DeclarationReference>()); // TODO include actual error
 		}
 
-		public static LookupResult Ambiguous(IEnumerable<SymbolReference> symbols)
+		public static LookupResult Ambiguous(IEnumerable<DeclarationReference> symbols)
 		{
 			return new NotViableResult(symbols); // TODO include actual error
 		}

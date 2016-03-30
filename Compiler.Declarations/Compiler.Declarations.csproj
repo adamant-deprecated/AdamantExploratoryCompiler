@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}</ProjectGuid>
+    <ProjectGuid>{ED84BB94-4A61-4974-8813-73FFEB029F52}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Adamant.Exploratory.Compiler.Compiled</RootNamespace>
-    <AssemblyName>Adamant.Exploratory.Compiler.Compiled</AssemblyName>
+    <RootNamespace>Adamant.Exploratory.Compiler.Declarations</RootNamespace>
+    <AssemblyName>Adamant.Exploratory.Compiler.Declarations</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,22 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompiledDependency.cs" />
-    <Compile Include="CompiledPackage.cs" />
+    <Compile Include="AmbiguousDeclaration.cs" />
+    <Compile Include="ClassDeclaration.cs" />
+    <Compile Include="DeclarationBuilder.cs" />
+    <Compile Include="FunctionDeclaration.cs" />
+    <Compile Include="GlobalVariableDeclaration.cs" />
+    <Compile Include="NamespaceDeclaration.cs" />
+    <Compile Include="Declaration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{041EE85B-E098-4454-9DD9-D7B6723DDF83}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
-      <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
-      <Name>Compiler.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Compiler.Semantics\Compiler.Semantics.csproj">
-      <Project>{5235F122-AD65-4577-BBC4-DBA7D60DA92D}</Project>
-      <Name>Compiler.Semantics</Name>
     </ProjectReference>
     <ProjectReference Include="..\Compiler.Syntax\Compiler.Syntax.csproj">
       <Project>{3DFA5C38-11A2-4B3D-918E-C22A5B5CCB2D}</Project>

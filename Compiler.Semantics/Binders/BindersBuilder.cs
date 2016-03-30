@@ -1,34 +1,26 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
-using Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences;
+using Adamant.Exploratory.Compiler.Semantics.Model;
 using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Semantics.Binders
 {
-	public class BindersBuilder
+	internal class BindersBuilder
 	{
-		private readonly PackageSyntax packageSyntax;
-		private readonly Package package;
-		private readonly List<IPackageSymbolReference> packageReferences;
+		private readonly PackageModel package;
 
-		public BindersBuilder(
-			PackageSyntax packageSyntax,
-			Package package,
-			IEnumerable<IPackageSymbolReference> packageReferences)
+		public BindersBuilder(PackageModel package)
 		{
-			this.packageSyntax = packageSyntax;
 			this.package = package;
-			this.packageReferences = packageReferences.ToList();
 		}
 
 		public IReadOnlyDictionary<SyntaxNode, Binder> Build(DiagnosticsBuilder diagnostics)
 		{
 			var binders = new Dictionary<SyntaxNode, Binder>();
 			// The package binder doesn't go in the binders collection, it just serves as the root binder
-			var packageBinder = new PackageBinder(packageSyntax, package, packageReferences);
-			foreach(var compilationUnit in packageSyntax.CompilationUnits)
-				new CompilationUnitBindersBuilder(binders, packageSyntax, compilationUnit, diagnostics).Build(packageBinder);
+			var packageBinder = new PackageBinder(package);
+			foreach(var compilationUnit in package.Syntax.CompilationUnits)
+				new CompilationUnitBindersBuilder(binders, package, compilationUnit, diagnostics).Build(packageBinder);
 
 			return binders;
 		}

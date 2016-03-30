@@ -60,10 +60,6 @@
       <Project>{f0a0e5bc-e590-469b-9ef3-8d92fe43fe44}</Project>
       <Name>Compiler.Antlr</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Compiler.Compiled\Compiler.Compiled.csproj">
-      <Project>{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}</Project>
-      <Name>Compiler.Compiled</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
       <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
       <Name>Compiler.Core</Name>

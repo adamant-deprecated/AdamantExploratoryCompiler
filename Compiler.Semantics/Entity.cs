@@ -1,13 +1,9 @@
-﻿using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.Modifiers;
+﻿using Adamant.Exploratory.Compiler.Syntax.Declarations;
 
 namespace Adamant.Exploratory.Compiler.Semantics
 {
-	public abstract class Entity : Declaration
+	public interface Entity<out TSyntax> : Declaration<TSyntax>
+			where TSyntax : EntitySyntax
 	{
-		protected Entity(PackageSyntax containingPackage, Accessibility declaredAccessibility, string name)
-			: base(containingPackage, declaredAccessibility, name)
-		{
-		}
 	}
 }

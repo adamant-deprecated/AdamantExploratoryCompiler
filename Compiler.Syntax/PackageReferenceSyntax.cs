@@ -2,13 +2,13 @@
 
 namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public class PackageDependencySyntax : SyntaxNode
+	public class PackageReferenceSyntax : SyntaxNode
 	{
 		public readonly string Name;
 		public readonly string Alias;
 		public readonly bool Trusted;
 
-		public PackageDependencySyntax(string name, string alias, bool trusted)
+		public PackageReferenceSyntax(string name, string alias, bool trusted)
 		{
 			Requires.NotNull(name, nameof(name));
 

@@ -1,29 +1,26 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Semantics.Binders.LookupResults;
-using Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences;
-using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Semantics.Model;
+using Adamant.Exploratory.Compiler.Semantics.References;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Semantics.Binders
 {
-	public class PackageBinder : ContainerBinder
+	internal class PackageBinder : ContainerBinder
 	{
-		public readonly PackageSyntax PackageSyntax;
-		public readonly Package Package;
+		public readonly PackageModel Package;
 
 		// TODO move PackageSymbolReferences into PackageSymbols
-		public PackageBinder(PackageSyntax packageSyntax, Package package, IEnumerable<IPackageSymbolReference> packageReferences)
-			: base(null, new NamespaceReference(packageReferences.Select(d => d.Package).Append(package)), Enumerable.Empty<ImportedSymbol>())
+		public PackageBinder(PackageModel package)
+			: base(null, new NamespaceReference(package.Dependencies.Select(d => d.Package.GlobalNamespace).Append(package.GlobalNamespace)), Enumerable.Empty<ImportedSymbol>())
 		{
-			Requires.NotNull(packageSyntax, nameof(packageSyntax));
-
-			PackageSyntax = packageSyntax;
+			Requires.NotNull(package, nameof(package));
+			
 			Package = package;
 		}
 
-		public override LookupResult LookupInGlobalNamespace(NameSyntax name, PackageSyntax fromPackage)
+		public override LookupResult LookupInGlobalNamespace(NameSyntax name, Package fromPackage)
 		{
 			return Lookup(name, fromPackage);
 		}

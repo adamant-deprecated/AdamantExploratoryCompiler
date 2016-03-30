@@ -61,10 +61,6 @@
     <EmbeddedResource Include="Initial\0_Empty.adam" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Compiler.Compiled\Compiler.Compiled.csproj">
-      <Project>{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}</Project>
-      <Name>Compiler.Compiled</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
       <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
       <Name>Compiler.Core</Name>
@@ -72,6 +68,10 @@
     <ProjectReference Include="..\Compiler.Emit.Cpp\Compiler.Emit.Cpp.csproj">
       <Project>{F659BAFA-A6B7-4253-BA43-80DF0A5455DE}</Project>
       <Name>Compiler.Emit.Cpp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler.Semantics\Compiler.Semantics.csproj">
+      <Project>{5235F122-AD65-4577-BBC4-DBA7D60DA92D}</Project>
+      <Name>Compiler.Semantics</Name>
     </ProjectReference>
     <ProjectReference Include="..\Compiler.Syntax\Compiler.Syntax.csproj">
       <Project>{3DFA5C38-11A2-4B3D-918E-C22A5B5CCB2D}</Project>

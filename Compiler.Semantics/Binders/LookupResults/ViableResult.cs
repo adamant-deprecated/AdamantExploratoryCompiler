@@ -1,27 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
-using Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences;
+using Adamant.Exploratory.Compiler.Semantics.References;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Semantics.Binders.LookupResults
 {
-	public class ViableResult : LookupResult
+	internal class ViableResult : LookupResult
 	{
-		private readonly List<SymbolReference> symbols;
+		private readonly List<DeclarationReference> symbols;
 
 		public override bool IsEmpty => false;
 		public override bool IsViable => true;
-		public override IEnumerable<SymbolReference> Symbols => symbols;
+		public override IEnumerable<DeclarationReference> Symbols => symbols;
 
-		public ViableResult(SymbolReference symbol)
+		public ViableResult(DeclarationReference declaration)
 		{
-			Requires.NotNull(symbol, nameof(symbol));
-			symbols = new List<SymbolReference>() { symbol };
+			Requires.NotNull(declaration, nameof(declaration));
+			symbols = new List<DeclarationReference>() { declaration };
 		}
 
-		public override LookupResult Lookup(SimpleNameSyntax name, PackageSyntax fromPackage)
+		public override LookupResult Lookup(SimpleNameSyntax name, Package fromPackage)
 		{
 			return name.Match().Returning<LookupResult>()
 				.With<IdentifierNameSyntax>(identifierName =>

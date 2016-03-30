@@ -1,13 +1,13 @@
-﻿using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.Modifiers;
+﻿using System.Collections.Generic;
+using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Semantics
 {
-	public abstract class Declaration : SemanticModel
+	public interface Declaration<out TSyntax> : Symbol<TSyntax>
+		where TSyntax : DeclarationSyntax
 	{
-		protected Declaration(PackageSyntax containingPackage, Accessibility declaredAccessibility, string name)
-			: base(containingPackage, declaredAccessibility, name)
-		{
-		}
+		Namespace ContainingNamespace { get; }
+		IEnumerable<Declaration<DeclarationSyntax>> GetMembers();
+		IEnumerable<Declaration<DeclarationSyntax>> GetMembers(string name);
 	}
 }

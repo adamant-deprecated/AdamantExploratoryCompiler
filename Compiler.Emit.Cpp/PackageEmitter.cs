@@ -1,15 +1,13 @@
-﻿using System;
-using System.Linq;
-using Adamant.Exploratory.Compiler.Compiled;
+﻿using System.Linq;
 using Adamant.Exploratory.Compiler.Semantics;
 
 namespace Compiler.Emit.Cpp
 {
 	public class PackageEmitter
 	{
-		private readonly CompiledPackage package;
+		private readonly Package package;
 
-		public PackageEmitter(CompiledPackage package)
+		public PackageEmitter(Package package)
 		{
 			this.package = package;
 		}
@@ -29,7 +27,7 @@ namespace Compiler.Emit.Cpp
 
 			source.WriteIndentedLine("namespace");
 			source.BeginBlock();
-			Emit(source, package.Symbol);
+			Emit(source, package);
 			source.EndBlock();
 
 			EmitEntryPoint(source);
@@ -37,7 +35,7 @@ namespace Compiler.Emit.Cpp
 			return source.ToString();
 		}
 
-		private void Emit(SourceFileBuilder source, Container container)
+		private void Emit(SourceFileBuilder source, Package package)
 		{
 			//throw new System.NotImplementedException();
 		}

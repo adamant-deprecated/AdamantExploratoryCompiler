@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences;
+using Adamant.Exploratory.Compiler.Semantics.References;
 using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Semantics.Binders
 {
-	public class CompilationUnitBinder : ContainerBinder
+	internal class CompilationUnitBinder : ContainerBinder
 	{
 		private readonly CompilationUnitSyntax compilationUnit;
 
@@ -14,7 +14,7 @@ namespace Adamant.Exploratory.Compiler.Semantics.Binders
 			this.compilationUnit = compilationUnit;
 		}
 
-		public override IEnumerable<SymbolReference> GetMembers(string name)
+		public override IEnumerable<DeclarationReference> GetMembers(string name)
 		{
 			return ContainingScope.GetMembers(name);
 		}

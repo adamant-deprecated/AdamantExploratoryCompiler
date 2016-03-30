@@ -47,7 +47,7 @@
     <Compile Include="Declarations\EntitySyntax.cs" />
     <Compile Include="Declarations\ClassSyntax.cs" />
     <Compile Include="Declarations\FunctionSyntax.cs" />
-    <Compile Include="PackageDependencySyntax.cs" />
+    <Compile Include="PackageReferenceSyntax.cs" />
     <Compile Include="ParameterSyntax.cs" />
     <Compile Include="Declarations\GlobalVariableSyntax.cs" />
     <Compile Include="ExpressionSyntax.cs" />

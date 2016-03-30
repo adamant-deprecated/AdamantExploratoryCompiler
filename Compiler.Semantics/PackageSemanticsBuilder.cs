@@ -1,85 +1,72 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
-using Adamant.Exploratory.Compiler.Semantics.NamespaceMembers;
+using Adamant.Exploratory.Compiler.Declarations;
+using Adamant.Exploratory.Compiler.Semantics.Binders;
+using Adamant.Exploratory.Compiler.Semantics.Model;
 using Adamant.Exploratory.Compiler.Syntax;
-using Adamant.Exploratory.Compiler.Syntax.Declarations;
 
 namespace Adamant.Exploratory.Compiler.Semantics
 {
 	public class PackageSemanticsBuilder
 	{
 		private readonly PackageSyntax packageSyntax;
+		private readonly IReadOnlyList<Package> compiledPackages;
 
-		public PackageSemanticsBuilder(PackageSyntax packageSyntax)
+		public PackageSemanticsBuilder(PackageSyntax packageSyntax, IEnumerable<Package> compiledPackages)
 		{
 			this.packageSyntax = packageSyntax;
+			this.compiledPackages = compiledPackages.ToList();
 		}
 
-		public Package Build(DiagnosticsBuilder diagnostics)
+		public Package Build()
 		{
-			var namespaceMembers = packageSyntax.CompilationUnits.SelectMany(cu => BuildNamespaceMembers(cu, diagnostics));
-			var globalDeclarations = BuildNamespaceSymbols(namespaceMembers, diagnostics);
-			// TODO check for duplicates
-			var package = new Package(packageSyntax, globalDeclarations);
-
+			var diagnostics = new DiagnosticsBuilder(packageSyntax.Diagnostics);
+			var package = new PackageModel(packageSyntax);
+			var references = GetPackageReferences(package);
+			package.Add(references);
+			var globalDeclarations = new DeclarationBuilder(packageSyntax).Build();
+			BuildDeclarations(package.GlobalNamespace, globalDeclarations);
+			package.FindEntryPoints();
+			var binders = new BindersBuilder(package).Build(diagnostics);
+			// TODO use binders to resolve rest of semantic model
+			// TODO type check
+			// TODO borrow check
+			package.Set(diagnostics);
 			return package;
 		}
 
-		private IEnumerable<NamespaceMember> BuildNamespaceMembers(CompilationUnitSyntax compilationUnit, DiagnosticsBuilder diagnostics)
+		private IEnumerable<PackageReferenceModel> GetPackageReferences(PackageModel package)
 		{
-			return compilationUnit.Declarations.Select(d => BuildNamespaceMember(d, diagnostics));
+			var packagesLookup = compiledPackages.ToLookup(p => p.Name);
+			return packageSyntax.Dependencies.Select(d => new PackageReferenceModel(d, package, packagesLookup[d.Name].Single()));
 		}
 
-		private NamespaceMember BuildNamespaceMember(DeclarationSyntax declaration, DiagnosticsBuilder diagnostics)
+		private static void BuildDeclarations(NamespaceModel @namespace, IEnumerable<Declaration> declarations)
 		{
-			return declaration.Match().Returning<NamespaceMember>()
-				.With<NamespaceSyntax>(@namespace =>
-				{
-					var members = @namespace.Members.Select(m => BuildNamespaceMember(m, diagnostics));
-
-					foreach(var name in @namespace.Names.Reverse())
+			foreach(var declaration in declarations)
+				declaration.Match()
+					.With<NamespaceDeclaration>(ns =>
 					{
-						var childNamespace = new NamespaceMembers.Namespace(name.ValueText, members);
-						members = new[] { childNamespace };
-					}
-					return members.Single(); // pull out the top level namespace
-				})
-				.With<ClassSyntax>(@class =>
-				{
-					// TODO check for and report duplicate members
-					var symbol = new Class(packageSyntax, @class.Accessibility, @class.Name.ValueText);
-					return new NamespaceMembers.Entity(symbol);
-				})
-				.With<FunctionSyntax>(function =>
-				{
-					var symbol = new Function(packageSyntax, function.Accessibility, function.Name.ValueText);
-					return new NamespaceMembers.Entity(symbol);
-				})
-				.Exhaustive();
-		}
-
-		private IEnumerable<Declaration> BuildNamespaceSymbols(IEnumerable<NamespaceMember> namespaceMembers, DiagnosticsBuilder diagnostics)
-		{
-			return namespaceMembers.GroupBy(m => m.GetType()).SelectMany(g =>
-			{
-				if(g.Key == typeof(NamespaceMembers.Namespace))
-					return BuildNamespaceSymbols(g.Cast<NamespaceMembers.Namespace>(), diagnostics);
-
-				if(g.Key == typeof(NamespaceMembers.Entity))
-					return g.Cast<NamespaceMembers.Entity>().Select(e => e.Symbol);
-
-				throw new NotSupportedException("Only Entity and Namespace NamespaceMembers are supported");
-			});
-		}
-
-		private IEnumerable<Declaration> BuildNamespaceSymbols(IEnumerable<NamespaceMembers.Namespace> namespaces, DiagnosticsBuilder diagnostics)
-		{
-			return namespaces.GroupBy(ns => ns.Name).Select(g =>
-				// TODO check for and report duplicate symbols
-				new Namespace(packageSyntax, g.Key, BuildNamespaceSymbols(g.SelectMany(ns => ns.Member), diagnostics)));
+						var childNamespace = new NamespaceModel(ns.Syntax, @namespace, ns.Name);
+						@namespace.Add(childNamespace);
+						BuildDeclarations(childNamespace, ns.Members);
+					})
+					.With<ClassDeclaration>(@classDecl =>
+					{
+						var syntax = @classDecl.Syntax.Single(); // TODO handle partial classes
+						var @class = new ClassModel(syntax, @namespace, syntax.Accessibility, @classDecl.Name);
+						@namespace.Add(@class);
+					})
+					.With<FunctionDeclaration>(@functionDeclaration =>
+					{
+						var syntax = @functionDeclaration.Syntax.Single(); // TODO handle overloads
+						var function = new FunctionModel(syntax, @namespace, syntax.Accessibility, @functionDeclaration.Name);
+						@namespace.Add(function);
+					})
+					// TODO handle ambigouous declarations
+					.Exhaustive();
 		}
 	}
 }

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Antlr;
 using Adamant.Exploratory.Compiler.Antlr.Builders;
-using Adamant.Exploratory.Compiler.Compiled;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
@@ -42,51 +40,12 @@ namespace Adamant.Exploratory.Compiler
 			return tree.Accept(compilationUnitBuilder);
 		}
 
-		public CompiledPackage Compile(PackageSyntax package, IEnumerable<CompiledPackage> dependencies)
+		public Package Compile(PackageSyntax package, IEnumerable<Package> compiledPackages)
 		{
-			var compiledDependencies = GetCompiledDependencies(package, dependencies);
-			var diagnostics = new DiagnosticsBuilder(package.Diagnostics);
-			var symbol = new PackageSemanticsBuilder(package).Build(diagnostics);
-			//var binders = new BindersBuilder(package, symbol, compiledDependencies).Build(diagnostics);
-
-			// TODO type check
-			// TODO borrow check
-			return new CompiledPackage(package, symbol, FindEntryPoints(symbol), diagnostics.Complete(), compiledDependencies);
+			return new PackageSemanticsBuilder(package, compiledPackages).Build();
 		}
 
-		// TODO move to PackageSymbol class
-		private static IEnumerable<Function> FindEntryPoints(Container root)
-		{
-			var containers = new Stack<Container>();
-			containers.Push(root);
-			while(containers.Count > 0)
-			{
-				var container = containers.Pop();
-				foreach(var symbol in container.GetMembers())
-				{
-					var entryPoint = symbol.Match().Returning<Function>()
-						.With<Namespace>(@namespace =>
-						{
-							containers.Push(@namespace);
-							return null;
-						})
-						.With<Function>(function => function.Name == "Main" ? function : null)
-						.Ignore<Class>(null)
-						.Exhaustive();
-					if(entryPoint != null)
-						yield return entryPoint;
-				}
-			}
-		}
-
-		private static IList<CompiledDependency> GetCompiledDependencies(PackageSyntax package, IEnumerable<CompiledPackage> dependencies)
-		{
-			var compiledPackages = dependencies.ToLookup(p => p.Name);
-			var compiledDependencies = package.Dependencies.Select(d => new CompiledDependency(compiledPackages[d.Name].Single(), d.Alias, d.Trusted));
-			return compiledDependencies.ToList();
-		}
-
-		public string EmitCpp(CompiledPackage package)
+		public string EmitCpp(Package package)
 		{
 			var emitter = new PackageEmitter(package);
 			return emitter.Emit();

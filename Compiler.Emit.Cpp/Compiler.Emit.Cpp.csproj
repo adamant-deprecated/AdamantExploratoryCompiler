@@ -54,13 +54,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Compiler.Compiled\Compiler.Compiled.csproj">
-      <Project>{3AA19DEE-EF79-4B17-94E7-2086E4ECD463}</Project>
-      <Name>Compiler.Compiled</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Compiler.Semantics\Compiler.Semantics.csproj">
       <Project>{5235F122-AD65-4577-BBC4-DBA7D60DA92D}</Project>
       <Name>Compiler.Semantics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compiler.Syntax\Compiler.Syntax.csproj">
+      <Project>{3dfa5c38-11a2-4b3d-918e-c22a5b5ccb2d}</Project>
+      <Name>Compiler.Syntax</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

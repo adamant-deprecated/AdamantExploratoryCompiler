@@ -2,7 +2,7 @@
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
-using Adamant.Exploratory.Compiler.Semantics.Binders.SymbolReferences;
+using Adamant.Exploratory.Compiler.Semantics.References;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Adamant.Exploratory.Compiler.Syntax.Directives;
@@ -17,23 +17,23 @@ namespace Adamant.Exploratory.Compiler.Semantics.Binders
 	internal class CompilationUnitBindersBuilder
 	{
 		private readonly Dictionary<SyntaxNode, Binder> binders;
-		private readonly PackageSyntax packageSyntax;
+		private readonly Package package;
 		private readonly CompilationUnitSyntax compilationUnit;
 		private readonly DiagnosticsBuilder diagnostics;
 
 		public CompilationUnitBindersBuilder(
 			Dictionary<SyntaxNode, Binder> binders,
-			PackageSyntax packageSyntax,
+			Package package,
 			CompilationUnitSyntax compilationUnit,
 			DiagnosticsBuilder diagnostics)
 		{
 			Requires.NotNull(binders, nameof(binders));
-			Requires.NotNull(packageSyntax, nameof(packageSyntax));
+			Requires.NotNull(package, nameof(package));
 			Requires.NotNull(compilationUnit, nameof(compilationUnit));
 			Requires.NotNull(diagnostics, nameof(diagnostics));
 
 			this.binders = binders;
-			this.packageSyntax = packageSyntax;
+			this.package = package;
 			this.compilationUnit = compilationUnit;
 			this.diagnostics = diagnostics;
 		}
@@ -49,7 +49,7 @@ namespace Adamant.Exploratory.Compiler.Semantics.Binders
 
 		private IEnumerable<ImportedSymbol> GatherImportedSymbols(UsingSyntax usingDirective, Binder scope)
 		{
-			var lookup = scope.LookupInGlobalNamespace(usingDirective.Name, packageSyntax);
+			var lookup = scope.LookupInGlobalNamespace(usingDirective.Name, package);
 
 			if(!lookup.IsViable)
 				diagnostics.AddBindingError(compilationUnit.SourceFile, usingDirective.Name.Position, $"Could not bind using statement for {usingDirective.Name}");

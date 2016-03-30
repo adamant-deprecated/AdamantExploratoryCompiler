@@ -7,7 +7,7 @@ namespace Adamant.Exploratory.Common
 	{
 		public static IEnumerable<T> Append<T>(this IEnumerable<T> enumerable, T value)
 		{
-			return enumerable.Concat(Enumerable.Repeat(value, 1));
+			return enumerable.Concat(value.Yield());
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿namespace Adamant.Exploratory.Common
+﻿using System.Collections.Generic;
+
+namespace Adamant.Exploratory.Common
 {
 	public static class ObjectExtensions
 	{
@@ -12,6 +14,11 @@
 			where TValue : class
 		{
 			return new Matcher<TValue, TParam>(value, param);
+		}
+
+		public static IEnumerable<TValue> Yield<TValue>(this TValue value)
+		{
+			yield return value;
 		}
 	}
 }
