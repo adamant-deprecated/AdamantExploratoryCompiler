@@ -59,6 +59,8 @@
     <Compile Include="Declaration.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Function.cs" />
+    <Compile Include="GlobalVariable.cs" />
+    <Compile Include="Model\GlobalVariableModel.cs" />
     <Compile Include="Model\PackageReferenceModel.cs" />
     <Compile Include="Namespace.cs" />
     <Compile Include="Package.cs" />

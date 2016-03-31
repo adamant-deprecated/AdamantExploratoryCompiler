@@ -3,6 +3,7 @@ using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Adamant.Exploratory.Compiler.Syntax.Modifiers;
 
 namespace Adamant.Exploratory.Compiler.Semantics.Model
@@ -20,8 +21,10 @@ namespace Adamant.Exploratory.Compiler.Semantics.Model
 		public IReadOnlyList<PackageReferenceModel> Dependencies => dependencies;
 		IEnumerable<PackageReference> Package.Dependencies => dependencies;
 		public IReadOnlyList<Diagnostic> Diagnostics { get; private set; }
+		private List<Entity<EntitySyntax>> entities;
+		public IReadOnlyList<Entity<EntitySyntax>> Entities => entities;
 		private List<FunctionModel> entryPoints;
-		public List<FunctionModel> EntryPoints => entryPoints;
+		public IReadOnlyList<FunctionModel> EntryPoints => entryPoints;
 		IEnumerable<Function> Package.EntryPoints => entryPoints;
 
 		public PackageModel(PackageSyntax syntax)
@@ -39,21 +42,33 @@ namespace Adamant.Exploratory.Compiler.Semantics.Model
 			}
 		}
 
-		public void FindEntryPoints()
+		/// <summary>
+		/// Populate the Entities property with all entities reachable from the GlobalNamespace
+		/// </summary>
+		public void FindEntities()
 		{
-			entryPoints = new List<FunctionModel>();
-			var containers = new Stack<NamespaceModel>();
-			containers.Push(GlobalNamespace);
-			while(containers.Count > 0)
+			entities = new List<Entity<EntitySyntax>>();
+			var namespaces = new Stack<NamespaceModel>();
+			namespaces.Push(GlobalNamespace);
+			while(namespaces.Count > 0)
 			{
-				var container = containers.Pop();
-				foreach(var symbol in container.GetMembers())
-					symbol.Match()
-						.With<NamespaceModel>(@namespace => containers.Push(@namespace))
-						.With<FunctionModel>(function => { if(function.Name == "Main") entryPoints.Add(function); })
-						.Ignore<ClassModel>()
+				var @namespace = namespaces.Pop();
+				foreach(var declaration in @namespace.GetMembers())
+					declaration.Match()
+						.With<NamespaceModel>(ns => namespaces.Push(ns))
+						.With<Entity<EntitySyntax>>(entity => entities.Add(entity))
 						.Exhaustive();
 			}
+		}
+
+		/// <summary>
+		/// Populate the EntryPoints property with all Main functions
+		/// </summary>
+		public void FindEntryPoints()
+		{
+			entryPoints = entities.OfType<FunctionModel>()
+				.Where(f => f.Name == "Main")
+				.ToList();
 		}
 
 		public void Set(DiagnosticsBuilder diagnostics)

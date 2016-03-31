@@ -28,6 +28,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 			package.Add(references);
 			var globalDeclarations = new DeclarationBuilder(packageSyntax).Build();
 			BuildDeclarations(package.GlobalNamespace, globalDeclarations);
+			package.FindEntities();
 			package.FindEntryPoints();
 			var binders = new BindersBuilder(package).Build(diagnostics);
 			// TODO use binders to resolve rest of semantic model
