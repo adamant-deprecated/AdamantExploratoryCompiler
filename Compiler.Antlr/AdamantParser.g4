@@ -72,9 +72,23 @@ typeArguments
 	: '<' referenceType (',' referenceType)* '>'
 	;
 
+identifierOrPredefinedType
+	: identifier
+	| token='string'
+	| token='byte'
+	| token=IntType
+	| token=UIntType
+	| token=FloatType
+	| token=FixedType
+	| token=DecimalType
+	| token=SizeType
+	| token=OffsetType
+	| token=UnsafeArrayType
+	;
+
 simpleName
-	: identifier				#IdentifierName
-	| identifier typeArguments	#GenericName
+	: identifierOrPredefinedType				#IdentifierName
+	| identifierOrPredefinedType typeArguments	#GenericName
 	;
 
 name
@@ -84,8 +98,6 @@ name
 
 valueType
 	: name																		#NamedType
-	| token='string'															#StringType
-	| token=('byte'|IntType|UIntType|FloatType|FixedType|DecimalType|SizeType)	#PrimitiveNumericType
 	| valueType '?'																#MaybeType
 	| valueType '*'																#PointerType
 	| ('[' types+=valueType (',' types+=valueType)* ']' | '[' ']')				#TupleType

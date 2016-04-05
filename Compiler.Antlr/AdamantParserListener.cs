@@ -178,6 +178,16 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitTypeArguments([NotNull] AdamantParser.TypeArgumentsContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.identifierOrPredefinedType"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterIdentifierOrPredefinedType([NotNull] AdamantParser.IdentifierOrPredefinedTypeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.identifierOrPredefinedType"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitIdentifierOrPredefinedType([NotNull] AdamantParser.IdentifierOrPredefinedTypeContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>IdentifierName</c>
 	/// labeled alternative in <see cref="AdamantParser.simpleName"/>.
 	/// </summary>
@@ -226,18 +236,6 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitQualifiedName([NotNull] AdamantParser.QualifiedNameContext context);
 	/// <summary>
-	/// Enter a parse tree produced by the <c>StringType</c>
-	/// labeled alternative in <see cref="AdamantParser.valueType"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterStringType([NotNull] AdamantParser.StringTypeContext context);
-	/// <summary>
-	/// Exit a parse tree produced by the <c>StringType</c>
-	/// labeled alternative in <see cref="AdamantParser.valueType"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitStringType([NotNull] AdamantParser.StringTypeContext context);
-	/// <summary>
 	/// Enter a parse tree produced by the <c>NamedType</c>
 	/// labeled alternative in <see cref="AdamantParser.valueType"/>.
 	/// </summary>
@@ -249,18 +247,6 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitNamedType([NotNull] AdamantParser.NamedTypeContext context);
-	/// <summary>
-	/// Enter a parse tree produced by the <c>PrimitiveNumericType</c>
-	/// labeled alternative in <see cref="AdamantParser.valueType"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterPrimitiveNumericType([NotNull] AdamantParser.PrimitiveNumericTypeContext context);
-	/// <summary>
-	/// Exit a parse tree produced by the <c>PrimitiveNumericType</c>
-	/// labeled alternative in <see cref="AdamantParser.valueType"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitPrimitiveNumericType([NotNull] AdamantParser.PrimitiveNumericTypeContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>FunctionType</c>
 	/// labeled alternative in <see cref="AdamantParser.valueType"/>.

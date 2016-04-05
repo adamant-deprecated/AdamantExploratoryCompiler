@@ -127,7 +127,7 @@ Async: 'async';
 Await: 'await';
 
 //*************
-// Primitive Types
+// Predefined Types
 //*************
 String : 'string';
 ByteType : 'byte';
@@ -137,6 +137,8 @@ FloatType : 'float' IntLiteral?;
 FixedType : 'fixed' IntLiteral '.' IntLiteral;
 DecimalType : 'decimal' IntLiteral?;
 SizeType : 'size';
+OffsetType : 'offset';
+UnsafeArrayType : 'UnsafeArray';
 
 //*************
 // Literals

@@ -3,5 +3,6 @@
 	public enum TokenType
 	{
 		Identifier = 1,
+		PredefinedType,
 	}
 }

@@ -43,21 +43,48 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			return new TextPosition(token.StartIndex, token.Line, token.Column);
 		}
 
+		private static readonly int[] identifierTokenTypes =
+		{
+			AdamantParser.Identifier, AdamantParser.EscapedIdentifier,
+			AdamantParser.String,
+			AdamantParser.ByteType,
+			AdamantParser.IntType,
+			AdamantParser.UIntType,
+			AdamantParser.FloatType,
+			AdamantParser.FixedType,
+			AdamantParser.DecimalType,
+			AdamantParser.SizeType,
+			AdamantParser.OffsetType,
+			AdamantParser.Self,
+		};
+
 		protected static Token Identifier(IToken token)
 		{
 			if(token == null) return null;
-			Requires.EnumIn(token.Type, nameof(token), AdamantParser.Identifier, AdamantParser.EscapedIdentifier, AdamantParser.SizeType, AdamantParser.Self, AdamantParser.String);
+			Requires.EnumIn(token.Type, nameof(token), identifierTokenTypes);
 
+			var tokenType = TokenType.Identifier;
 			var text = token.Text;
 			var valueText = text;
 			if(token.Type == AdamantParser.EscapedIdentifier)
 				valueText = text.Substring(1); // Remove the `
-			return new Token(TokenType.Identifier, PositionOf(token), text, valueText);
+			else if(token.Type != AdamantParser.Identifier)
+			{
+				// Unsafe array is handled more like a regular identifier becuase it has generic type params
+				tokenType = token.Type == AdamantParser.UnsafeArrayType ? TokenType.Identifier : TokenType.PredefinedType;
+				valueText = "#" + valueText; // Special identifiers like predefined type we distiguish by prefixing with a special char
+			}
+			return new Token(tokenType, PositionOf(token), text, valueText);
 		}
 
 		protected static Token Identifier(AdamantParser.IdentifierContext context)
 		{
 			return Identifier(context?.token);
+		}
+
+		protected static Token Identifier(AdamantParser.IdentifierOrPredefinedTypeContext context)
+		{
+			return context.token != null ? Identifier(context.token) : Identifier(context.identifier());
 		}
 	}
 }

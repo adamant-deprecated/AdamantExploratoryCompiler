@@ -91,8 +91,7 @@
     <Compile Include="Token.cs" />
     <Compile Include="TokenType.cs" />
     <Compile Include="ValueTypeSyntax.cs" />
-    <Compile Include="ValueTypes\NumericTypeSyntax.cs" />
-    <Compile Include="ValueTypes\StringTypeSyntax.cs" />
+    <Compile Include="ValueTypes\PredefinedTypeSyntax.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

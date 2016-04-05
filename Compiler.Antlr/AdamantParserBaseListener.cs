@@ -202,6 +202,18 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitTypeArguments([NotNull] AdamantParser.TypeArgumentsContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.identifierOrPredefinedType"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterIdentifierOrPredefinedType([NotNull] AdamantParser.IdentifierOrPredefinedTypeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.identifierOrPredefinedType"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitIdentifierOrPredefinedType([NotNull] AdamantParser.IdentifierOrPredefinedTypeContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.IdentifierName"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -250,18 +262,6 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitQualifiedName([NotNull] AdamantParser.QualifiedNameContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.StringType"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterStringType([NotNull] AdamantParser.StringTypeContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.StringType"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitStringType([NotNull] AdamantParser.StringTypeContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.NamedType"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -273,18 +273,6 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitNamedType([NotNull] AdamantParser.NamedTypeContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AdamantParser.PrimitiveNumericType"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterPrimitiveNumericType([NotNull] AdamantParser.PrimitiveNumericTypeContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AdamantParser.PrimitiveNumericType"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitPrimitiveNumericType([NotNull] AdamantParser.PrimitiveNumericTypeContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.FunctionType"/>.
 	/// <para>The default implementation does nothing.</para>

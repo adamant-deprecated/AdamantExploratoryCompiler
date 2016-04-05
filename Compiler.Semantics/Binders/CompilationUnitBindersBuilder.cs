@@ -164,10 +164,10 @@ namespace Adamant.Exploratory.Compiler.Semantics.Binders
 		private void Build(ValueTypeSyntax type, Binder containingScope)
 		{
 			type.Match()
-				.With<NumericTypeSyntax>(numericType =>
+				.With<PredefinedTypeSyntax>(predefinedType =>
 				{
-					// Not really sure this makes sense since a numeric type is a keyword
-					binders.Add(numericType, containingScope);
+					// Not really sure this makes sense since a predefined type is a keyword
+					binders.Add(predefinedType, containingScope);
 				})
 				.With<GenericNameSyntax>(genericName =>
 				{
