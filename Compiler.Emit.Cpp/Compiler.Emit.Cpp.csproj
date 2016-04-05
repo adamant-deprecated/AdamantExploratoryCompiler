@@ -54,6 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{041EE85B-E098-4454-9DD9-D7B6723DDF83}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Compiler.Semantics\Compiler.Semantics.csproj">
       <Project>{5235F122-AD65-4577-BBC4-DBA7D60DA92D}</Project>
       <Name>Compiler.Semantics</Name>

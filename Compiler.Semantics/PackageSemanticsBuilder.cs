@@ -31,6 +31,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 			package.FindEntities();
 			package.FindEntryPoints();
 			var binders = new BindersBuilder(package).Build(diagnostics);
+			// TODO resolve entity types
 			// TODO use binders to resolve rest of semantic model
 			// TODO type check
 			// TODO borrow check

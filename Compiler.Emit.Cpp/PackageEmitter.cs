@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Semantics;
+using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Compiler.Emit.Cpp
 {
@@ -27,7 +30,7 @@ namespace Compiler.Emit.Cpp
 
 			source.WriteIndentedLine("namespace");
 			source.BeginBlock();
-			Emit(source, package);
+			Emit(source, package.GlobalNamespace.GetMembers());
 			source.EndBlock();
 
 			EmitEntryPoint(source);
@@ -35,9 +38,27 @@ namespace Compiler.Emit.Cpp
 			return source.ToString();
 		}
 
-		private void Emit(SourceFileBuilder source, Package package)
+		private static void Emit(SourceFileBuilder source, IEnumerable<Declaration<DeclarationSyntax>> declarations)
 		{
-			//throw new System.NotImplementedException();
+			foreach(var declaration in declarations)
+				declaration.Match()
+					.With<Namespace>(ns =>
+					{
+						source.WriteIndentedLine($"namespace {ns.Name}");
+						source.BeginBlock();
+						Emit(source, ns.GetMembers());
+						source.EndBlock();
+					})
+					.With<Function>(function =>
+					{
+						// TODO write correct return type
+						// TODO write correct parameter types
+						source.WriteIndentedLine($"void {function.Name}()");
+						source.BeginBlock();
+						// TODO write body
+						source.EndBlock();
+					})
+					.Exhaustive();
 		}
 
 		private void EmitEntryPoint(SourceFileBuilder source)
@@ -48,7 +69,7 @@ namespace Compiler.Emit.Cpp
 			source.WriteLine();
 			source.WriteIndentedLine("int main(int argc, char *argv[])");
 			source.BeginBlock();
-			//throw new NotImplementedException("Invoke the entry point");
+			source.WriteIndentedLine($"{entryPoint.Name}();");
 			source.WriteIndentedLine("return 0;");
 			source.EndBlock();
 		}
