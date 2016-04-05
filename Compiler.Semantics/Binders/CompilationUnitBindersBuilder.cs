@@ -189,6 +189,11 @@ namespace Adamant.Exploratory.Compiler.Semantics.Binders
 					Build(expressionStatement.Expression, containingScope);
 					return containingScope;
 				})
+				.With<ReturnSyntax>(returnStatement =>
+				{
+					Build(returnStatement.Expression, containingScope);
+					return containingScope;
+				})
 				.Exhaustive();
 		}
 
