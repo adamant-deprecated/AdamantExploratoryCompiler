@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Adamant.Exploratory.Compiler.Semantics.Binders.LookupResults;
 using Adamant.Exploratory.Compiler.Semantics.References;
-using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 

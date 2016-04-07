@@ -12,7 +12,7 @@ namespace Adamant.Exploratory.Compiler.Semantics.Model
 	///	  * Local Variable Declarations
 	///   * Packages
 	/// </summary>
-	internal abstract class SymbolModel<TSyntax> : SemanticModel<TSyntax>, Symbol<TSyntax>
+	internal abstract class SymbolModel<TSyntax> : SemanticNodeModel<TSyntax>, Symbol<TSyntax>
 		where TSyntax : SyntaxNode
 	{
 		public Accessibility DeclaredAccessibility { get; }

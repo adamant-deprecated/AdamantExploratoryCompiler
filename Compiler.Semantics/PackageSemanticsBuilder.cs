@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Declarations;
 using Adamant.Exploratory.Compiler.Semantics.Binders;
 using Adamant.Exploratory.Compiler.Semantics.Model;
+using Adamant.Exploratory.Compiler.Semantics.Model.Types;
+using Adamant.Exploratory.Compiler.Semantics.Types;
 using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Declarations;
 
 namespace Adamant.Exploratory.Compiler.Semantics
 {
@@ -32,9 +36,10 @@ namespace Adamant.Exploratory.Compiler.Semantics
 			package.FindEntryPoints();
 			var binders = new BindersBuilder(package).Build(diagnostics);
 			// TODO resolve entity types
-			// TODO use binders to resolve rest of semantic model
-			// TODO type check
-			// TODO borrow check
+
+			Resolve(package, binders); // use binders to resolve rest of semantic model
+									   // TODO type check
+									   // TODO borrow check
 			package.Set(diagnostics);
 			return package;
 		}
@@ -69,6 +74,34 @@ namespace Adamant.Exploratory.Compiler.Semantics
 					})
 					// TODO handle ambigouous declarations
 					.Exhaustive();
+		}
+
+		private void Resolve(PackageModel package, IReadOnlyDictionary<SyntaxNode, Binder> binders)
+		{
+			foreach(var entity in package.Entities)
+				Resolve(entity, binders);
+		}
+
+		private void Resolve(Entity<EntitySyntax> entity, IReadOnlyDictionary<SyntaxNode, Binder> binders)
+		{
+			entity.Match()
+				.With<FunctionModel>(function =>
+				{
+					function.ReturnType = Resolve(function.ContainingPackage, function.Syntax.ReturnType, binders);
+				})
+				.Exhaustive();
+		}
+
+		private ReferenceTypeModel Resolve(PackageModel containingPackage, ReferenceTypeSyntax syntax, IReadOnlyDictionary<SyntaxNode, Binder> binders)
+		{
+			var valueType = Resolve(containingPackage, syntax.Type, binders);
+			return new ReferenceTypeModel(syntax, containingPackage, valueType);
+		}
+
+		private ValueType<ValueTypeSyntax> Resolve(PackageModel containingPackage, ValueTypeSyntax syntax, IReadOnlyDictionary<SyntaxNode, Binder> binders)
+		{
+			// TODO construct the ValueType
+			return null;
 		}
 	}
 }

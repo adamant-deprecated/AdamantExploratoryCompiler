@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Adamant.Exploratory.Compiler.Semantics.Model.Types;
+using Adamant.Exploratory.Compiler.Semantics.Types;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Declarations;
 using Adamant.Exploratory.Compiler.Syntax.Modifiers;
@@ -8,7 +10,9 @@ namespace Adamant.Exploratory.Compiler.Semantics.Model
 {
 	internal class FunctionModel : EntityModel<FunctionSyntax>, Function
 	{
-		// TODO return type
+		public new FunctionSyntax Syntax => base.Syntax.SingleOrDefault();
+		public ReferenceTypeModel ReturnType { get; set; }
+		ReferenceType Function.ReturnType => ReturnType;
 
 		public FunctionModel(FunctionSyntax syntax, NamespaceModel containingNamespace, Accessibility declaredAccessibility, string name)
 			: base(syntax, containingNamespace, declaredAccessibility, name)

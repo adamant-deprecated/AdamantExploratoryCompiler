@@ -10,7 +10,7 @@ namespace Adamant.Exploratory.Compiler.Semantics.Model
 	/// correspond to some SyntaxNode(s).  However, in the future when IL is implemented, a semantic
 	/// model might correspond to the IL loaded for a dependency.
 	/// </summary>
-	internal abstract class SemanticModel<TSyntax> : SemanticNode<TSyntax>
+	internal abstract class SemanticNodeModel<TSyntax> : SemanticNode<TSyntax>
 		where TSyntax : SyntaxNode
 	{
 		//private readonly List<Location> locations = new List<Location>();
@@ -21,7 +21,7 @@ namespace Adamant.Exploratory.Compiler.Semantics.Model
 		public bool IsPoisoned { get; private set; }
 		//public IReadOnlyList<Location> Locations => locations;
 
-		protected SemanticModel(TSyntax syntax)
+		protected SemanticNodeModel(TSyntax syntax)
 		{
 			// Right now, syntax won't be null, but in the future when IL is implemented it will be
 			Requires.NotNull(syntax, nameof(syntax));
@@ -29,7 +29,7 @@ namespace Adamant.Exploratory.Compiler.Semantics.Model
 			Syntax = new List<TSyntax>(1) { syntax };
 		}
 
-		protected SemanticModel(IEnumerable<TSyntax> syntax)
+		protected SemanticNodeModel(IEnumerable<TSyntax> syntax)
 		{
 			Syntax = syntax.ToList();
 		}

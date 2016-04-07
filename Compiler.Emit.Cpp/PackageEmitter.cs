@@ -53,6 +53,7 @@ namespace Compiler.Emit.Cpp
 					{
 						// TODO write correct return type
 						// TODO write correct parameter types
+
 						source.WriteIndentedLine($"void {function.Name}()");
 						source.BeginBlock();
 						// TODO write body

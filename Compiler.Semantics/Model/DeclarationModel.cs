@@ -26,7 +26,6 @@ namespace Adamant.Exploratory.Compiler.Semantics.Model
 			ContainingNamespace = containingNamespace;
 		}
 
-
 		public abstract IEnumerable<Declaration<DeclarationSyntax>> GetMembers();
 		public abstract IEnumerable<Declaration<DeclarationSyntax>> GetMembers(string name);
 	}
