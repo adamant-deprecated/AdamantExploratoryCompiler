@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
-using Adamant.Exploratory.Compiler.Semantics.Model;
 using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Adamant.Exploratory.Compiler.Semantics.Binders
 {
 	internal class BindersBuilder
 	{
-		private readonly PackageModel package;
+		private readonly Package package;
 
-		public BindersBuilder(PackageModel package)
+		public BindersBuilder(Package package)
 		{
 			this.package = package;
 		}

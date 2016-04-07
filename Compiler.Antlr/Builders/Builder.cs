@@ -58,12 +58,12 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			AdamantParser.Self,
 		};
 
-		protected static Token Identifier(IToken token)
+		protected static SyntaxToken Identifier(IToken token)
 		{
 			if(token == null) return null;
 			Requires.EnumIn(token.Type, nameof(token), identifierTokenTypes);
 
-			var tokenType = TokenType.Identifier;
+			var tokenType = SyntaxTokenType.Identifier;
 			var text = token.Text;
 			var valueText = text;
 			if(token.Type == AdamantParser.EscapedIdentifier)
@@ -71,18 +71,18 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			else if(token.Type != AdamantParser.Identifier)
 			{
 				// Unsafe array is handled more like a regular identifier becuase it has generic type params
-				tokenType = token.Type == AdamantParser.UnsafeArrayType ? TokenType.Identifier : TokenType.PredefinedType;
+				tokenType = token.Type == AdamantParser.UnsafeArrayType ? SyntaxTokenType.Identifier : SyntaxTokenType.PredefinedType;
 				valueText = "#" + valueText; // Special identifiers like predefined type we distiguish by prefixing with a special char
 			}
-			return new Token(tokenType, PositionOf(token), text, valueText);
+			return new SyntaxToken(tokenType, PositionOf(token), text, valueText);
 		}
 
-		protected static Token Identifier(AdamantParser.IdentifierContext context)
+		protected static SyntaxToken Identifier(AdamantParser.IdentifierContext context)
 		{
 			return Identifier(context?.token);
 		}
 
-		protected static Token Identifier(AdamantParser.IdentifierOrPredefinedTypeContext context)
+		protected static SyntaxToken Identifier(AdamantParser.IdentifierOrPredefinedTypeContext context)
 		{
 			return context.token != null ? Identifier(context.token) : Identifier(context.identifier());
 		}

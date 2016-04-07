@@ -8,10 +8,10 @@ namespace Adamant.Exploratory.Compiler.Semantics.References
 {
 	internal class EntityReference : DeclarationReference
 	{
-		public readonly Entity<EntitySyntax> Entity;
+		public readonly Entity Entity;
 		public override string Name => Entity.Name;
 
-		public EntityReference(Entity<EntitySyntax> entity)
+		public EntityReference(Entity entity)
 		{
 			Requires.NotNull(entity, nameof(entity));
 
@@ -31,7 +31,7 @@ namespace Adamant.Exploratory.Compiler.Semantics.References
 
 		public override IEnumerable<DeclarationReference> GetMembers(string name)
 		{
-			return Entity.GetMembers(name).OfType<Entity<EntitySyntax>>().Select(sym => new EntityReference(sym));
+			return Entity.GetMembers(name).OfType<Entity>().Select(sym => new EntityReference(sym));
 		}
 	}
 }

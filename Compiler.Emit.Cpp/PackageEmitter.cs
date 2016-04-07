@@ -38,7 +38,7 @@ namespace Compiler.Emit.Cpp
 			return source.ToString();
 		}
 
-		private static void Emit(SourceFileBuilder source, IEnumerable<Declaration<DeclarationSyntax>> declarations)
+		private static void Emit(SourceFileBuilder source, IEnumerable<Declaration> declarations)
 		{
 			foreach(var declaration in declarations)
 				declaration.Match()

@@ -12,7 +12,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 
 		public FunctionSyntax(
 			Accessibility accessibility,
-			Token name,
+			SyntaxToken name,
 			IEnumerable<ParameterSyntax> parameters,
 			ReferenceTypeSyntax returnType,
 			IEnumerable<StatementSyntax> body)

@@ -8,14 +8,14 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 	public class ConstructorSyntax : ClassMemberSyntax
 	{
 		public readonly Accessibility Access;
-		public readonly Token Name;
+		public readonly SyntaxToken Name;
 		public readonly IReadOnlyList<ParameterSyntax> Parameters;
 		public readonly IReadOnlyList<StatementSyntax> Body;
 
-		public ConstructorSyntax(Accessibility access, Token name, IEnumerable<ParameterSyntax> parameters, IEnumerable<StatementSyntax> body)
+		public ConstructorSyntax(Accessibility access, SyntaxToken name, IEnumerable<ParameterSyntax> parameters, IEnumerable<StatementSyntax> body)
 		{
 			Requires.EnumDefined(access, nameof(access));
-			SyntaxRequires.TypeIs(name, TokenType.Identifier, nameof(name));
+			SyntaxRequires.TypeIs(name, SyntaxTokenType.Identifier, nameof(name));
 
 			Access = access;
 			Name = name;

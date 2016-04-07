@@ -5,13 +5,13 @@ namespace Adamant.Exploratory.Compiler.Syntax.ValueTypes
 {
 	public class PredefinedTypeSyntax : SimpleNameSyntax
 	{
-		public readonly Token Name;
+		public readonly SyntaxToken Name;
 		public override TextPosition Position => Name.Position;
 
-		public PredefinedTypeSyntax(Token name)
+		public PredefinedTypeSyntax(SyntaxToken name)
 		{
 			Requires.NotNull(name, nameof(name));
-			SyntaxRequires.TypeIs(name, TokenType.PredefinedType, nameof(name));
+			SyntaxRequires.TypeIs(name, SyntaxTokenType.PredefinedType, nameof(name));
 
 			Name = name;
 			// TODO really parse the type name

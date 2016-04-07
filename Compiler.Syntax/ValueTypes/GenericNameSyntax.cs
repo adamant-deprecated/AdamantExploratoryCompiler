@@ -4,11 +4,11 @@ namespace Adamant.Exploratory.Compiler.Syntax.ValueTypes
 {
 	public class GenericNameSyntax : SimpleNameSyntax
 	{
-		public readonly Token Identifier;
+		public readonly SyntaxToken Identifier;
 		public override TextPosition Position => Identifier.Position;
 		// TODO generic type params
 
-		public GenericNameSyntax(Token identifier)
+		public GenericNameSyntax(SyntaxToken identifier)
 		{
 			Identifier = identifier;
 		}

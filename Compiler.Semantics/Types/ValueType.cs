@@ -2,9 +2,13 @@
 
 namespace Adamant.Exploratory.Compiler.Semantics.Types
 {
-	public interface ValueType<TSyntax> : SemanticNode<TSyntax>
-		where TSyntax : ValueTypeSyntax
+	public class ValueType : SourceSemanticNode
 	{
-		new ValueTypeSyntax Syntax { get; }
+		public new ValueTypeSyntax Syntax => (ValueTypeSyntax)base.Syntax;
+
+		public ValueType(ValueTypeSyntax syntax, Package containingPackage)
+			: base(syntax, containingPackage)
+		{
+		}
 	}
 }

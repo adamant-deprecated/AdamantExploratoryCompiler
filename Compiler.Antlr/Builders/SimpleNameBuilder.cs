@@ -11,12 +11,12 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			var name = Identifier(context.identifierOrPredefinedType());
 			switch(name.Type)
 			{
-				case TokenType.Identifier:
+				case SyntaxTokenType.Identifier:
 					return new IdentifierNameSyntax(name);
-				case TokenType.PredefinedType:
+				case SyntaxTokenType.PredefinedType:
 					return new PredefinedTypeSyntax(name);
 				default:
-					throw new InvalidEnumArgumentException("Unsupported TokenType", (int)name.Type, typeof(TokenType));
+					throw new InvalidEnumArgumentException("Unsupported TokenType", (int)name.Type, typeof(SyntaxTokenType));
 			}
 		}
 

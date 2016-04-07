@@ -2,7 +2,11 @@
 
 namespace Adamant.Exploratory.Compiler.Semantics
 {
-	public interface GlobalVariable : Entity<GlobalVariableSyntax>
+	public class GlobalVariable : Entity
 	{
+		public GlobalVariable(GlobalVariableSyntax syntax, Namespace containingNamespace)
+			: base(syntax, containingNamespace, syntax.Accessibility, syntax.Name.ValueText)
+		{
+		}
 	}
 }

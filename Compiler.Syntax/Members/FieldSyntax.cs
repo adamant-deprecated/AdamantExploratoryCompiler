@@ -10,7 +10,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 		public readonly ReferenceTypeSyntax Type;
 		public readonly ExpressionSyntax InitExpression;
 
-		public FieldSyntax(Accessibility access, bool isMutableBinding, Token name, ReferenceTypeSyntax type, ExpressionSyntax initExpression)
+		public FieldSyntax(Accessibility access, bool isMutableBinding, SyntaxToken name, ReferenceTypeSyntax type, ExpressionSyntax initExpression)
 			: base(name)
 		{
 			Requires.EnumDefined(access, nameof(access));

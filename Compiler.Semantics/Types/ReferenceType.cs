@@ -2,11 +2,18 @@
 
 namespace Adamant.Exploratory.Compiler.Semantics.Types
 {
-	public interface ReferenceType : SemanticNode<ReferenceTypeSyntax>
+	public class ReferenceType : SourceSemanticNode
 	{
-		new ReferenceTypeSyntax Syntax { get; }
-		bool IsOwned { get; }
-		bool IsMutable { get; }
-		ValueType<ValueTypeSyntax> Type { get; }
+		public new ReferenceTypeSyntax Syntax => (ReferenceTypeSyntax)base.Syntax;
+		public bool IsOwned { get; }
+		public bool IsMutable => Syntax.IsMutable;
+		public ValueType Type { get;  }
+
+		public ReferenceType(ReferenceTypeSyntax syntax, Package containingPackage, ValueType type)
+			: base(syntax, containingPackage)
+		{
+			IsOwned = syntax.IsOwned ?? false; // TODO actually infer ownership
+			Type = type;
+		}
 	}
 }

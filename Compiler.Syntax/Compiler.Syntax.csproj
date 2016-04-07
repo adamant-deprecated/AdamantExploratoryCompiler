@@ -88,8 +88,8 @@
     <Compile Include="Statements\ThrowSyntax.cs" />
     <Compile Include="Statements\LocalVariableSyntax.cs" />
     <Compile Include="SyntaxNode.cs" />
-    <Compile Include="Token.cs" />
-    <Compile Include="TokenType.cs" />
+    <Compile Include="SyntaxToken.cs" />
+    <Compile Include="SyntaxTokenType.cs" />
     <Compile Include="ValueTypeSyntax.cs" />
     <Compile Include="ValueTypes\PredefinedTypeSyntax.cs" />
   </ItemGroup>

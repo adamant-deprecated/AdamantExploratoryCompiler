@@ -61,12 +61,12 @@ namespace Adamant.Exploratory.Compiler.Semantics.References
 			return GetMembersSlow(namespaces.SelectMany(ns => ns.GetMembers(name)));
 		}
 
-		private static IReadOnlyList<DeclarationReference> GetMembersSlow(IEnumerable<Declaration<DeclarationSyntax>> symbols)
+		private static IReadOnlyList<DeclarationReference> GetMembersSlow(IEnumerable<Declaration> symbols)
 		{
 			var lookup = symbols
 				.ToLookup(s => s is Namespace);
 
-			var childSymbols = lookup[false].Cast<Entity<EntitySyntax>>()
+			var childSymbols = lookup[false].Cast<Entity>()
 				.Select(e => (DeclarationReference)new EntityReference(e)).ToList();
 			var childNamespaces = lookup[true].ToList();
 			if(childNamespaces.Any())

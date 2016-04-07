@@ -5,13 +5,13 @@ namespace Adamant.Exploratory.Compiler.Syntax.ValueTypes
 {
 	public class IdentifierNameSyntax : SimpleNameSyntax
 	{
-		public readonly Token Identifier;
+		public readonly SyntaxToken Identifier;
 		public override TextPosition Position => Identifier.Position;
 
-		public IdentifierNameSyntax(Token identifier)
+		public IdentifierNameSyntax(SyntaxToken identifier)
 		{
 			Requires.NotNull(identifier, nameof(identifier));
-			SyntaxRequires.TypeIs(identifier, TokenType.Identifier, nameof(identifier));
+			SyntaxRequires.TypeIs(identifier, SyntaxTokenType.Identifier, nameof(identifier));
 
 			Identifier = identifier;
 		}

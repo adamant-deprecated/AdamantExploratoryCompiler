@@ -14,7 +14,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 		public GlobalVariableSyntax(
 			Accessibility accessibility,
 			bool isMutableBinding,
-			Token name,
+			SyntaxToken name,
 			ReferenceTypeSyntax type,
 			ExpressionSyntax initExpression)
 			: base(accessibility, name)

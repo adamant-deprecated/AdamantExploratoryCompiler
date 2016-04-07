@@ -11,7 +11,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 		public readonly IReadOnlyList<ParameterSyntax> Parameters;
 		public readonly IReadOnlyList<StatementSyntax> Body;
 
-		public MethodSyntax(Accessibility access, Token name, IEnumerable<ParameterSyntax> parameters, IEnumerable<StatementSyntax> body)
+		public MethodSyntax(Accessibility access, SyntaxToken name, IEnumerable<ParameterSyntax> parameters, IEnumerable<StatementSyntax> body)
 			: base(name)
 		{
 			Requires.EnumDefined(access, nameof(access));

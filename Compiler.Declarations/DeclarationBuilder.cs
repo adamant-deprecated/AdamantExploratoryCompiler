@@ -37,7 +37,7 @@ namespace Adamant.Exploratory.Compiler.Declarations
 
 		private static string NameInScope(int depth, DeclarationSyntax syntax)
 		{
-			return syntax.Match().Returning<Token>()
+			return syntax.Match().Returning<SyntaxToken>()
 				.With<NamespaceSyntax>(ns => ns.Names[depth])
 				.With<EntitySyntax>(e => e.Name)
 				.Exhaustive()

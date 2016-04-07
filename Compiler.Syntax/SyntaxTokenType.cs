@@ -1,6 +1,6 @@
 ﻿namespace Adamant.Exploratory.Compiler.Syntax
 {
-	public enum TokenType
+	public enum SyntaxTokenType
 	{
 		Identifier = 1,
 		PredefinedType,

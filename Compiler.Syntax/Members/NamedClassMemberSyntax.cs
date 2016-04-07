@@ -4,12 +4,12 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 {
 	public abstract class NamedClassMemberSyntax : ClassMemberSyntax
 	{
-		public readonly Token Name;
+		public readonly SyntaxToken Name;
 
-		protected NamedClassMemberSyntax(Token name)
+		protected NamedClassMemberSyntax(SyntaxToken name)
 		{
 			Requires.NotNull(name, nameof(name));
-			SyntaxRequires.TypeIs(name, TokenType.Identifier, nameof(name));
+			SyntaxRequires.TypeIs(name, SyntaxTokenType.Identifier, nameof(name));
 
 			Name = name;
 		}

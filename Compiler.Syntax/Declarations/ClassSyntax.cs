@@ -19,7 +19,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Declarations
 			Safety safety, 
 			bool isSealed,
 			bool isAbstract,
-			Token name,
+			SyntaxToken name,
 			IEnumerable<ClassMemberSyntax> members)
 			: base(accessibility, name)
 		{

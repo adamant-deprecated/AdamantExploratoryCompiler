@@ -55,40 +55,27 @@
     <Compile Include="Binders\LookupResults\ViableResult.cs" />
     <Compile Include="Binders\NamespaceBinder.cs" />
     <Compile Include="Binders\PackageBinder.cs" />
+    <Compile Include="GlobalVariable.cs" />
+    <Compile Include="PackageReference.cs" />
+    <Compile Include="Types\PredefinedType.cs" />
+    <Compile Include="Types\ReferenceType.cs" />
+    <Compile Include="SourceSemanticNode.cs" />
+    <Compile Include="Types\ValueType.cs" />
+    <Compile Include="References\EntityReference.cs" />
+    <Compile Include="References\NamespaceReference.cs" />
+    <Compile Include="References\DeclarationReference.cs" />
     <Compile Include="Class.cs" />
     <Compile Include="Declaration.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Function.cs" />
-    <Compile Include="GlobalVariable.cs" />
-    <Compile Include="Model\GlobalVariableModel.cs" />
-    <Compile Include="Model\PackageReferenceModel.cs" />
-    <Compile Include="Model\Types\PredefinedTypeModel.cs" />
-    <Compile Include="Model\Types\ReferenceTypeModel.cs" />
-    <Compile Include="Model\SemanticElementModel.cs" />
-    <Compile Include="Model\Types\ValueTypeModel.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="Namespace.cs" />
     <Compile Include="Package.cs" />
-    <Compile Include="Types\PredefinedType.cs" />
-    <Compile Include="References\EntityReference.cs" />
-    <Compile Include="References\NamespaceReference.cs" />
-    <Compile Include="PackageReference.cs" />
-    <Compile Include="References\DeclarationReference.cs" />
-    <Compile Include="Model\ClassModel.cs" />
-    <Compile Include="Model\DeclarationModel.cs" />
-    <Compile Include="Model\EntityModel.cs" />
-    <Compile Include="Model\FunctionModel.cs" />
-    <Compile Include="Location.cs" />
-    <Compile Include="Model\NamespaceModel.cs" />
-    <Compile Include="Model\PackageModel.cs" />
     <Compile Include="PackageSemanticsBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\SemanticNodeModel.cs" />
-    <Compile Include="Model\SymbolModel.cs" />
-    <Compile Include="Types\PredefinedTypeKind.cs" />
-    <Compile Include="Types\ReferenceType.cs" />
     <Compile Include="SemanticNode.cs" />
     <Compile Include="Symbol.cs" />
-    <Compile Include="Types\ValueType.cs" />
+    <Compile Include="Types\PredefinedTypeKind.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -108,7 +95,9 @@
       <Name>Compiler.Syntax</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Types\Predefined\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -12,7 +12,7 @@ namespace Adamant.Exploratory.Compiler.Syntax.Members
 		public readonly IReadOnlyList<ParameterSyntax> Parameters;
 		public readonly IReadOnlyList<StatementSyntax> Body;
 
-		public AccessorMethodSyntax(Accessibility access, AccessorMethodType type, Token name, IEnumerable<ParameterSyntax> parameters, IEnumerable<StatementSyntax> body)
+		public AccessorMethodSyntax(Accessibility access, AccessorMethodType type, SyntaxToken name, IEnumerable<ParameterSyntax> parameters, IEnumerable<StatementSyntax> body)
 			: base(name)
 		{
 			Requires.EnumDefined(access, nameof(access));
