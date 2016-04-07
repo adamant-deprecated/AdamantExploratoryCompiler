@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Declarations;
 using Adamant.Exploratory.Compiler.Semantics.Binders;
 using Adamant.Exploratory.Compiler.Semantics.Types;
+using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
 using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
+using ValueType = Adamant.Exploratory.Compiler.Semantics.Types.ValueType;
 
 namespace Adamant.Exploratory.Compiler.Semantics
 {
@@ -72,13 +76,13 @@ namespace Adamant.Exploratory.Compiler.Semantics
 					.Exhaustive();
 		}
 
-		private void Resolve(Package package, IReadOnlyDictionary<SyntaxNode, Binder> binders)
+		private static void Resolve(Package package, IReadOnlyDictionary<SyntaxNode, Binder> binders)
 		{
 			foreach(var entity in package.Entities)
 				Resolve(entity, binders);
 		}
 
-		private void Resolve(Entity entity, IReadOnlyDictionary<SyntaxNode, Binder> binders)
+		private static void Resolve(Entity entity, IReadOnlyDictionary<SyntaxNode, Binder> binders)
 		{
 			entity.Match()
 				.With<Function>(function =>
@@ -88,16 +92,45 @@ namespace Adamant.Exploratory.Compiler.Semantics
 				.Exhaustive();
 		}
 
-		private ReferenceType Resolve(Package containingPackage, ReferenceTypeSyntax syntax, IReadOnlyDictionary<SyntaxNode, Binder> binders)
+		private static ReferenceType Resolve(Package containingPackage, ReferenceTypeSyntax syntax, IReadOnlyDictionary<SyntaxNode, Binder> binders)
 		{
 			var valueType = Resolve(containingPackage, syntax.Type, binders);
 			return new ReferenceType(syntax, containingPackage, valueType);
 		}
 
-		private ValueType Resolve(Package containingPackage, ValueTypeSyntax syntax, IReadOnlyDictionary<SyntaxNode, Binder> binders)
+		private static ValueType Resolve(Package containingPackage, ValueTypeSyntax syntax, IReadOnlyDictionary<SyntaxNode, Binder> binders)
 		{
-			// TODO construct the ValueType
-			return null;
+			return syntax.Match().Returning<ValueType>()
+				.With<PredefinedTypeSyntax>(type =>
+				{
+					switch(type.Name.Text)
+					{
+						case "void":
+							return new VoidType(type, containingPackage);
+						case "string":
+							return new StringType(type, containingPackage);
+						case "byte":
+							return new IntType(type, containingPackage, 8, false);
+						default:
+							var text = type.Name.Text;
+							if(text.StartsWith("int"))
+								return new IntType(type, containingPackage, ParseBitLength(text.Substring("int".Length)), true);
+							if(text.StartsWith("uint"))
+								return new IntType(type, containingPackage, ParseBitLength(text.Substring("int".Length)), true);
+
+							throw new NotImplementedException($"Primitive type {text} not implemented");
+					}
+				})
+				.Exhaustive();
+		}
+
+		private static int ParseBitLength(string length)
+		{
+			int bits;
+			if(int.TryParse(length, out bits))
+				return bits; // TODO should we handle unsual bit lengths?
+
+			return 32;// TODO handle correctly and report error
 		}
 	}
 }

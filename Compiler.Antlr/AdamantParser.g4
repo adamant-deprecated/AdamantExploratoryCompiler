@@ -74,6 +74,7 @@ typeArguments
 
 identifierOrPredefinedType
 	: identifier
+	| token='void'
 	| token='string'
 	| token='byte'
 	| token=IntType

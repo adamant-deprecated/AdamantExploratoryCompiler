@@ -46,6 +46,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		private static readonly int[] identifierTokenTypes =
 		{
 			AdamantParser.Identifier, AdamantParser.EscapedIdentifier,
+			AdamantParser.Void,
 			AdamantParser.String,
 			AdamantParser.ByteType,
 			AdamantParser.IntType,

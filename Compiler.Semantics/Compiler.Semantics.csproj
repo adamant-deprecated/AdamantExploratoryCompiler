@@ -58,6 +58,14 @@
     <Compile Include="GlobalVariable.cs" />
     <Compile Include="PackageReference.cs" />
     <Compile Include="Types\PredefinedType.cs" />
+    <Compile Include="Types\Predefined\FixedType.cs" />
+    <Compile Include="Types\Predefined\IntType.cs" />
+    <Compile Include="Types\Predefined\OffsetType.cs" />
+    <Compile Include="Types\Predefined\SignedType.cs" />
+    <Compile Include="Types\Predefined\SizedType.cs" />
+    <Compile Include="Types\Predefined\SizeType.cs" />
+    <Compile Include="Types\Predefined\StringType.cs" />
+    <Compile Include="Types\Predefined\VoidType.cs" />
     <Compile Include="Types\ReferenceType.cs" />
     <Compile Include="SourceSemanticNode.cs" />
     <Compile Include="Types\ValueType.cs" />
@@ -95,9 +103,7 @@
       <Name>Compiler.Syntax</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Types\Predefined\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -129,6 +129,7 @@ Await: 'await';
 //*************
 // Predefined Types
 //*************
+Void : 'void';
 String : 'string';
 ByteType : 'byte';
 IntType : 'int' IntLiteral?;
