@@ -5,9 +5,11 @@ using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Declarations;
 using Adamant.Exploratory.Compiler.Semantics.Binders;
+using Adamant.Exploratory.Compiler.Semantics.Statements;
 using Adamant.Exploratory.Compiler.Semantics.Types;
 using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
 using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Statements;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 using ValueType = Adamant.Exploratory.Compiler.Semantics.Types.ValueType;
 
@@ -88,8 +90,20 @@ namespace Adamant.Exploratory.Compiler.Semantics
 				.With<Function>(function =>
 				{
 					function.ReturnType = Resolve(function.ContainingPackage, function.Syntax.ReturnType, binders);
+					function.Body = Resolve(function.ContainingPackage, function.Syntax.Body.GetEnumerator(), binders).ToList();
 				})
 				.Exhaustive();
+		}
+
+		private static IEnumerable<Statement> Resolve(Package containingPackage, IEnumerator<StatementSyntax> syntax, IReadOnlyDictionary<SyntaxNode, Binder> binders)
+		{
+			if(!syntax.MoveNext()) return Enumerable.Empty<Statement>();
+			var statementSyntax = syntax.Current;
+			var statement = statementSyntax.Match().Returning<Statement>()
+				.With<ReturnSyntax>(@return => new Return(@return, containingPackage))
+				.Exhaustive();
+
+			return statement.Yield().Concat(Resolve(containingPackage, syntax, binders));
 		}
 
 		private static ReferenceType Resolve(Package containingPackage, ReferenceTypeSyntax syntax, IReadOnlyDictionary<SyntaxNode, Binder> binders)

@@ -57,6 +57,8 @@
     <Compile Include="Binders\PackageBinder.cs" />
     <Compile Include="GlobalVariable.cs" />
     <Compile Include="PackageReference.cs" />
+    <Compile Include="Statement.cs" />
+    <Compile Include="Statements\Return.cs" />
     <Compile Include="Types\PredefinedType.cs" />
     <Compile Include="Types\Predefined\FixedType.cs" />
     <Compile Include="Types\Predefined\IntType.cs" />

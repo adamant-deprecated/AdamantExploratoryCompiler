@@ -2,6 +2,7 @@
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Semantics;
+using Adamant.Exploratory.Compiler.Semantics.Statements;
 using Adamant.Exploratory.Compiler.Semantics.Types;
 using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
 using Adamant.Exploratory.Compiler.Syntax;
@@ -59,10 +60,27 @@ namespace Compiler.Emit.Cpp
 
 						source.WriteIndentedLine($"{TypeOf(function.ReturnType)} {function.Name}()");
 						source.BeginBlock();
+						Emit(source, function.Body);
 						// TODO write body
 						source.EndBlock();
 					})
 					.Exhaustive();
+		}
+
+		private static void Emit(SourceFileBuilder source, IReadOnlyList<Statement> statements)
+		{
+			foreach(var statement in statements)
+				Emit(source, statement);
+		}
+
+		private static void Emit(SourceFileBuilder source, Statement statement)
+		{
+			statement.Match()
+				.With<Return>(@return =>
+				{
+					source.WriteIndentedLine("return;");
+				})
+				.Exhaustive();
 		}
 
 		private static string TypeOf(ReferenceType type)
