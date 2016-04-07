@@ -10,13 +10,15 @@ namespace Compiler.Emit.Cpp
 		public static CompilerResult Invoke(string sourcePath, string targetPath)
 		{
 			var compilerPath = ConfigurationManager.AppSettings["CppCompiler"];
-			var libPath = ConfigurationManager.AppSettings["CppLibPaths"];
+			var libPaths = ConfigurationManager.AppSettings["CppLibPaths"];
+			var includePaths = ConfigurationManager.AppSettings["CppIncludePaths"];
 			using(var process = new Process())
 			{
 				process.StartInfo.FileName = compilerPath;
 				process.StartInfo.Arguments = $"/EHsc /Fe\"{targetPath}\" {sourcePath}";
 				process.StartInfo.WorkingDirectory = Path.GetDirectoryName(sourcePath);
-				process.StartInfo.EnvironmentVariables.Add("LIB", libPath);
+				process.StartInfo.EnvironmentVariables.Add("LIB", libPaths);
+				process.StartInfo.EnvironmentVariables.Add("INCLUDE", includePaths);
 				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.RedirectStandardOutput = true;
 				process.StartInfo.RedirectStandardError = true;

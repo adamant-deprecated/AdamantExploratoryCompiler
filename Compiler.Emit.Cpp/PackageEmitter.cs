@@ -2,6 +2,8 @@
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Semantics;
+using Adamant.Exploratory.Compiler.Semantics.Types;
+using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
 using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Compiler.Emit.Cpp
@@ -22,6 +24,7 @@ namespace Compiler.Emit.Cpp
 			source.WriteLine();
 
 			source.WriteIndentedLine("// Dependencies");
+			source.WriteIndentedLine("#include <cstdint>");
 			source.WriteIndentedLine($"#include \"{CppRuntime.FileName}\"");
 			foreach(var dependency in package.Dependencies)
 				source.WriteIndentedLine($"#include \"{dependency.Package.Name}.cpp\"");
@@ -54,12 +57,24 @@ namespace Compiler.Emit.Cpp
 						// TODO write correct return type
 						// TODO write correct parameter types
 
-						source.WriteIndentedLine($"void {function.Name}()");
+						source.WriteIndentedLine($"{TypeOf(function.ReturnType)} {function.Name}()");
 						source.BeginBlock();
 						// TODO write body
 						source.EndBlock();
 					})
 					.Exhaustive();
+		}
+
+		private static string TypeOf(ReferenceType type)
+		{
+			return type.Type.Match().Returning<string>()
+				.With<VoidType>(voidType => "void")
+				.With<IntType>(intType =>
+				{
+					var coreType = intType.IsSigned ? "int" : "uint";
+					return $"{coreType}{intType.BitLength}_t*";
+				})
+				.Exhaustive();
 		}
 
 		private void EmitEntryPoint(SourceFileBuilder source)
