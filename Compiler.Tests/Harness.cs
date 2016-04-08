@@ -67,6 +67,7 @@ namespace Adamant.Exploratory.Compiler.Tests
 			{
 				process.StartInfo.FileName = targetPath;
 				process.StartInfo.WorkingDirectory = Path.GetDirectoryName(WorkPath);
+				process.StartInfo.CreateNoWindow = true;
 				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.RedirectStandardOutput = true;
 				process.StartInfo.RedirectStandardError = true;

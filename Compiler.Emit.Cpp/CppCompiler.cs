@@ -20,6 +20,7 @@ namespace Compiler.Emit.Cpp
 				process.StartInfo.EnvironmentVariables.Add("LIB", libPaths);
 				process.StartInfo.EnvironmentVariables.Add("INCLUDE", includePaths);
 				process.StartInfo.UseShellExecute = false;
+				process.StartInfo.CreateNoWindow = true;
 				process.StartInfo.RedirectStandardOutput = true;
 				process.StartInfo.RedirectStandardError = true;
 				var output = new StringBuilder();

@@ -116,8 +116,18 @@ namespace Compiler.Emit.Cpp
 			source.WriteLine();
 			source.WriteIndentedLine("int main(int argc, char *argv[])");
 			source.BeginBlock();
-			source.WriteIndentedLine($"{entryPoint.Name}();");
-			source.WriteIndentedLine("return 0;");
+			if(entryPoint.ReturnType.Type is VoidType)
+			{
+				source.WriteIndentedLine($"{entryPoint.Name}();");
+				source.WriteIndentedLine("return 0;");
+			}
+			else
+			{
+				source.WriteIndentedLine($"auto exitCodePtr = {entryPoint.Name}();");
+				source.WriteIndentedLine($"auto exitCode = *exitCodePtr;");
+				source.WriteIndentedLine("delete exitCodePtr;");
+				source.WriteIndentedLine("return exitCode;");
+			}
 			source.EndBlock();
 		}
 	}
