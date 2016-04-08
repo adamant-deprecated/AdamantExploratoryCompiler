@@ -13,6 +13,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 	{
 		private readonly MultiDictionary<string, Declaration> members = new MultiDictionary<string, Declaration>();
 		public new IEnumerable<NamespaceSyntax> Syntax => base.Syntax.Cast<NamespaceSyntax>();
+		public bool IsGlobal => Name.Length == 0;
 
 		public Namespace(Package containingPackage)
 			: base(Enumerable.Empty<NamespaceSyntax>(), containingPackage, null, Accessibility.Public, "")
@@ -38,6 +39,11 @@ namespace Adamant.Exploratory.Compiler.Semantics
 		{
 			Requires.That(child.ContainingNamespace == this, nameof(child), "Child must be contained in this namespace");
 			members.Add(child.Name, child);
+		}
+
+		public override IEnumerable<string> QualifiedName()
+		{
+			return IsGlobal ? Enumerable.Empty<string>() : base.QualifiedName();
 		}
 	}
 }

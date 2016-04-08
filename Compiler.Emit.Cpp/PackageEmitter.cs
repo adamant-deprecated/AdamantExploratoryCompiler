@@ -79,13 +79,13 @@ namespace Compiler.Emit.Cpp
 			statement.Match()
 				.With<Return>(@return =>
 				{
-					var code = @return.Expression != null ? $"return {CodeFor(source, @return.Expression)};" : "return;";
+					var code = @return.Expression != null ? $"return {CodeFor(@return.Expression)};" : "return;";
 					source.WriteIndentedLine(code);
 				})
 				.Exhaustive();
 		}
 
-		private static string CodeFor(SourceFileBuilder source, Expression expression)
+		private static string CodeFor(Expression expression)
 		{
 			return expression.Match().Returning<string>()
 				.With<IntegerLiteral>(literal =>
@@ -94,6 +94,12 @@ namespace Compiler.Emit.Cpp
 					return $"new int32_t({literal.Value})";
 				})
 				.Exhaustive();
+		}
+
+		private static string CodeFor(IEnumerable<string> qualifiedName)
+		{
+			// Start with :: becuase we are fully qualified and don't want to ever accidently pick up the wrong thing
+			return "::" + string.Join("::", qualifiedName);
 		}
 
 		private static string TypeOf(ReferenceType type)
@@ -116,15 +122,16 @@ namespace Compiler.Emit.Cpp
 			source.WriteLine();
 			source.WriteIndentedLine("int main(int argc, char *argv[])");
 			source.BeginBlock();
+			var entryPointName = CodeFor(entryPoint.QualifiedName());
 			if(entryPoint.ReturnType.Type is VoidType)
 			{
-				source.WriteIndentedLine($"{entryPoint.Name}();");
+				source.WriteIndentedLine($"{entryPointName}();");
 				source.WriteIndentedLine("return 0;");
 			}
 			else
 			{
-				source.WriteIndentedLine($"auto exitCodePtr = {entryPoint.Name}();");
-				source.WriteIndentedLine($"auto exitCode = *exitCodePtr;");
+				source.WriteIndentedLine($"auto exitCodePtr = {entryPointName}();");
+				source.WriteIndentedLine("auto exitCode = *exitCodePtr;");
 				source.WriteIndentedLine("delete exitCodePtr;");
 				source.WriteIndentedLine("return exitCode;");
 			}

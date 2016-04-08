@@ -28,5 +28,13 @@ namespace Adamant.Exploratory.Compiler.Semantics
 
 		public abstract IEnumerable<Declaration> GetMembers();
 		public abstract IEnumerable<Declaration> GetMembers(string name);
+
+		public virtual IEnumerable<string> QualifiedName()
+		{
+			if(ContainingNamespace == null)
+				return Name.Yield();
+
+			return ContainingNamespace.QualifiedName().Append(Name);
+		}
 	}
 }
