@@ -1,6 +1,6 @@
 ﻿namespace Adamant.Exploratory.Compiler.Syntax.Expressions
 {
-	public class LiteralSyntax : ExpressionSyntax
+	public abstract class LiteralSyntax : ExpressionSyntax
 	{
 	}
 }

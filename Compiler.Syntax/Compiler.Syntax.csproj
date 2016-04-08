@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expressions\Literals\BooleanLiteralSyntax.cs" />
+    <Compile Include="Expressions\Literals\IntegerLiteralSyntax.cs" />
+    <Compile Include="Expressions\Literals\StringLiteralSyntax.cs" />
     <Compile Include="Members\AccessorMethodType.cs" />
     <Compile Include="Members\IndexerMethodSyntax.cs" />
     <Compile Include="Modifiers\Accessibility.cs" />

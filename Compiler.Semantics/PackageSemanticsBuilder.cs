@@ -5,10 +5,12 @@ using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Declarations;
 using Adamant.Exploratory.Compiler.Semantics.Binders;
+using Adamant.Exploratory.Compiler.Semantics.Expressions.Literals;
 using Adamant.Exploratory.Compiler.Semantics.Statements;
 using Adamant.Exploratory.Compiler.Semantics.Types;
 using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
 using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Expressions.Literals;
 using Adamant.Exploratory.Compiler.Syntax.Statements;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 using ValueType = Adamant.Exploratory.Compiler.Semantics.Types.ValueType;
@@ -100,10 +102,21 @@ namespace Adamant.Exploratory.Compiler.Semantics
 			if(!syntax.MoveNext()) return Enumerable.Empty<Statement>();
 			var statementSyntax = syntax.Current;
 			var statement = statementSyntax.Match().Returning<Statement>()
-				.With<ReturnSyntax>(@return => new Return(@return, containingPackage))
+				.With<ReturnSyntax>(@return =>
+				{
+					var expression = @return.Expression != null ? Resolve(containingPackage, @return.Expression, binders) : null;
+					return new Return(@return, containingPackage, expression);
+				})
 				.Exhaustive();
 
 			return statement.Yield().Concat(Resolve(containingPackage, syntax, binders));
+		}
+
+		private static Expression Resolve(Package containingPackage, ExpressionSyntax syntax, IReadOnlyDictionary<SyntaxNode, Binder> binders)
+		{
+			return syntax.Match().Returning<Expression>()
+				.With<IntegerLiteralSyntax>(literal => new IntegerLiteral(literal, containingPackage))
+				.Exhaustive();
 		}
 
 		private static ReferenceType Resolve(Package containingPackage, ReferenceTypeSyntax syntax, IReadOnlyDictionary<SyntaxNode, Binder> binders)

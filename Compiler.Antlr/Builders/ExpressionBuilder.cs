@@ -2,6 +2,7 @@
 using System.Linq;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Expressions;
+using Adamant.Exploratory.Compiler.Syntax.Expressions.Literals;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Antlr.Builders
@@ -69,17 +70,17 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		public override ExpressionSyntax VisitBooleanLiteralExpression(AdamantParser.BooleanLiteralExpressionContext context)
 		{
-			return new LiteralSyntax();
+			return new BooleanLiteralSyntax(context.GetText());
 		}
 
 		public override ExpressionSyntax VisitIntLiteralExpression(AdamantParser.IntLiteralExpressionContext context)
 		{
-			return new LiteralSyntax();
+			return new IntegerLiteralSyntax(context.GetText());
 		}
 
 		public override ExpressionSyntax VisitStringLiteralExpression(AdamantParser.StringLiteralExpressionContext context)
 		{
-			return new LiteralSyntax();
+			return new StringLiteralSyntax(context.GetText());
 		}
 
 		public override ExpressionSyntax VisitAssignmentExpression(AdamantParser.AssignmentExpressionContext context)

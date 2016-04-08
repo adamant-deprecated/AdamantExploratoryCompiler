@@ -2,6 +2,7 @@
 using System.Linq;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Semantics;
+using Adamant.Exploratory.Compiler.Semantics.Expressions.Literals;
 using Adamant.Exploratory.Compiler.Semantics.Statements;
 using Adamant.Exploratory.Compiler.Semantics.Types;
 using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
@@ -78,7 +79,19 @@ namespace Compiler.Emit.Cpp
 			statement.Match()
 				.With<Return>(@return =>
 				{
-					source.WriteIndentedLine("return;");
+					var code = @return.Expression != null ? $"return {CodeFor(source, @return.Expression)};" : "return;";
+					source.WriteIndentedLine(code);
+				})
+				.Exhaustive();
+		}
+
+		private static string CodeFor(SourceFileBuilder source, Expression expression)
+		{
+			return expression.Match().Returning<string>()
+				.With<IntegerLiteral>(literal =>
+				{
+					// TODO use the correctly calculated type for this
+					return $"new int32_t({literal.Value})";
 				})
 				.Exhaustive();
 		}

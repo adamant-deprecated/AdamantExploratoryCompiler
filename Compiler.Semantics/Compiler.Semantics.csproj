@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +56,9 @@
     <Compile Include="Binders\LookupResults\ViableResult.cs" />
     <Compile Include="Binders\NamespaceBinder.cs" />
     <Compile Include="Binders\PackageBinder.cs" />
+    <Compile Include="Expression.cs" />
+    <Compile Include="Expressions\Literal.cs" />
+    <Compile Include="Expressions\Literals\IntegerLiteral.cs" />
     <Compile Include="GlobalVariable.cs" />
     <Compile Include="PackageReference.cs" />
     <Compile Include="Statement.cs" />
