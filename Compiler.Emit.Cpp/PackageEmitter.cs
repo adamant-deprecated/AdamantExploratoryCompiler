@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Semantics;
+using Adamant.Exploratory.Compiler.Semantics.Expressions;
 using Adamant.Exploratory.Compiler.Semantics.Expressions.Literals;
 using Adamant.Exploratory.Compiler.Semantics.Statements;
 using Adamant.Exploratory.Compiler.Semantics.Types;
 using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
-using Adamant.Exploratory.Compiler.Syntax;
 
 namespace Compiler.Emit.Cpp
 {
@@ -93,6 +94,14 @@ namespace Compiler.Emit.Cpp
 					// TODO use the correctly calculated type for this
 					return $"new int32_t({literal.Value})";
 				})
+				.With<StringLiteral>(literal =>
+				{
+					var encodedValue = Encoding.UTF8.GetBytes(literal.Value);
+					var bytes = string.Join(", ", encodedValue.Select(b => "0x" + b.ToString("X")));
+					var unsafeArray = $"new uint8_t[{encodedValue.Length}]{{{bytes}}}";
+					return $"new ::__Adamant::Runtime::string(new uintptr_t({encodedValue.Length}), {unsafeArray})";
+				})
+				.With<MemberAccess>(memberAccess => $"({CodeFor(memberAccess.Expression)})->{memberAccess.Member}")
 				.Exhaustive();
 		}
 

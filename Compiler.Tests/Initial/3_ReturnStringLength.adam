@@ -5,7 +5,7 @@
 */
 namespace Adamant.Compiler.Tests.Initial
 {
-	public Main() -> int
+	public Main() -> own int
 	{
 		return "Hello World!".ByteLength;
 	}

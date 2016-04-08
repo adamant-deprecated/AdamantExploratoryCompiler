@@ -1,1 +1,28 @@
 #pragma once
+
+#include <cstdint>
+
+namespace __Adamant
+{
+	namespace Runtime
+	{
+		class string
+		{
+			protected:
+				uint8_t* bytes; // unsafe arrays are just blocks of memory from new[]
+			public:
+				uintptr_t* ByteLength;
+
+				string(uintptr_t* byteLength, uint8_t* bytes)
+					: ByteLength(byteLength), bytes(bytes)
+				{
+				}
+
+				~string()
+				{
+					delete ByteLength;
+					delete[] bytes;
+				}
+		};
+	}
+}

@@ -5,11 +5,13 @@ using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Declarations;
 using Adamant.Exploratory.Compiler.Semantics.Binders;
+using Adamant.Exploratory.Compiler.Semantics.Expressions;
 using Adamant.Exploratory.Compiler.Semantics.Expressions.Literals;
 using Adamant.Exploratory.Compiler.Semantics.Statements;
 using Adamant.Exploratory.Compiler.Semantics.Types;
 using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
 using Adamant.Exploratory.Compiler.Syntax;
+using Adamant.Exploratory.Compiler.Syntax.Expressions;
 using Adamant.Exploratory.Compiler.Syntax.Expressions.Literals;
 using Adamant.Exploratory.Compiler.Syntax.Statements;
 using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
@@ -116,6 +118,12 @@ namespace Adamant.Exploratory.Compiler.Semantics
 		{
 			return syntax.Match().Returning<Expression>()
 				.With<IntegerLiteralSyntax>(literal => new IntegerLiteral(literal, containingPackage))
+				.With<StringLiteralSyntax>(literal => new StringLiteral(literal, containingPackage))
+				.With<MemberAccessSyntax>(memberAccess =>
+				{
+					var expression = Resolve(containingPackage, memberAccess.Expression, binders);
+					return new MemberAccess(memberAccess, containingPackage, expression);
+				})
 				.Exhaustive();
 		}
 

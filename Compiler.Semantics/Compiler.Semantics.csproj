@@ -59,6 +59,8 @@
     <Compile Include="Expression.cs" />
     <Compile Include="Expressions\Literal.cs" />
     <Compile Include="Expressions\Literals\IntegerLiteral.cs" />
+    <Compile Include="Expressions\Literals\StringLiteral.cs" />
+    <Compile Include="Expressions\MemberAccess.cs" />
     <Compile Include="GlobalVariable.cs" />
     <Compile Include="PackageReference.cs" />
     <Compile Include="Statement.cs" />
