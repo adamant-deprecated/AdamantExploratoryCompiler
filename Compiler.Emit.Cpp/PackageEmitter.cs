@@ -99,7 +99,7 @@ namespace Compiler.Emit.Cpp
 					var encodedValue = Encoding.UTF8.GetBytes(literal.Value);
 					var bytes = string.Join(", ", encodedValue.Select(b => "0x" + b.ToString("X")));
 					var unsafeArray = $"new uint8_t[{encodedValue.Length}]{{{bytes}}}";
-					return $"new ::__Adamant::Runtime::string(new uintptr_t({encodedValue.Length}), {unsafeArray})";
+					return $"new ::__Adamant::Runtime::string(new size_t({encodedValue.Length}), {unsafeArray})";
 				})
 				.With<MemberAccess>(memberAccess => $"({CodeFor(memberAccess.Expression)})->{memberAccess.Member}")
 				.Exhaustive();

@@ -11,9 +11,9 @@ namespace __Adamant
 			protected:
 				uint8_t* bytes; // unsafe arrays are just blocks of memory from new[]
 			public:
-				uintptr_t* ByteLength;
+				size_t* ByteLength;
 
-				string(uintptr_t* byteLength, uint8_t* bytes)
+				string(size_t* byteLength, uint8_t* bytes)
 					: ByteLength(byteLength), bytes(bytes)
 				{
 				}
