@@ -80,8 +80,8 @@ identifierOrPredefinedType
 	| token=IntType
 	| token=UIntType
 	| token=FloatType
-	| token=FixedType
-	| token=DecimalType
+	//| token=FixedType
+	//| token=DecimalType
 	| token=SizeType
 	| token=OffsetType
 	| token=UnsafeArrayType

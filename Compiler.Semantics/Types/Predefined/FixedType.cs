@@ -3,6 +3,10 @@ using Adamant.Exploratory.Compiler.Syntax.ValueTypes;
 
 namespace Adamant.Exploratory.Compiler.Semantics.Types.Predefined
 {
+	/// <summary>
+	/// The Fixed type is not actually supported by this version of the compiler.  This class is just hear to indicate
+	/// how it would fit into the semantic model
+	/// </summary>
 	public class FixedType : SignedType
 	{
 		public int FractionalBits { get; }
