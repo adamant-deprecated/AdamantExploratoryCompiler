@@ -2,13 +2,13 @@
 
 namespace Adamant.Exploratory.Forge
 {
-	public class BuiltPackage
+	public class CompiledProject
 	{
 		public readonly string ProjectDirectory;
 		public readonly Package Package;
 		public string Name => Package.Name;
 
-		public BuiltPackage(string projectDirectory, Package package)
+		public CompiledProject(string projectDirectory, Package package)
 		{
 			ProjectDirectory = projectDirectory;
 			Package = package;

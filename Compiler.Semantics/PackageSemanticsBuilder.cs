@@ -22,12 +22,12 @@ namespace Adamant.Exploratory.Compiler.Semantics
 	public class PackageSemanticsBuilder
 	{
 		private readonly PackageSyntax packageSyntax;
-		private readonly IReadOnlyList<Package> compiledPackages;
+		private readonly IReadOnlyList<Package> packages;
 
-		public PackageSemanticsBuilder(PackageSyntax packageSyntax, IEnumerable<Package> compiledPackages)
+		public PackageSemanticsBuilder(PackageSyntax packageSyntax, IEnumerable<Package> packages)
 		{
 			this.packageSyntax = packageSyntax;
-			this.compiledPackages = compiledPackages.ToList();
+			this.packages = packages.ToList();
 		}
 
 		public Package Build()
@@ -52,7 +52,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 
 		private IEnumerable<PackageReference> GetPackageReferences(Package package)
 		{
-			var packagesLookup = compiledPackages.ToLookup(p => p.Name);
+			var packagesLookup = packages.ToLookup(p => p.Name);
 			return packageSyntax.Dependencies.Select(d => new PackageReference(d, package, packagesLookup[d.Name].Single()));
 		}
 

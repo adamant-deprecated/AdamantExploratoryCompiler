@@ -2,7 +2,7 @@
 
 namespace Adamant.Exploratory.Forge
 {
-	public class BuildFailedException : Exception
+	public class CompileFailedException : Exception
 	{
 	}
 }

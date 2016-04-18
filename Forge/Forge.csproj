@@ -63,15 +63,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildFailedException.cs" />
-    <Compile Include="BuiltPackages.cs" />
+    <Compile Include="CompileFailedException.cs" />
+    <Compile Include="CompiledProjects.cs" />
     <Compile Include="Commands\BuildCommand.cs" />
+    <Compile Include="Commands\InterpretCommand.cs" />
     <Compile Include="Commands\ProjectDirCommand.cs" />
     <Compile Include="Commands\RunCommand.cs" />
-    <Compile Include="BuiltPackage.cs" />
+    <Compile Include="CompiledProject.cs" />
     <Compile Include="Config\DependencyConfig.cs" />
     <Compile Include="Config\ProjectConfig.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectCompiler.cs" />
     <Compile Include="ProjectFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -43,7 +43,8 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			return new TextPosition(token.StartIndex, token.Line, token.Column);
 		}
 
-		private static readonly int[] identifierTokenTypes =
+		// TODO this is duplicated for differnt type parameters, but it isn't easy to refactor to fix that
+		private static readonly int[] IdentifierTokenTypes =
 		{
 			AdamantParser.Identifier, AdamantParser.EscapedIdentifier,
 			AdamantParser.Void,
@@ -62,7 +63,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		protected static SyntaxToken Identifier(IToken token)
 		{
 			if(token == null) return null;
-			Requires.EnumIn(token.Type, nameof(token), identifierTokenTypes);
+			Requires.EnumIn(token.Type, nameof(token), IdentifierTokenTypes);
 
 			var tokenType = SyntaxTokenType.Identifier;
 			var text = token.Text;
@@ -72,7 +73,8 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			else if(token.Type != AdamantParser.Identifier)
 			{
 				// Unsafe array is handled more like a regular identifier becuase it has generic type params
-				tokenType = token.Type == AdamantParser.UnsafeArrayType ? SyntaxTokenType.Identifier : SyntaxTokenType.PredefinedType;
+				tokenType = token.Type == AdamantParser.UnsafeArrayType || token.Type == AdamantParser.Self
+					? SyntaxTokenType.Identifier : SyntaxTokenType.PredefinedType;
 				valueText = "#" + valueText; // Special identifiers like predefined type we distiguish by prefixing with a special char
 			}
 			return new SyntaxToken(tokenType, PositionOf(token), text, valueText);

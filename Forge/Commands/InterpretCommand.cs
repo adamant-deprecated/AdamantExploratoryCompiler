@@ -2,11 +2,11 @@
 
 namespace Adamant.Exploratory.Forge.Commands
 {
-	public class BuildCommand : ProjectDirCommand
+	public class InterpretCommand : ProjectDirCommand
 	{
-		public BuildCommand()
+		public InterpretCommand()
 		{
-			IsCommand("build", "Build a forge project");
+			IsCommand("interpret", "Run a forge project in the interpreter");
 		}
 
 		public override int Run(string[] remainingArguments)
@@ -15,7 +15,7 @@ namespace Adamant.Exploratory.Forge.Commands
 			{
 				var compiler = new ProjectCompiler(ProjectPath);
 				var projects = compiler.Compile();
-				// TODO split out compile and emit
+				// TODO run interpreter
 				return 0;
 			}
 			catch(CompileFailedException)
