@@ -14,8 +14,9 @@ namespace Adamant.Exploratory.Forge.Commands
 			try
 			{
 				var compiler = new ProjectCompiler(ProjectPath);
+				var emitter = new ProjectEmitter();
+				compiler.ProjectCompiled += emitter.Emit;
 				var projects = compiler.Compile();
-				// TODO split out compile and emit
 				return 0;
 			}
 			catch(CompileFailedException)

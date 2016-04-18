@@ -74,6 +74,7 @@
     <Compile Include="Config\ProjectConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectCompiler.cs" />
+    <Compile Include="ProjectEmitter.cs" />
     <Compile Include="ProjectFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -82,6 +83,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{041EE85B-E098-4454-9DD9-D7B6723DDF83}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
       <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
       <Name>Compiler.Core</Name>

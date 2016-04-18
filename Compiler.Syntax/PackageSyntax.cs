@@ -14,17 +14,18 @@ namespace Adamant.Exploratory.Compiler.Syntax
 	public class PackageSyntax : SyntaxNode
 	{
 		public readonly string Name;
+		public readonly bool IsApp;
 		public readonly IReadOnlyList<CompilationUnitSyntax> CompilationUnits;
 		public readonly IReadOnlyList<PackageReferenceSyntax> Dependencies;
 		public readonly IReadOnlyList<Diagnostic> Diagnostics;
 		// TODO Language version
 
-		public PackageSyntax(string name, IEnumerable<PackageReferenceSyntax> dependencies)
-			: this(name, new List<CompilationUnitSyntax>(), dependencies.ToList())
+		public PackageSyntax(string name, bool isApp, IEnumerable<PackageReferenceSyntax> dependencies)
+			: this(name, isApp, new List<CompilationUnitSyntax>(), dependencies.ToList())
 		{
 		}
 
-		private PackageSyntax(string name, IReadOnlyList<CompilationUnitSyntax> compilationUnits, IReadOnlyList<PackageReferenceSyntax> dependencies)
+		private PackageSyntax(string name, bool isApp, IReadOnlyList<CompilationUnitSyntax> compilationUnits, IReadOnlyList<PackageReferenceSyntax> dependencies)
 		{
 			Requires.NotNullOrEmpty(name, nameof(name));
 			Requires.That(dependencies.Select(d => d.AliasName).Distinct().Count() == dependencies.Count, nameof(dependencies), "Dependency names/alias must be unique");
@@ -32,6 +33,7 @@ namespace Adamant.Exploratory.Compiler.Syntax
 			Name = name;
 			CompilationUnits = compilationUnits;
 			Dependencies = dependencies;
+			IsApp = isApp;
 			var diagnostics = new DiagnosticsBuilder();
 			foreach(var compilationUnit in CompilationUnits)
 				diagnostics.Add(compilationUnit.Diagnostics);
@@ -42,7 +44,7 @@ namespace Adamant.Exploratory.Compiler.Syntax
 		[Pure]
 		public PackageSyntax With(IEnumerable<CompilationUnitSyntax> compilationUnits)
 		{
-			return new PackageSyntax(Name, compilationUnits.ToList(), Dependencies);
+			return new PackageSyntax(Name, IsApp, compilationUnits.ToList(), Dependencies);
 		}
 	}
 }

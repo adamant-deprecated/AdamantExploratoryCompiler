@@ -41,7 +41,7 @@ namespace Adamant.Exploratory.Compiler.Tests
 		public void Test(TestCaseConfig config, TextReader reader)
 		{
 			var dependencies = config.Runtime ? new[] { runtimeDependency } : Enumerable.Empty<PackageReferenceSyntax>();
-			var package = new PackageSyntax($"Adamant.Exploratory.Compiler.Tests.{config.TestName}", dependencies);
+			var package = new PackageSyntax($"Adamant.Exploratory.Compiler.Tests.{config.TestName}", true, dependencies);
 			var unit = compiler.Parse(package, new SourceReader(config.FileName, reader));
 			package = package.With(new[] { unit });
 			if(package.Diagnostics.Count > 0)

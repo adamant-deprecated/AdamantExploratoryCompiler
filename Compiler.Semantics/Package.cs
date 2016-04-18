@@ -14,6 +14,7 @@ namespace Adamant.Exploratory.Compiler.Semantics
 	{
 		public override Package ContainingPackage => this;
 		public new PackageSyntax Syntax => (PackageSyntax)base.Syntax.SingleOrDefault();
+		public bool IsApp => Syntax.IsApp;
 		public Namespace GlobalNamespace { get; }
 		private readonly List<PackageReference> dependencies = new List<PackageReference>();
 		public IReadOnlyList<PackageReference> Dependencies => dependencies;
