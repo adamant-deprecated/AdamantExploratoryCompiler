@@ -1,0 +1,12 @@
+﻿/*---
+{
+	"result": 42
+}
+*/
+namespace Adamant.Compiler.Tests.Initial
+{
+	public Main() -> own int
+	{
+		return 42;
+	}
+}

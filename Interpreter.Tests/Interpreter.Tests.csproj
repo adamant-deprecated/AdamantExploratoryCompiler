@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D2465634-8F38-451C-84EA-445C99DA4708}</ProjectGuid>
+    <ProjectGuid>{D1E41E6C-BBA0-4935-9650-A3A7F1678421}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Adamant.Exploratory.Compiler.Tests</RootNamespace>
-    <AssemblyName>Adamant.Exploratory.Compiler.Tests</AssemblyName>
+    <RootNamespace>Adamant.Exploratory.Interpreter.Tests</RootNamespace>
+    <AssemblyName>Adamant.Exploratory.Interpreter.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -52,12 +48,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Initial\2_ReturnConstantWithNamespace.adam" />
-    <EmbeddedResource Include="Initial\3_ReturnStringLength.adam" />
-    <None Include="App.config" />
-    <None Include="packages.config" />
-    <EmbeddedResource Include="Initial\1_ReturnConstant.adam" />
     <EmbeddedResource Include="Initial\0_Empty.adam" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Initial\1_ReturnConstant.adam" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Initial\2_ReturnConstantWithNamespace.adam" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Initial\3_ReturnStringLength.adam" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Tests\Common.Tests.csproj">
@@ -67,10 +67,6 @@
     <ProjectReference Include="..\Compiler.Core\Compiler.Core.csproj">
       <Project>{23E6BA4B-9B13-4FBF-8F48-03CBC4AACFE9}</Project>
       <Name>Compiler.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Compiler.Emit.Cpp\Compiler.Emit.Cpp.csproj">
-      <Project>{F659BAFA-A6B7-4253-BA43-80DF0A5455DE}</Project>
-      <Name>Compiler.Emit.Cpp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Compiler.Semantics\Compiler.Semantics.csproj">
       <Project>{5235F122-AD65-4577-BBC4-DBA7D60DA92D}</Project>
@@ -84,6 +80,9 @@
       <Project>{884126DA-5100-4924-8068-B60E5DD01D59}</Project>
       <Name>Compiler</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
