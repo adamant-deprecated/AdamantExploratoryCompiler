@@ -53,7 +53,7 @@ namespace Adamant.Exploratory.Interpreter.Tests
 			var entryPoint = compiledPackage.EntryPoints.Single();
 			var outputBuffer = new StringBuilder();
 			var errorBuffer = new StringBuilder();
-			var exitCode = interpreter.Invoke(entryPoint, new StringWriter(outputBuffer), new StringWriter(errorBuffer));
+			var exitCode = interpreter.Invoke(entryPoint, new string[0], new StringWriter(outputBuffer), new StringWriter(errorBuffer));
 			Assert.AreEqual(config.Result, exitCode, "Exit Code");
 			if(config.VerifyConsoleOutput)
 				Assert.AreEqual(config.ExpectedConsoleOutput, outputBuffer.ToString());

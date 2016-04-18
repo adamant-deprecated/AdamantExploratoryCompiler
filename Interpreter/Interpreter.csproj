@@ -41,9 +41,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdamantInterpreter.cs" />
+    <Compile Include="CallStack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="References\BorrowReference.cs" />
+    <Compile Include="References\OwnReference.cs" />
+    <Compile Include="References\Reference.cs" />
+    <Compile Include="Values\Value.cs" />
+    <Compile Include="Values\VoidValue.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{041EE85B-E098-4454-9DD9-D7B6723DDF83}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Compiler.Semantics\Compiler.Semantics.csproj">
       <Project>{5235F122-AD65-4577-BBC4-DBA7D60DA92D}</Project>
       <Name>Compiler.Semantics</Name>
