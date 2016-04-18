@@ -80,6 +80,10 @@
       <Project>{884126DA-5100-4924-8068-B60E5DD01D59}</Project>
       <Name>Compiler</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Interpreter\Interpreter.csproj">
+      <Project>{BE0782A7-2185-4983-911E-42F8C9F97BDE}</Project>
+      <Name>Interpreter</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
