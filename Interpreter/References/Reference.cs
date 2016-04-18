@@ -12,8 +12,8 @@ namespace Adamant.Exploratory.Interpreter.References
 			IsMutable = isMutable;
 		}
 
-		public abstract BorrowReference Borrow(bool mutable);
-		public abstract OwnReference TakeOwnership(bool mutable);
+		public abstract BorrowReference Borrow(bool mutable = false);
+		public abstract OwnReference TakeOwnership(bool mutable = false);
 		public abstract void Release();
 	}
 }
