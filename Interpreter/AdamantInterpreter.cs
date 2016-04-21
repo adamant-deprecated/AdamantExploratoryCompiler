@@ -8,7 +8,6 @@ using Adamant.Exploratory.Compiler.Semantics.Expressions;
 using Adamant.Exploratory.Compiler.Semantics.Expressions.Literals;
 using Adamant.Exploratory.Compiler.Semantics.Statements;
 using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
-using Adamant.Exploratory.Interpreter.References;
 using Adamant.Exploratory.Interpreter.Values;
 
 namespace Adamant.Exploratory.Interpreter
@@ -16,7 +15,7 @@ namespace Adamant.Exploratory.Interpreter
 	public class AdamantInterpreter
 	{
 		private readonly Package package;
-		private readonly BorrowReference voidReference = new OwnReference(VoidValue.Instance, false, true).Borrow(false);
+		private readonly Ref voidReference = Ref.ToStatic(VoidValue.Instance);
 		private readonly Dictionary<Literal, Value> literalValues = new Dictionary<Literal, Value>();
 
 
@@ -34,16 +33,13 @@ namespace Adamant.Exploratory.Interpreter
 		{
 			Requires.That(package.EntryPoints.Contains(entryPoint), nameof(entryPoint), "Must be for the package");
 			// TODO pass any arguments
-			var returnRef = Call(entryPoint);
-			var exitCode = returnRef.Value.Match().Returning<int>()
-				.With<VoidValue>(value => 0)
-				.With<IntegerValue>(value => (int)value.Value)
-				.Exhaustive();
-			returnRef.Release();
-			return exitCode;
+			using(var result = Call(entryPoint))
+			{
+				return result.AsExitCode();
+			}
 		}
 
-		private Reference Call(Function function)
+		private Ref Call(Function function)
 		{
 			try
 			{
@@ -70,9 +66,9 @@ namespace Adamant.Exploratory.Interpreter
 			}
 		}
 
-		private Reference Execute(Statement statement)
+		private Ref Execute(Statement statement)
 		{
-			var result = statement.Match().Returning<Reference>()
+			var result = statement.Match().Returning<Ref>()
 				.With<Return>(@return =>
 				{
 					if(@return.Expression == null) return voidReference.Borrow();
@@ -82,16 +78,37 @@ namespace Adamant.Exploratory.Interpreter
 			return result;
 		}
 
-		private Reference Execute(Expression expression)
+		private Ref Execute(Expression expression)
 		{
-			var result = expression.Match().Returning<Reference>()
+			var result = expression.Match().Returning<Ref>()
 				.With<IntegerLiteral>(literal =>
 				{
 					Value value;
 					if(!literalValues.TryGetValue(literal, out value))
+					{
 						value = new IntegerValue(literal.Value);
+						literalValues.Add(literal, value);
+					}
 
-					return new OwnReference(value, false, true);
+					return Ref.ToStatic(value);
+				})
+				.With<StringLiteral>(literal =>
+				{
+					Value value;
+					if(!literalValues.TryGetValue(literal, out value))
+					{
+						value = new StringValue(literal.Value);
+						literalValues.Add(literal, value);
+					}
+
+					return Ref.ToStatic(value);
+				})
+				.With<MemberAccess>(memberAccess =>
+				{
+					var reference = Execute(memberAccess.Expression);
+					var member = memberAccess.Member;
+
+					return reference.Access(member);
 				})
 				.Exhaustive();
 			return result;

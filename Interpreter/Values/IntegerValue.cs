@@ -8,7 +8,12 @@ namespace Adamant.Exploratory.Interpreter.Values
 
 		public IntegerValue(BigInteger value)
 		{
-			this.Value = value;
+			Value = value;
+		}
+
+		public override Ref Access(bool isMutable, string member)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

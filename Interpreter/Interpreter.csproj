@@ -45,10 +45,9 @@
     <Compile Include="CallStack.cs" />
     <Compile Include="InterpreterPanicException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="References\BorrowReference.cs" />
-    <Compile Include="References\OwnReference.cs" />
-    <Compile Include="References\Reference.cs" />
+    <Compile Include="Ref.cs" />
     <Compile Include="Values\IntegerValue.cs" />
+    <Compile Include="Values\StringValue.cs" />
     <Compile Include="Values\Value.cs" />
     <Compile Include="Values\VoidValue.cs" />
   </ItemGroup>

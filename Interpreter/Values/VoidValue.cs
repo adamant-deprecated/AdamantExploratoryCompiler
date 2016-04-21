@@ -9,5 +9,10 @@
 		{
 		}
 		#endregion
+
+		public override Ref Access(bool isMutable, string member)
+		{
+			throw new InterpreterPanicException("Can't access member of void");
+		}
 	}
 }
