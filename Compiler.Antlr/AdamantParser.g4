@@ -32,7 +32,12 @@ declaration
 		typeParameterConstraintClause*
 		'{' member* '}' #ClassDeclaration
 	| attribute* modifier* kind=('var'|'let') identifier (':' referenceType)? ('=' expression)? ';' #VariableDeclaration
-	| attribute* modifier* identifier typeArguments? parameterList '->' returnType=referenceType typeParameterConstraintClause* methodBody	 #FunctionDeclaration
+	| attribute* modifier* identifier typeArguments? parameterList '->' returnType=referenceType typeParameterConstraintClause* contract* methodBody #FunctionDeclaration
+	;
+
+contract
+	: 'requires' expression #Precondition
+	| 'ensures' expression #Postcondition
 	;
 
 attribute
@@ -66,6 +71,7 @@ typeParameters
 
 typeParameter
 	: identifier isList='...'? (':' baseType=valueType)?
+	| lifetime
 	;
 
 typeArguments
@@ -106,10 +112,15 @@ valueType
 	;
 
 referenceType // these are types with lifetimes
-	: valueType				#ImmutableReferenceType
-	| 'mut' valueType		#MutableReferenceType
-	| 'own' valueType		#OwnedImmutableReferenceType
-	| 'own' 'mut' valueType	#OwnedMutableReferenceType
+	: lifetime? valueType		#ImmutableReferenceType
+	| lifetime? 'mut' valueType	#MutableReferenceType
+	| 'own' valueType			#OwnedImmutableReferenceType
+	| 'own' 'mut' valueType		#OwnedMutableReferenceType
+	;
+
+lifetime
+	: '~' identifier
+	| '~' 'self'
 	;
 
 funcTypeParameterList
@@ -139,13 +150,17 @@ typeParameterConstraint
 	;
 
 member
-	: attribute* modifier* 'new' identifier? parameterList ('->' returnType=referenceType)? constructorInitializer? methodBody						#Constructor
-	| attribute* modifier* 'delete' parameterList methodBody																						#Destructor
-	| attribute* modifier* 'conversion' typeArguments? parameterList '->' referenceType typeParameterConstraintClause* methodBody					#ConversionMethod
-	| attribute* modifier* kind=('var'|'let') identifier (':' referenceType)? ('=' expression)? ';'													#Field
-	| attribute* modifier* kind=('get'|'set') identifier typeArguments? parameterList '->' referenceType typeParameterConstraintClause* methodBody	#Accessor
-	| attribute* modifier* kind=('get'|'set') '[' ']' typeArguments? parameterList '->' referenceType typeParameterConstraintClause* methodBody		#Indexer
-	| attribute* modifier* identifier typeArguments? parameterList '->' returnType=referenceType typeParameterConstraintClause* methodBody			#Method
+	: attribute* modifier* 'new' identifier? parameterList ('->' returnType=referenceType)? constructorInitializer? contract* methodBody						#Constructor
+	| attribute* modifier* 'delete' parameterList methodBody																									#Destructor
+	| attribute* modifier* 'conversion' typeArguments? parameterList '->' referenceType typeParameterConstraintClause* contract* methodBody						#ConversionMethod
+	| attribute* modifier* kind=('var'|'let') identifier (':' referenceType)? ('=' expression)? ';'																#Field
+	| attribute* modifier* kind=('get'|'set') identifier typeArguments? parameterList '->' referenceType typeParameterConstraintClause* contract* methodBody	#Accessor
+	| attribute* modifier* kind=('get'|'set') '[' ']' typeArguments? parameterList '->' referenceType typeParameterConstraintClause* contract* methodBody		#Indexer
+	| attribute* modifier* identifier typeArguments? parameterList '->' returnType=referenceType typeParameterConstraintClause* contract* methodBody			#Method
+	| attribute* modifier* 'operator' overloadableOperator parameterList '->' returnType=referenceType typeParameterConstraintClause* contract* methodBody      #OperatorOverload
+	| attribute* modifier* 'class' identifier typeParameters? baseTypes?
+		typeParameterConstraintClause*
+		'{' member* '}' #NestedClassDeclaration
 	;
 
 parameterList
@@ -187,6 +202,7 @@ overloadableOperator
 	| '??'
 	| '.'
 	| '[' ']'
+	| '|' '|'
 	;
 
 statement
@@ -195,20 +211,24 @@ statement
 	| '{' statement* '}'									#BlockStatement
 	| ';'													#EmptyStatement
 	| expression ';'										#ExpressionStatement
-	| 'return' expression ';'								#ReturnStatement
+	| 'return' expression? ';'								#ReturnStatement
 	| 'throw' expression ';'								#ThrowStatement
 	| 'if' '(' condition=expression ')' then=statement ('else' else=statement)?			#IfStatement
-	| 'for' '(' localVariableDeclaration? ';' expression? ';' expression? ')' statement		#ForStatement
-	| 'foreach' '(' localVariableDeclaration 'in' expression ')' statement					#ForeachStatement
+	| 'if' '(' localVariableDeclaration ')' then=statement ('else' else=statement)?		#LetIfStatement
+	| 'for' '(' (localVariableDeclaration|'_') 'in' expression ')' statement					#ForStatement
 	| 'delete' expression ';'								#DeleteStatement
+	| 'continue' ';'										#ContinueStatement
 	;
 
 localVariableDeclaration
-	: kind=('var'|'let') identifier (':' referenceType)? ('=' expression)?
+	: kind=('var'|'let') identifier('?')? (':' referenceType)? ('=' expression)?
 	;
 
 expression
-	: expression '.' identifier								#MemberExpression
+	: '(' expression ')'									#ParenthesizedExpression
+	| '|' expression '|'									#MagnitudeExpression
+	| expression '.' identifier								#MemberExpression
+	| expression '..' expression							#DotDotExpression
 	| expression '->' identifier							#PointerMemberExpression
 	| expression '(' argumentList ')'						#CallExpression
 	| expression '[' argumentList ']'						#ArrayAccessExpression
@@ -222,16 +242,19 @@ expression
 	| expression 'xor' expression							#XorExpression
 	| expression 'or' expression							#OrExpression
 	| expression '??' expression							#CoalesceExpression
+	| expression 'in' expression							#InExpression
 	| <assoc=right> condition=expression '?' then=expression ':' else=expression #IfExpression
 	| <assoc=right> lvalue=expression op=('='|'*='|'/='|'+='|'-='|'and='|'xor='|'or=') rvalue=expression #AssignmentExpression
-	| identifier											#NameExpression
+	| simpleName											#NameExpression
 	// Since new Class.Constructor() is indistiguishable from new Namespace.Class() we can't parse for named constructor calls here
 	| 'new' name '(' argumentList ')'						#NewExpression
 	| 'new' baseTypes? '(' argumentList ')' '{' member* '}'	#NewObjectExpression
+	| ('try'|'try!') expression								#TryExpression
 	| 'null'												#NullLiteralExpression
 	| 'self'												#SelfExpression
 	| BooleanLiteral										#BooleanLiteralExpression
 	| IntLiteral											#IntLiteralExpression
 	| 'uninitialized'										#UninitializedExpression
 	| StringLiteral											#StringLiteralExpression
+	| CharLiteral											#CharLiteralExpression
 	;

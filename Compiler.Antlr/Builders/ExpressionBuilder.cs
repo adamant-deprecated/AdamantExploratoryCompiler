@@ -47,7 +47,7 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 
 		public override ExpressionSyntax VisitNameExpression(AdamantParser.NameExpressionContext context)
 		{
-			var name = Identifier(context.identifier());
+			var name = Identifier(context.simpleName().Start);
 			return new IdentifierNameSyntax(name);
 		}
 

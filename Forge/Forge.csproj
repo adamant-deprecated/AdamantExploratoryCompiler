@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CompileCommand.cs" />
     <Compile Include="CompileFailedException.cs" />
     <Compile Include="CompiledProjects.cs" />
     <Compile Include="Commands\BuildCommand.cs" />

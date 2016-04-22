@@ -44,10 +44,9 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 			return new IfSyntax();
 		}
 
-		public override StatementSyntax VisitForeachStatement(AdamantParser.ForeachStatementContext context)
+		public override StatementSyntax VisitForStatement(AdamantParser.ForStatementContext context)
 		{
-			// TODO implement
-			return new ForeachSyntax();
+			return new ForSyntax();
 		}
 	}
 }

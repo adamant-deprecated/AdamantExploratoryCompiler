@@ -83,6 +83,20 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFunctionDeclaration([NotNull] AdamantParser.FunctionDeclarationContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>Precondition</c>
+	/// labeled alternative in <see cref="AdamantParser.contract"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPrecondition([NotNull] AdamantParser.PreconditionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>Postcondition</c>
+	/// labeled alternative in <see cref="AdamantParser.contract"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPostcondition([NotNull] AdamantParser.PostconditionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="AdamantParser.attribute"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -216,6 +230,12 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitOwnedMutableReferenceType([NotNull] AdamantParser.OwnedMutableReferenceTypeContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="AdamantParser.lifetime"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLifetime([NotNull] AdamantParser.LifetimeContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="AdamantParser.funcTypeParameterList"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -309,6 +329,20 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitMethod([NotNull] AdamantParser.MethodContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>OperatorOverload</c>
+	/// labeled alternative in <see cref="AdamantParser.member"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOperatorOverload([NotNull] AdamantParser.OperatorOverloadContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>NestedClassDeclaration</c>
+	/// labeled alternative in <see cref="AdamantParser.member"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNestedClassDeclaration([NotNull] AdamantParser.NestedClassDeclarationContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="AdamantParser.parameterList"/>.
 	/// </summary>
@@ -416,6 +450,13 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitIfStatement([NotNull] AdamantParser.IfStatementContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>LetIfStatement</c>
+	/// labeled alternative in <see cref="AdamantParser.statement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLetIfStatement([NotNull] AdamantParser.LetIfStatementContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>ForStatement</c>
 	/// labeled alternative in <see cref="AdamantParser.statement"/>.
 	/// </summary>
@@ -423,19 +464,19 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitForStatement([NotNull] AdamantParser.ForStatementContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>ForeachStatement</c>
-	/// labeled alternative in <see cref="AdamantParser.statement"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitForeachStatement([NotNull] AdamantParser.ForeachStatementContext context);
-	/// <summary>
 	/// Visit a parse tree produced by the <c>DeleteStatement</c>
 	/// labeled alternative in <see cref="AdamantParser.statement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitDeleteStatement([NotNull] AdamantParser.DeleteStatementContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>ContinueStatement</c>
+	/// labeled alternative in <see cref="AdamantParser.statement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitContinueStatement([NotNull] AdamantParser.ContinueStatementContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="AdamantParser.localVariableDeclaration"/>.
 	/// </summary>
@@ -470,6 +511,13 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitNameExpression([NotNull] AdamantParser.NameExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>InExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInExpression([NotNull] AdamantParser.InExpressionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>UnaryExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
@@ -555,6 +603,13 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitNullLiteralExpression([NotNull] AdamantParser.NullLiteralExpressionContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>ParenthesizedExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitParenthesizedExpression([NotNull] AdamantParser.ParenthesizedExpressionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>AdditiveExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
 	/// </summary>
@@ -590,6 +645,20 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitUninitializedExpression([NotNull] AdamantParser.UninitializedExpressionContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>TryExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTryExpression([NotNull] AdamantParser.TryExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>MagnitudeExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMagnitudeExpression([NotNull] AdamantParser.MagnitudeExpressionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>MemberExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
 	/// </summary>
@@ -603,6 +672,20 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitComparativeExpression([NotNull] AdamantParser.ComparativeExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>CharLiteralExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitCharLiteralExpression([NotNull] AdamantParser.CharLiteralExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>DotDotExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitDotDotExpression([NotNull] AdamantParser.DotDotExpressionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>CoalesceExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.

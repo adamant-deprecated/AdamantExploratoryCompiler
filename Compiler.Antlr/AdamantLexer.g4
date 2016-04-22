@@ -67,6 +67,7 @@ Self : 'self';
 Uninitialized : 'uninitialized';
 Where : 'where';
 Base : 'base';
+Operator : 'operator';
 
 // Properties
 Var : 'var';
@@ -98,6 +99,7 @@ Return : 'return';
 
 // Exceptions
 Try : 'try';
+TryPanic : 'try!';
 Catch : 'catch';
 Finally : 'finally';
 Throw : 'throw';
@@ -125,6 +127,10 @@ Immutable : 'immut';
 // Async
 Async: 'async';
 Await: 'await';
+
+// Contracts
+Requires: 'requires';
+Ensures: 'ensures';
 
 //*************
 // Predefined Types
@@ -160,12 +166,17 @@ StringLiteral
 	: '"' (InputChar|'\"'|'\\')*? '"'
 	;
 
+CharLiteral
+	: '\'' (InputChar|'\\\'')*? '\''
+	;
+
 //*************
 // Operators
 //*************
 Semicolon : ';';
 Colon : ':';
 Dot : '.';
+DotDot : '..';
 ColonColon: '::';
 Tilde : '~';
 Comma : ',';
@@ -211,6 +222,8 @@ DivideAssign : '/=';
 AndAssign : 'and=';
 XorAssign : 'xor=';
 OrAssign : 'or=';
+
+PlaceHolder : '_';
 
 // must be defined after all keywords so it will not match a keyword
 Identifier

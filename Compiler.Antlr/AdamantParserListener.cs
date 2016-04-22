@@ -118,6 +118,30 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitFunctionDeclaration([NotNull] AdamantParser.FunctionDeclarationContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>Precondition</c>
+	/// labeled alternative in <see cref="AdamantParser.contract"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterPrecondition([NotNull] AdamantParser.PreconditionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>Precondition</c>
+	/// labeled alternative in <see cref="AdamantParser.contract"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitPrecondition([NotNull] AdamantParser.PreconditionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>Postcondition</c>
+	/// labeled alternative in <see cref="AdamantParser.contract"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterPostcondition([NotNull] AdamantParser.PostconditionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>Postcondition</c>
+	/// labeled alternative in <see cref="AdamantParser.contract"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitPostcondition([NotNull] AdamantParser.PostconditionContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.attribute"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -344,6 +368,16 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitOwnedMutableReferenceType([NotNull] AdamantParser.OwnedMutableReferenceTypeContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.lifetime"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLifetime([NotNull] AdamantParser.LifetimeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.lifetime"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLifetime([NotNull] AdamantParser.LifetimeContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.funcTypeParameterList"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -503,6 +537,30 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitMethod([NotNull] AdamantParser.MethodContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>OperatorOverload</c>
+	/// labeled alternative in <see cref="AdamantParser.member"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterOperatorOverload([NotNull] AdamantParser.OperatorOverloadContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>OperatorOverload</c>
+	/// labeled alternative in <see cref="AdamantParser.member"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitOperatorOverload([NotNull] AdamantParser.OperatorOverloadContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>NestedClassDeclaration</c>
+	/// labeled alternative in <see cref="AdamantParser.member"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNestedClassDeclaration([NotNull] AdamantParser.NestedClassDeclarationContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>NestedClassDeclaration</c>
+	/// labeled alternative in <see cref="AdamantParser.member"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNestedClassDeclaration([NotNull] AdamantParser.NestedClassDeclarationContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.parameterList"/>.
 	/// </summary>
@@ -684,6 +742,18 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitIfStatement([NotNull] AdamantParser.IfStatementContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>LetIfStatement</c>
+	/// labeled alternative in <see cref="AdamantParser.statement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLetIfStatement([NotNull] AdamantParser.LetIfStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>LetIfStatement</c>
+	/// labeled alternative in <see cref="AdamantParser.statement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLetIfStatement([NotNull] AdamantParser.LetIfStatementContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>ForStatement</c>
 	/// labeled alternative in <see cref="AdamantParser.statement"/>.
 	/// </summary>
@@ -696,18 +766,6 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitForStatement([NotNull] AdamantParser.ForStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by the <c>ForeachStatement</c>
-	/// labeled alternative in <see cref="AdamantParser.statement"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterForeachStatement([NotNull] AdamantParser.ForeachStatementContext context);
-	/// <summary>
-	/// Exit a parse tree produced by the <c>ForeachStatement</c>
-	/// labeled alternative in <see cref="AdamantParser.statement"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitForeachStatement([NotNull] AdamantParser.ForeachStatementContext context);
-	/// <summary>
 	/// Enter a parse tree produced by the <c>DeleteStatement</c>
 	/// labeled alternative in <see cref="AdamantParser.statement"/>.
 	/// </summary>
@@ -719,6 +777,18 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitDeleteStatement([NotNull] AdamantParser.DeleteStatementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>ContinueStatement</c>
+	/// labeled alternative in <see cref="AdamantParser.statement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterContinueStatement([NotNull] AdamantParser.ContinueStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>ContinueStatement</c>
+	/// labeled alternative in <see cref="AdamantParser.statement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitContinueStatement([NotNull] AdamantParser.ContinueStatementContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.localVariableDeclaration"/>.
 	/// </summary>
@@ -777,6 +847,18 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitNameExpression([NotNull] AdamantParser.NameExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>InExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInExpression([NotNull] AdamantParser.InExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>InExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInExpression([NotNull] AdamantParser.InExpressionContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>UnaryExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
@@ -922,6 +1004,18 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitNullLiteralExpression([NotNull] AdamantParser.NullLiteralExpressionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>ParenthesizedExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterParenthesizedExpression([NotNull] AdamantParser.ParenthesizedExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>ParenthesizedExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitParenthesizedExpression([NotNull] AdamantParser.ParenthesizedExpressionContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>AdditiveExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
 	/// </summary>
@@ -982,6 +1076,30 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitUninitializedExpression([NotNull] AdamantParser.UninitializedExpressionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>TryExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTryExpression([NotNull] AdamantParser.TryExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>TryExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTryExpression([NotNull] AdamantParser.TryExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>MagnitudeExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterMagnitudeExpression([NotNull] AdamantParser.MagnitudeExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>MagnitudeExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitMagnitudeExpression([NotNull] AdamantParser.MagnitudeExpressionContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>MemberExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
 	/// </summary>
@@ -1005,6 +1123,30 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitComparativeExpression([NotNull] AdamantParser.ComparativeExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>CharLiteralExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterCharLiteralExpression([NotNull] AdamantParser.CharLiteralExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>CharLiteralExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitCharLiteralExpression([NotNull] AdamantParser.CharLiteralExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>DotDotExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterDotDotExpression([NotNull] AdamantParser.DotDotExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>DotDotExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitDotDotExpression([NotNull] AdamantParser.DotDotExpressionContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>CoalesceExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.

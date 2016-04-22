@@ -41,12 +41,12 @@ namespace Adamant.Exploratory.Compiler.Antlr
 			// Verify modifiers
 			foreach(var expectedModifier in expected)
 			{
-				var modifier = modifiers[0];
-				if(expectedModifier.Contains(modifier.token.Type))
-				{
-					// It is one of the values we expected.
-					adjustedModifiers.RemoveAt(0);
-				}
+				//var modifier = modifiers[0];
+				//if(expectedModifier.Contains(modifier.token.Type))
+				//{
+				//	// It is one of the values we expected.
+				//	adjustedModifiers.RemoveAt(0);
+				//}
 				// TODO if they are optional, we are ok, otherwise report error
 
 				// TODO search the rest of the modifiers to see if we find any, remove and report errors

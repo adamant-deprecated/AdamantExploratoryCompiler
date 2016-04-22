@@ -86,7 +86,7 @@
     <Compile Include="Directives\UsingSyntax.cs" />
     <Compile Include="StatementSyntax.cs" />
     <Compile Include="Statements\ExpressionStatementSyntax.cs" />
-    <Compile Include="Statements\ForeachSyntax.cs" />
+    <Compile Include="Statements\ForSyntax.cs" />
     <Compile Include="Statements\IfSyntax.cs" />
     <Compile Include="Statements\ReturnSyntax.cs" />
     <Compile Include="Statements\ThrowSyntax.cs" />
