@@ -1124,6 +1124,18 @@ public interface IAdamantParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitComparativeExpression([NotNull] AdamantParser.ComparativeExpressionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>CastExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterCastExpression([NotNull] AdamantParser.CastExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>CastExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitCastExpression([NotNull] AdamantParser.CastExpressionContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>CharLiteralExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
 	/// </summary>

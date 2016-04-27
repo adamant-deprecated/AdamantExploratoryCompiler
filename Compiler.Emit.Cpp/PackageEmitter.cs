@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Adamant.Exploratory.Common;
@@ -8,6 +9,8 @@ using Adamant.Exploratory.Compiler.Semantics.Expressions.Literals;
 using Adamant.Exploratory.Compiler.Semantics.Statements;
 using Adamant.Exploratory.Compiler.Semantics.Types;
 using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
+using Adamant.Exploratory.Compiler.Syntax.Expressions;
+using ValueType = Adamant.Exploratory.Compiler.Semantics.Types.ValueType;
 
 namespace Compiler.Emit.Cpp
 {
@@ -102,6 +105,14 @@ namespace Compiler.Emit.Cpp
 					return $"new ::__Adamant::Runtime::string(new size_t({encodedValue.Length}), {unsafeArray})";
 				})
 				.With<MemberAccess>(memberAccess => $"({CodeFor(memberAccess.Expression)})->{memberAccess.Member}")
+				.With<Cast>(cast =>
+				{
+					if(cast.CastType != CastType.Panic)
+						throw new NotSupportedException($"Cast type '{cast.CastType}' not supported");
+					return cast.Type.Match().Returning<string>()
+						.With<IntType>(intType => $"new {TypeOf(intType)}(*({CodeFor(cast.Expression)}))")
+						.Exhaustive();
+				})
 				.Exhaustive();
 		}
 
@@ -119,6 +130,17 @@ namespace Compiler.Emit.Cpp
 				{
 					var coreType = intType.IsSigned ? "int" : "uint";
 					return $"{coreType}{intType.BitLength}_t*";
+				})
+				.Exhaustive();
+		}
+		private static string TypeOf(ValueType type)
+		{
+			return type.Match().Returning<string>()
+				.With<VoidType>(voidType => "void")
+				.With<IntType>(intType =>
+				{
+					var coreType = intType.IsSigned ? "int" : "uint";
+					return $"{coreType}{intType.BitLength}_t";
 				})
 				.Exhaustive();
 		}

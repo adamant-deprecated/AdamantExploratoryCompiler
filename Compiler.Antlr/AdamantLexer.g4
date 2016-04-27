@@ -100,6 +100,7 @@ Return : 'return';
 // Exceptions
 Try : 'try';
 TryPanic : 'try!';
+TryResult : 'try?';
 Catch : 'catch';
 Finally : 'finally';
 Throw : 'throw';
@@ -108,6 +109,9 @@ Throw : 'throw';
 Implicit : 'implicit';
 Explicit : 'explicit';
 Conversion : 'conversion';
+As : 'as';
+AsPanic : 'as!';
+AsResult : 'as?';
 
 // Access modifiers
 Public : 'public';

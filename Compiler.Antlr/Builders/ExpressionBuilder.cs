@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Expressions;
 using Adamant.Exploratory.Compiler.Syntax.Expressions.Literals;
@@ -93,6 +95,29 @@ namespace Adamant.Exploratory.Compiler.Antlr.Builders
 		public override ExpressionSyntax VisitSelfExpression(AdamantParser.SelfExpressionContext context)
 		{
 			return new SelfSyntax();
+		}
+
+		public override ExpressionSyntax VisitCastExpression(AdamantParser.CastExpressionContext context)
+		{
+			var expression = context.expression().Accept(this);
+			CastType castType;
+			switch(context.@as.Type)
+			{
+				case AdamantParser.As:
+					castType = CastType.Safe;
+					break;
+				case AdamantParser.AsPanic:
+					castType = CastType.Panic;
+					break;
+				case AdamantParser.AsResult:
+					castType = CastType.Result;
+					break;
+				default:
+					throw new NotSupportedException("Unsupported cast type");
+
+			}
+			var type = context.valueType().Accept(build.ValueType);
+			return new CastSyntax(expression, castType, type);
 		}
 	}
 }

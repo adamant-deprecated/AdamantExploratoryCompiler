@@ -243,13 +243,14 @@ expression
 	| expression 'or' expression							#OrExpression
 	| expression '??' expression							#CoalesceExpression
 	| expression 'in' expression							#InExpression
+	| 'new' name '(' argumentList ')'						#NewExpression
+	| 'new' baseTypes? '(' argumentList ')' '{' member* '}'	#NewObjectExpression
+	| expression as=('as'|'as!'|'as?') valueType			#CastExpression
+	| try=('try'|'try!'|'try?') expression					#TryExpression
 	| <assoc=right> condition=expression '?' then=expression ':' else=expression #IfExpression
 	| <assoc=right> lvalue=expression op=('='|'*='|'/='|'+='|'-='|'and='|'xor='|'or=') rvalue=expression #AssignmentExpression
 	| simpleName											#NameExpression
 	// Since new Class.Constructor() is indistiguishable from new Namespace.Class() we can't parse for named constructor calls here
-	| 'new' name '(' argumentList ')'						#NewExpression
-	| 'new' baseTypes? '(' argumentList ')' '{' member* '}'	#NewObjectExpression
-	| ('try'|'try!') expression								#TryExpression
 	| 'null'												#NullLiteralExpression
 	| 'self'												#SelfExpression
 	| BooleanLiteral										#BooleanLiteralExpression

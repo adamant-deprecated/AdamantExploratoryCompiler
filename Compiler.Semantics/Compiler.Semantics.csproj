@@ -57,6 +57,7 @@
     <Compile Include="Binders\NamespaceBinder.cs" />
     <Compile Include="Binders\PackageBinder.cs" />
     <Compile Include="Expression.cs" />
+    <Compile Include="Expressions\Cast.cs" />
     <Compile Include="Expressions\Literal.cs" />
     <Compile Include="Expressions\Literals\IntegerLiteral.cs" />
     <Compile Include="Expressions\Literals\StringLiteral.cs" />

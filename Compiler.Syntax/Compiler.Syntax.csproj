@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expressions\CastSyntax.cs" />
+    <Compile Include="Expressions\CastType.cs" />
     <Compile Include="Expressions\Literals\BooleanLiteralSyntax.cs" />
     <Compile Include="Expressions\Literals\IntegerLiteralSyntax.cs" />
     <Compile Include="Expressions\Literals\StringLiteralSyntax.cs" />

@@ -1174,6 +1174,18 @@ public partial class AdamantParserBaseListener : IAdamantParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitComparativeExpression([NotNull] AdamantParser.ComparativeExpressionContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="AdamantParser.CastExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterCastExpression([NotNull] AdamantParser.CastExpressionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AdamantParser.CastExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitCastExpression([NotNull] AdamantParser.CastExpressionContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="AdamantParser.CharLiteralExpression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

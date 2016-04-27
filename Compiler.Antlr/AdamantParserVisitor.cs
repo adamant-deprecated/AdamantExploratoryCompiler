@@ -673,6 +673,13 @@ public interface IAdamantParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitComparativeExpression([NotNull] AdamantParser.ComparativeExpressionContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>CastExpression</c>
+	/// labeled alternative in <see cref="AdamantParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitCastExpression([NotNull] AdamantParser.CastExpressionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>CharLiteralExpression</c>
 	/// labeled alternative in <see cref="AdamantParser.expression"/>.
 	/// </summary>

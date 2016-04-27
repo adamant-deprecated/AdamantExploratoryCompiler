@@ -219,6 +219,11 @@ namespace Adamant.Exploratory.Compiler.Semantics.Binders
 					foreach(var argument in call.Arguments)
 						Build(argument, containingScope);
 				})
+				.With<CastSyntax>(cast =>
+				{
+					Build(cast.Expression, containingScope);
+					Build(cast.Type, containingScope);
+				})
 				.Ignore<LiteralSyntax>()
 				.Exhaustive();
 		}

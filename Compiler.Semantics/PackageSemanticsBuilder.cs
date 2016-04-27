@@ -124,6 +124,12 @@ namespace Adamant.Exploratory.Compiler.Semantics
 					var expression = Resolve(containingPackage, memberAccess.Expression, binders);
 					return new MemberAccess(memberAccess, containingPackage, expression);
 				})
+				.With<CastSyntax>(cast =>
+				{
+					var expression = Resolve(containingPackage, cast.Expression, binders);
+					var type = Resolve(containingPackage, cast.Type, binders);
+					return new Cast(cast, containingPackage, expression, cast.CastType, type);
+				})
 				.Exhaustive();
 		}
 
