@@ -1,0 +1,12 @@
+﻿/*---
+{
+	"expectedConsoleOutput": "Hello World!"
+}
+*/
+namespace Adamant.Compiler.Tests.Initial
+{
+	public Main(console: mut Console) -> void
+	{
+		console.WriteLine("Hello World!");
+	}
+}

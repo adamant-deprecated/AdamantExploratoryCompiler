@@ -57,7 +57,9 @@
     <Compile Include="Binders\NamespaceBinder.cs" />
     <Compile Include="Binders\PackageBinder.cs" />
     <Compile Include="Expression.cs" />
+    <Compile Include="Expressions\Call.cs" />
     <Compile Include="Expressions\Cast.cs" />
+    <Compile Include="Types\Value\IdentifierName.cs" />
     <Compile Include="Expressions\Literal.cs" />
     <Compile Include="Expressions\Literals\IntegerLiteral.cs" />
     <Compile Include="Expressions\Literals\StringLiteral.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="GlobalVariable.cs" />
     <Compile Include="PackageReference.cs" />
     <Compile Include="Statement.cs" />
+    <Compile Include="Statements\ExpressionStatement.cs" />
     <Compile Include="Statements\Return.cs" />
     <Compile Include="Types\PredefinedType.cs" />
     <Compile Include="Types\Predefined\FixedType.cs" />
@@ -93,6 +96,8 @@
     <Compile Include="SemanticNode.cs" />
     <Compile Include="Symbol.cs" />
     <Compile Include="Types\PredefinedTypeKind.cs" />
+    <Compile Include="Types\Value\Name.cs" />
+    <Compile Include="Types\Value\SimpleName.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

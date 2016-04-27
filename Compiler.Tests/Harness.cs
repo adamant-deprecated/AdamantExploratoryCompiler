@@ -11,7 +11,6 @@ using Adamant.Exploratory.Compiler.Core.Diagnostics;
 using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 using Compiler.Emit.Cpp;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Adamant.Exploratory.Compiler.Tests

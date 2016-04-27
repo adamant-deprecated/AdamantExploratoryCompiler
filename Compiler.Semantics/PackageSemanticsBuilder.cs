@@ -10,6 +10,7 @@ using Adamant.Exploratory.Compiler.Semantics.Expressions.Literals;
 using Adamant.Exploratory.Compiler.Semantics.Statements;
 using Adamant.Exploratory.Compiler.Semantics.Types;
 using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
+using Adamant.Exploratory.Compiler.Semantics.Types.Value;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Expressions;
 using Adamant.Exploratory.Compiler.Syntax.Expressions.Literals;
@@ -109,6 +110,11 @@ namespace Adamant.Exploratory.Compiler.Semantics
 					var expression = @return.Expression != null ? Resolve(containingPackage, @return.Expression, binders) : null;
 					return new Return(@return, containingPackage, expression);
 				})
+				.With<ExpressionStatementSyntax>(expressionStatement =>
+				{
+					var expression = Resolve(containingPackage, expressionStatement.Expression, binders);
+					return new ExpressionStatement(expressionStatement, containingPackage, expression);
+				})
 				.Exhaustive();
 
 			return statement.Yield().Concat(Resolve(containingPackage, syntax, binders));
@@ -129,6 +135,19 @@ namespace Adamant.Exploratory.Compiler.Semantics
 					var expression = Resolve(containingPackage, cast.Expression, binders);
 					var type = Resolve(containingPackage, cast.Type, binders);
 					return new Cast(cast, containingPackage, expression, cast.CastType, type);
+				})
+				.With<CallSyntax>(call =>
+				{
+					var expression = Resolve(containingPackage, call.Expression, binders);
+					var arguments = call.Arguments.Select(arg => Resolve(containingPackage, arg, binders));
+					return new Call(call, containingPackage, expression, arguments);
+				})
+				.With<IdentifierNameSyntax>(identifierName =>
+				{
+					var binder = binders[identifierName];
+					var result = binder.Lookup(identifierName, containingPackage);
+					var declaration = result.Symbols.Single();
+					return new IdentifierName(identifierName, containingPackage, declaration);
 				})
 				.Exhaustive();
 		}

@@ -2,11 +2,11 @@
 
 namespace Adamant.Exploratory.Compiler.Semantics.Types
 {
-	public abstract class ValueType : SourceSemanticNode
+	public abstract class ValueType : Expression
 	{
 		public new ValueTypeSyntax Syntax => (ValueTypeSyntax)base.Syntax;
 
-		public ValueType(ValueTypeSyntax syntax, Package containingPackage)
+		protected ValueType(ValueTypeSyntax syntax, Package containingPackage)
 			: base(syntax, containingPackage)
 		{
 		}
