@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace Compiler.Emit.Cpp
+namespace Adamant.Exploratory.Compiler.Emit.Cpp
 {
 	public static class CppCompiler
 	{

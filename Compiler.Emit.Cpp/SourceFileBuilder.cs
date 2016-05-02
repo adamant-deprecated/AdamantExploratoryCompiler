@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Compiler.Emit.Cpp
+namespace Adamant.Exploratory.Compiler.Emit.Cpp
 {
 	public class SourceFileBuilder
 	{

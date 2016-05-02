@@ -35,19 +35,19 @@ PreprocessorLine
 mode PREPROCESSOR_SKIP;
 
 PreprocessorLineInSkipped
-	// the type here prevents it from creatig another token type
+	// the type here prevents it from creating another token type
 	: Whitespace? '#' InputChar* { Preprocess(); } -> type(PreprocessorLine), skip
 	;
 
 PreprocessorSkippedSection
 	// anything except newline or #
-	// newline is excluded becuase otherwise a multiline match could swollow the leading whitespace we need to check
+	// newline is excluded because otherwise a multi-line match could swallow the leading whitespace we need to check
 	// that preprocessor directives are the first thing on the line
 	: ~[\u000D\u000A\u0085\u2028\u2029#]+ -> skip
 	;
 
 PreprocessorSkippedNewline
-	// the type here prevents it from creatig another token type
+	// the type here prevents it from creating another token type
 	: Newline -> type(Newline), skip
 	;
 

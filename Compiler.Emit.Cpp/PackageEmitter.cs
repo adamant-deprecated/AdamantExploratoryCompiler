@@ -12,7 +12,7 @@ using Adamant.Exploratory.Compiler.Semantics.Types.Predefined;
 using Adamant.Exploratory.Compiler.Syntax.Expressions;
 using ValueType = Adamant.Exploratory.Compiler.Semantics.Types.ValueType;
 
-namespace Compiler.Emit.Cpp
+namespace Adamant.Exploratory.Compiler.Emit.Cpp
 {
 	public class PackageEmitter
 	{

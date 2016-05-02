@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Compiler.Emit.Cpp
+namespace Adamant.Exploratory.Compiler.Emit.Cpp
 {
 	public class CompilerResult
 	{

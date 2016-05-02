@@ -8,9 +8,9 @@ using System.Text;
 using Adamant.Exploratory.Common.Tests;
 using Adamant.Exploratory.Compiler.Core;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
+using Adamant.Exploratory.Compiler.Emit.Cpp;
 using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
-using Compiler.Emit.Cpp;
 using NUnit.Framework;
 
 namespace Adamant.Exploratory.Compiler.Tests

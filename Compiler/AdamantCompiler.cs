@@ -3,11 +3,11 @@ using System.Linq;
 using Adamant.Exploratory.Compiler.Antlr;
 using Adamant.Exploratory.Compiler.Antlr.Builders;
 using Adamant.Exploratory.Compiler.Core.Diagnostics;
+using Adamant.Exploratory.Compiler.Emit.Cpp;
 using Adamant.Exploratory.Compiler.Semantics;
 using Adamant.Exploratory.Compiler.Syntax;
 using Adamant.Exploratory.Compiler.Syntax.Directives;
 using Antlr4.Runtime.Atn;
-using Compiler.Emit.Cpp;
 
 namespace Adamant.Exploratory.Compiler
 {

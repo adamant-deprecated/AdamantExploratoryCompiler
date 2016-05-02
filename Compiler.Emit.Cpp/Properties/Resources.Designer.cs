@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Compiler.Emit.Cpp.Properties {
+namespace Adamant.Exploratory.Compiler.Emit.Cpp.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Compiler.Emit.Cpp.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Compiler.Emit.Cpp.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Adamant.Exploratory.Compiler.Emit.Cpp.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,34 @@ namespace Compiler.Emit.Cpp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to #pragma once
+        ///
+        ///#include &lt;cstdint&gt;
+        ///
+        ///namespace __Adamant
+        ///{
+        ///	namespace Runtime
+        ///	{
+        ///		class string
+        ///		{
+        ///			protected:
+        ///				uint8_t* bytes; // unsafe arrays are just blocks of memory from new[]
+        ///			public:
+        ///				size_t* ByteLength;
+        ///
+        ///				string(size_t* byteLength, uint8_t* bytes)
+        ///					: ByteLength(byteLength), bytes(bytes)
+        ///				{
+        ///				}
+        ///
+        ///				~string()
+        ///				{
+        ///					delete ByteLength;
+        ///					delete[] bytes;
+        ///				}
+        ///		};
+        ///	}
+        ///}.
         /// </summary>
         internal static string Runtime {
             get {

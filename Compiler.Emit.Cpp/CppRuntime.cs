@@ -1,6 +1,4 @@
-﻿using Compiler.Emit.Cpp.Properties;
-
-namespace Compiler.Emit.Cpp
+﻿namespace Adamant.Exploratory.Compiler.Emit.Cpp
 {
 	public static class CppRuntime
 	{

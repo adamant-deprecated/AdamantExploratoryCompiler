@@ -3,7 +3,7 @@ using System.Collections;
 using System.IO;
 using Adamant.Exploratory.Common;
 using Adamant.Exploratory.Compiler;
-using Compiler.Emit.Cpp;
+using Adamant.Exploratory.Compiler.Emit.Cpp;
 
 namespace Adamant.Exploratory.Forge
 {
