@@ -1,11 +1,15 @@
-# Adamant Exploratory Compiler
+#  *Deprecated* Adamant Exploratory Compiler
 This is an exploratory compiler for the Adamant programming language.  It exists to rapidly evaluate language design decisions and possibly form the basis for bootstrapping an Adamant compiler.  The exploratory compiler will be thrown away when the compiler is re-written in Adamant.
 
-## Project Status: Alpha Active
-This is under active development.  It is in a very early stage and there are likely issues and limitations.  APIs are subject to frequent breaking changes.
+## Project Status: Alpha  *Deprecated*
+This project should not be used, it has been superseded by the "[Pre-Adamant Compiler](https://github.com/adamant/PreAdamantCompiler)".
 
 ### Download and Use
 Clone this git repo and compile using Visual Studio 2015.
+
+## Reasons for Deprecation
+
+The approach of this compiler was still too heavy weight and cumbersome.  Implementing language features required modifications to the grammar, syntax tree and semantic model.  Something as simple as getting an operator added and emitting code was involved.  Furthermore, this was to be a compiler for the full Adamant language.  Eventually, it was realized that wasn't really necessary.  Certain features like type inference simply aren't important in a early compiler, but would be very complicated to implement.
 
 ## Explanation of this Project
 The Adamant language is being designed.  It is being created to provide a high-level OO language (like C# or Java) using a borrow checker instead of garbage collection (like Rust).  Planned features include:
