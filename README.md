@@ -2,7 +2,7 @@
 This is an exploratory compiler for the Adamant programming language.  It exists to rapidly evaluate language design decisions and possibly form the basis for bootstrapping an Adamant compiler.  The exploratory compiler will be thrown away when the compiler is re-written in Adamant.
 
 ## Project Status: Alpha  *Deprecated*
-This project should not be used, it has been superseded by the "[Pre-Adamant Compiler](https://github.com/adamant/PreAdamantCompiler)".
+This project should not be used, it has been superseded by the "[Pre-Adamant Compiler](https://github.com/adamant/PreAdamantCompiler)" which was superseded by the "[Adamant.Compiler](https://github.com/adamant/Adamant.Compiler)" project.
 
 ### Download and Use
 Clone this git repo and compile using Visual Studio 2015.
