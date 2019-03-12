@@ -4,7 +4,7 @@ This is an exploratory compiler for the Adamant programming language.  It exists
 
 ## Project Status: Alpha *Deprecated*
 
-This project should not be used. The current Adamant compiler is the "[adamant.tools.compiler.bootstrap](https://github.com/adamant/adamant.tools.compiler.bootstrap)" project.
+This project should not be used.
 
 ### Download and Use
 
